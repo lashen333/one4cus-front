@@ -1,11 +1,258 @@
-// src\features\home\mocks\home-page.mock.ts
 import type { HomePageData } from "../types/home.types";
 
 export const homePageMock: HomePageData = {
   hero: {
     title: "Find Services & Deals Near You",
-    subtitle: "Browse service providers and discover trusted deals.",
-    primaryActionLabel: "Browse Services",
-    secondaryActionLabel: "Browse Deals",
+    subtitle:
+      "Connect with local service providers and discover amazing deals in your area",
+    primaryCta: {
+      label: "Browse Services/Deals",
+      href: "/services",
+    },
+    secondaryCta: {
+      label: "Become a Provider",
+      href: "/become-a-provider",
+    },
+  },
+  search: {
+    placeholder: "Search for services or deals...",
+    buttonLabel: "Search",
+    chips: [
+      { id: "electricians", label: "Electricians" },
+      { id: "plumbers", label: "Plumbers" },
+      { id: "gem-mining", label: "Gem Mining" },
+      { id: "handymen", label: "Handymen" },
+      { id: "tutors", label: "Tutors" },
+    ],
+  },
+  servicesSection: {
+    title: "Our Top Service Providers",
+    ctaLabel: "Browse All Services",
+    ctaHref: "/services",
+    items: [
+      {
+        id: "1",
+        name: "K.M.S.Perera",
+        category: "ProFix Plumbing",
+        description:
+          "Experienced and reliable plumbers for all your home and commercial needs. Emergency services available 24/7.",
+        rating: 4.8,
+        reviewCount: 125,
+        phone: "071XXXXXX1",
+        image: "/images/providers/provider-1.jpg",
+        profileHref: "/providers/kms-perera",
+      },
+      {
+        id: "2",
+        name: "R.M.S.Rajapaksha",
+        category: "Housekeeping",
+        description:
+          "Dedicated to making your home shine with eco-friendly cleaning solutions and meticulous attention to detail.",
+        rating: 4.9,
+        reviewCount: 210,
+        phone: "071XXXXXX2",
+        image: "/images/providers/provider-2.jpg",
+        profileHref: "/providers/rms-rajapaksha",
+      },
+      {
+        id: "3",
+        name: "C.M.Fernando",
+        category: "Landscaping",
+        description:
+          "Transform your outdoor space into a beautiful oasis. Services include garden design, maintenance, and lawn care.",
+        rating: 4.7,
+        reviewCount: 98,
+        phone: "071XXXXXX3",
+        image: "/images/providers/provider-3.jpg",
+        profileHref: "/providers/cm-fernando",
+      },
+      {
+        id: "4",
+        name: "C.M.Fernando",
+        category: "IT Support",
+        description:
+          "Reliable IT solutions for homes and small businesses. From troubleshooting to network setup, we cover it all.",
+        rating: 4.6,
+        reviewCount: 72,
+        phone: "071XXXXXX4",
+        image: "/images/providers/provider-4.jpg",
+        profileHref: "/providers/cm-fernando-it",
+      },
+      {
+        id: "5",
+        name: "K.M.S.Perera",
+        category: "Painting",
+        description:
+          "Professional interior and exterior painting services. High-quality finishes and attention to detail guaranteed.",
+        rating: 4.9,
+        reviewCount: 150,
+        phone: "071XXXXXX5",
+        image: "/images/providers/provider-5.jpg",
+        profileHref: "/providers/kms-perera-painting",
+      },
+      {
+        id: "6",
+        name: "R.M.S.Rajapaksha",
+        category: "FixIt Handyman",
+        description:
+          "Your go-to for all home repairs and improvements. No job too big or small, always reliable and efficient.",
+        rating: 4.7,
+        reviewCount: 180,
+        phone: "071XXXXXX6",
+        image: "/images/providers/provider-6.jpg",
+        profileHref: "/providers/rms-rajapaksha-handyman",
+      },
+      {
+        id: "7",
+        name: "R.M.S.Rajapaksha",
+        category: "Tutoring",
+        description:
+          "Expert tutoring across various subjects for students of all ages. Personalized learning plans to ensure success.",
+        rating: 5.0,
+        reviewCount: 95,
+        phone: "071XXXXXX7",
+        image: "/images/providers/provider-7.jpg",
+        profileHref: "/providers/rms-rajapaksha-tutoring",
+      },
+      {
+        id: "8",
+        name: "C.M.Fernando",
+        category: "Dog Walking",
+        description:
+          "Reliable and caring dog walking and pet sitting services. Your furry friends are in safe hands.",
+        rating: 4.9,
+        reviewCount: 110,
+        phone: "071XXXXXX8",
+        image: "/images/providers/provider-8.jpg",
+        profileHref: "/providers/cm-fernando-dog-walking",
+      },
+      {
+        id: "9",
+        name: "K.M.S.Perera",
+        category: "Car Detailing",
+        description:
+          "Premium car detailing services to keep your vehicle looking showroom-ready. Interior and exterior care.",
+        rating: 4.8,
+        reviewCount: 60,
+        phone: "071XXXXXX9",
+        image: "/images/providers/provider-9.jpg",
+        profileHref: "/providers/kms-perera-car-detailing",
+      },
+    ],
+  },
+  dealsSection: {
+    title: "Our Top Investments",
+    ctaLabel: "Browse All Deals",
+    ctaHref: "/deals",
+    items: [
+      {
+        id: "1",
+        title: "Gem Mining Investment – Ratnapura Project",
+        description:
+          "Invest in a licensed gem mining operation in Ratnapura....",
+        raisedLabel: "Raised",
+        targetLabel: "Target",
+        raisedValue: 7,
+        targetValue: 12,
+        image: "/images/deals/deal-1.jpg",
+        href: "/deals/gem-mining-ratnapura",
+      },
+      {
+        id: "2",
+        title: "Apartment Development – Colombo 05",
+        description:
+          "Fund a 12-unit apartment project. Returns distributed after property sales.",
+        raisedLabel: "Raised",
+        targetLabel: "Target",
+        raisedValue: 75,
+        targetValue: 80,
+        image: "/images/deals/deal-2.jpg",
+        href: "/deals/apartment-development-colombo-05",
+      },
+      {
+        id: "3",
+        title: "Tech Startup – AI-Based Delivery App",
+        description:
+          "Invest in a Sri Lankan AI logistics platform targeting urban delivery optimization....",
+        raisedLabel: "Raised",
+        targetLabel: "Target",
+        raisedValue: 10,
+        targetValue: 15,
+        image: "/images/deals/deal-3.jpg",
+        href: "/deals/ai-delivery-app",
+      },
+      {
+        id: "4",
+        title: "Gem Mining Investment – Ratnapura Project",
+        description:
+          "Invest in a licensed gem mining operation in Ratnapura....",
+        raisedLabel: "Raised",
+        targetLabel: "Target",
+        raisedValue: 7,
+        targetValue: 12,
+        image: "/images/deals/deal-2.jpg",
+        href: "/deals/gem-mining-ratnapura-2",
+      },
+      {
+        id: "5",
+        title: "Gem Mining Investment – Ratnapura Project",
+        description:
+          "Invest in a licensed gem mining operation in Ratnapura....",
+        raisedLabel: "Raised",
+        targetLabel: "Target",
+        raisedValue: 7,
+        targetValue: 12,
+        image: "/images/deals/deal-3.jpg",
+        href: "/deals/gem-mining-ratnapura-3",
+      },
+      {
+        id: "6",
+        title: "Gem Mining Investment – Ratnapura Project",
+        description:
+          "Invest in a licensed gem mining operation in Ratnapura....",
+        raisedLabel: "Raised",
+        targetLabel: "Target",
+        raisedValue: 7,
+        targetValue: 12,
+        image: "/images/deals/deal-1.jpg",
+        href: "/deals/gem-mining-ratnapura-4",
+      },
+      {
+        id: "7",
+        title: "Gem Mining Investment – Ratnapura Project",
+        description:
+          "Invest in a licensed gem mining operation in Ratnapura....",
+        raisedLabel: "Raised",
+        targetLabel: "Target",
+        raisedValue: 7,
+        targetValue: 12,
+        image: "/images/deals/deal-3.jpg",
+        href: "/deals/gem-mining-ratnapura-5",
+      },
+      {
+        id: "8",
+        title: "Gem Mining Investment – Ratnapura Project",
+        description:
+          "Invest in a licensed gem mining operation in Ratnapura....",
+        raisedLabel: "Raised",
+        targetLabel: "Target",
+        raisedValue: 7,
+        targetValue: 12,
+        image: "/images/deals/deal-1.jpg",
+        href: "/deals/gem-mining-ratnapura-6",
+      },
+      {
+        id: "9",
+        title: "Gem Mining Investment – Ratnapura Project",
+        description:
+          "Invest in a licensed gem mining operation in Ratnapura....",
+        raisedLabel: "Raised",
+        targetLabel: "Target",
+        raisedValue: 7,
+        targetValue: 12,
+        image: "/images/deals/deal-2.jpg",
+        href: "/deals/gem-mining-ratnapura-7",
+      },
+    ],
   },
 };
