@@ -1,7 +1,7 @@
 // src\app\layout.tsx
+import { siteConfig } from "@/lib/config/site";
 import type { Metadata } from "next";
 import "./globals.css";
-import { siteConfig } from "@/lib/constants/site";
 
 export const metadata: Metadata = {
   title: siteConfig.name,
