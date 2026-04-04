@@ -1,22 +1,16 @@
 // src\app\(public)\providers\[slug]\page.tsx
+import { ProviderProfilePageView } from "@/features/providers/components/provider-profile-page-view";
+import { getProviderProfileData } from "@/features/providers/server/get-provider-profile-data";
+
 type ProviderDetailPageProps = {
   params: Promise<{
     slug: string;
   }>;
 };
 
-export default async function ProviderDetailPage({
-  params,
-}: ProviderDetailPageProps) {
+export default async function ProviderDetailPage({ params }: ProviderDetailPageProps) {
   const { slug } = await params;
+  const provider = await getProviderProfileData(slug);
 
-  return (
-    <main className="min-h-[calc(100vh-128px)]">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-slate-900">
-          Provider Detail: {slug}
-        </h1>
-      </div>
-    </main>
-  );
+  return <ProviderProfilePageView provider={provider} />;
 }
