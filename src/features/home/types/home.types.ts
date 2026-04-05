@@ -1,3 +1,4 @@
+// src\features\home\types\home.types.ts
 export type HeroContent = {
   title: string;
   subtitle: string;

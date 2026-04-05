@@ -1,10 +1,10 @@
+// src\features\home\mocks\home-page.mock.ts
 import type { HomePageData } from "../types/home.types";
 
 export const homePageMock: HomePageData = {
   hero: {
     title: "Find Services & Deals Near You",
-    subtitle:
-      "Connect with local service providers and discover amazing deals in your area",
+    subtitle: "Connect with local service providers and discover amazing deals in your area",
     primaryCta: {
       label: "Browse Services/Deals",
       href: "/services",
@@ -148,8 +148,7 @@ export const homePageMock: HomePageData = {
       {
         id: "1",
         title: "Gem Mining Investment – Ratnapura Project",
-        description:
-          "Invest in a licensed gem mining operation in Ratnapura....",
+        description: "Invest in a licensed gem mining operation in Ratnapura....",
         raisedLabel: "Raised",
         targetLabel: "Target",
         raisedValue: 7,
@@ -160,8 +159,7 @@ export const homePageMock: HomePageData = {
       {
         id: "2",
         title: "Apartment Development – Colombo 05",
-        description:
-          "Fund a 12-unit apartment project. Returns distributed after property sales.",
+        description: "Fund a 12-unit apartment project. Returns distributed after property sales.",
         raisedLabel: "Raised",
         targetLabel: "Target",
         raisedValue: 75,
@@ -184,8 +182,7 @@ export const homePageMock: HomePageData = {
       {
         id: "4",
         title: "Gem Mining Investment – Ratnapura Project",
-        description:
-          "Invest in a licensed gem mining operation in Ratnapura....",
+        description: "Invest in a licensed gem mining operation in Ratnapura....",
         raisedLabel: "Raised",
         targetLabel: "Target",
         raisedValue: 7,
@@ -196,8 +193,7 @@ export const homePageMock: HomePageData = {
       {
         id: "5",
         title: "Gem Mining Investment – Ratnapura Project",
-        description:
-          "Invest in a licensed gem mining operation in Ratnapura....",
+        description: "Invest in a licensed gem mining operation in Ratnapura....",
         raisedLabel: "Raised",
         targetLabel: "Target",
         raisedValue: 7,
@@ -208,8 +204,7 @@ export const homePageMock: HomePageData = {
       {
         id: "6",
         title: "Gem Mining Investment – Ratnapura Project",
-        description:
-          "Invest in a licensed gem mining operation in Ratnapura....",
+        description: "Invest in a licensed gem mining operation in Ratnapura....",
         raisedLabel: "Raised",
         targetLabel: "Target",
         raisedValue: 7,
@@ -220,8 +215,7 @@ export const homePageMock: HomePageData = {
       {
         id: "7",
         title: "Gem Mining Investment – Ratnapura Project",
-        description:
-          "Invest in a licensed gem mining operation in Ratnapura....",
+        description: "Invest in a licensed gem mining operation in Ratnapura....",
         raisedLabel: "Raised",
         targetLabel: "Target",
         raisedValue: 7,
@@ -232,8 +226,7 @@ export const homePageMock: HomePageData = {
       {
         id: "8",
         title: "Gem Mining Investment – Ratnapura Project",
-        description:
-          "Invest in a licensed gem mining operation in Ratnapura....",
+        description: "Invest in a licensed gem mining operation in Ratnapura....",
         raisedLabel: "Raised",
         targetLabel: "Target",
         raisedValue: 7,
@@ -244,8 +237,7 @@ export const homePageMock: HomePageData = {
       {
         id: "9",
         title: "Gem Mining Investment – Ratnapura Project",
-        description:
-          "Invest in a licensed gem mining operation in Ratnapura....",
+        description: "Invest in a licensed gem mining operation in Ratnapura....",
         raisedLabel: "Raised",
         targetLabel: "Target",
         raisedValue: 7,

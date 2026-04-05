@@ -1,22 +1,15 @@
-// src\app\(public)\deals\[slug]\page.tsx
+import { DealProfilePageView } from "@/features/deals/components/deal-profile-page-view";
+import { getDealProfileData } from "@/features/deals/server/get-deal-profile-data";
+
 type DealDetailPageProps = {
   params: Promise<{
     slug: string;
   }>;
 };
 
-export default async function DealDetailPage({
-  params,
-}: DealDetailPageProps) {
+export default async function DealDetailPage({ params }: DealDetailPageProps) {
   const { slug } = await params;
+  const deal = await getDealProfileData(slug);
 
-  return (
-    <main className="min-h-[calc(100vh-128px)]">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-slate-900">
-          Deal Detail: {slug}
-        </h1>
-      </div>
-    </main>
-  );
+  return <DealProfilePageView deal={deal} />;
 }
