@@ -1,4 +1,4 @@
-// src\features\deals\components\deal-key-highlights-card.tsx
+// src\features\deals\components\deal-profile\deal-key-highlights-card.tsx
 const points = [
   "Safe, phased mining operation",
   "Profit-sharing starts after gem auction",

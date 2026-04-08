@@ -1,4 +1,4 @@
-// src\features\deals\components\deal-how-it-works-card.tsx
+// src\features\deals\components\deal-profile\deal-how-it-works-card.tsx
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 

@@ -1,6 +1,6 @@
-// src\features\deals\components\deal-profile-page-view.tsx
+// src\features\deals\components\deal-profile\deal-profile-page-view.tsx
 import { PageContainer } from "@/components/layout/page-container";
-import type { DealProfileData } from "../types/deals.types";
+import type { DealProfileData } from "../../types/deals.types";
 import { DealHeroBanner } from "./deal-hero-banner";
 import { DealMainContent } from "./deal-main-content";
 import { DealSidebar } from "./deal-sidebar";

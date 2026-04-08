@@ -1,9 +1,9 @@
-// src\features\deals\components\deal-hero-banner.tsx
+// src\features\deals\components\deal-profile\deal-hero-banner.tsx
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Bookmark, MapPin, Share2, TrendingUp } from "lucide-react";
 import Image from "next/image";
-import type { DealProfileData } from "../types/deals.types";
+import type { DealProfileData } from "../../types/deals.types";
 
 type DealHeroBannerProps = {
   deal: DealProfileData;

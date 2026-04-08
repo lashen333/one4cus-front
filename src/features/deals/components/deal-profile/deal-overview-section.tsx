@@ -1,4 +1,4 @@
-// src\features\deals\components\deal-overview-section.tsx
+// src\features\deals\components\deal-profile\deal-overview-section.tsx
 type DealOverviewSectionProps = {
   title: string;
   paragraphs: string[];

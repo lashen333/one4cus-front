@@ -1,4 +1,4 @@
-// src\features\deals\components\deal-support-card.tsx
+// src\features\deals\components\deal-profile\deal-support-card.tsx
 export function DealSupportCard() {
   return (
     <div className="rounded-2xl border border-[#cfe1f5] bg-[#f6fbff] p-6">

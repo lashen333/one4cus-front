@@ -1,5 +1,5 @@
-// src\features\deals\components\deal-details-grid.tsx
-import type { DealStatItem } from "../types/deals.types";
+// src\features\deals\components\deal-profile\deal-details-grid.tsx
+import type { DealStatItem } from "../../types/deals.types";
 
 type DealDetailsGridProps = {
   items: DealStatItem[];

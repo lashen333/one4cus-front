@@ -1,6 +1,6 @@
-// src\features\deals\components\deal-main-content.tsx
+// src\features\deals\components\deal-profile\deal-main-content.tsx
 import Image from "next/image";
-import type { DealProfileData } from "../types/deals.types";
+import type { DealProfileData } from "../../types/deals.types";
 import { DealDetailsGrid } from "./deal-details-grid";
 import { DealGallerySection } from "./deal-gallery-section";
 import { DealHighlightsGrid } from "./deal-highlights-grid";

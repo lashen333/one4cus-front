@@ -1,4 +1,4 @@
-// src\features\deals\components\deal-tabs.tsx
+// src\features\deals\components\deal-profile\deal-tabs.tsx
 const tabs = ["Project Overview", "Investor Materials", "Live Updates", "Investors (253)", "FAQs"];
 
 export function DealTabs() {

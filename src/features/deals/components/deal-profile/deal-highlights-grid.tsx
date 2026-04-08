@@ -1,5 +1,5 @@
-// src\features\deals\components\deal-highlights-grid.tsx
-import type { DealHighlightItem } from "../types/deals.types";
+// src\features\deals\components\deal-profile\deal-highlights-grid.tsx
+import type { DealHighlightItem } from "../../types/deals.types";
 
 type DealHighlightsGridProps = {
   items: DealHighlightItem[];

@@ -1,6 +1,6 @@
-// src\features\deals\components\deal-gallery-section.tsx
+// src\features\deals\components\deal-profile\deal-gallery-section.tsx
 import Image from "next/image";
-import type { DealGalleryItem } from "../types/deals.types";
+import type { DealGalleryItem } from "../../types/deals.types";
 
 type DealGallerySectionProps = {
   items: DealGalleryItem[];

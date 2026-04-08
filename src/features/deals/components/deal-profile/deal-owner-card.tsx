@@ -1,8 +1,8 @@
-// src\features\deals\components\deal-owner-card.tsx
+// src\features\deals\components\deal-profile\deal-owner-card.tsx
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Phone } from "lucide-react";
 import Image from "next/image";
-import type { DealOwner } from "../types/deals.types";
+import type { DealOwner } from "../../types/deals.types";
 
 type DealOwnerCardProps = {
   owner: DealOwner;

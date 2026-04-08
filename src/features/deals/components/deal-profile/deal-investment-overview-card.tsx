@@ -1,5 +1,5 @@
-// src\features\deals\components\deal-investment-overview-card.tsx
-import type { DealProfileData } from "../types/deals.types";
+// src\features\deals\components\deal-profile\deal-investment-overview-card.tsx
+import type { DealProfileData } from "../../types/deals.types";
 
 type DealInvestmentOverviewCardProps = {
   deal: DealProfileData;

@@ -1,4 +1,5 @@
-import { DealProfilePageView } from "@/features/deals/components/deal-profile-page-view";
+// src\app\(public)\deals\[slug]\page.tsx
+import { DealProfilePageView } from "@/features/deals/components/deal-profile/deal-profile-page-view";
 import { getDealProfileData } from "@/features/deals/server/get-deal-profile-data";
 
 type DealDetailPageProps = {
