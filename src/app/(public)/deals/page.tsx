@@ -1,10 +1,8 @@
-// src\app\(public)\deals\page.tsx
+import { DealsPageView } from "@/features/deals/components/deal-list/deals-page-view";
+import { getDealsPageData } from "@/features/deals/server/get-deals-list-page-data";
+
 export default async function DealsPage() {
-  return (
-    <main className="min-h-[calc(100vh-128px)]">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-slate-900">Deals Page</h1>
-      </div>
-    </main>
-  );
+  const data = await getDealsPageData();
+
+  return <DealsPageView data={data} />;
 }

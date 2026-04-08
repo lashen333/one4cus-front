@@ -1,6 +1,7 @@
 // src\features\services\components\services-hero.tsx
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
+import { BrowsePageToggle } from "@/features/browse/components/browse-page-toggle";
 import { MapPin, Search } from "lucide-react";
 
 type ServicesHeroProps = {
@@ -31,9 +32,10 @@ export function ServicesHero({
   onCityChange,
 }: ServicesHeroProps) {
   return (
-    <section className="bg-[#eef5fb] py-20">
+    <section className="bg-[#eef5fb] py-10">
       <PageContainer>
-        <div className="mx-auto max-w-5xl text-center">
+        <BrowsePageToggle active="services" />
+        <div className="mx-auto max-w-5xl text-center mt-12">
           <div className="inline-flex rounded-full border border-[#b9d5ef] bg-white px-4 py-1 text-sm font-medium text-[#1f78d1]">
             {badge}
           </div>
