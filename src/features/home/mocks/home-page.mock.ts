@@ -39,7 +39,7 @@ export const homePageMock: HomePageData = {
         rating: 4.8,
         reviewCount: 125,
         phone: "071XXXXXX1",
-        image: "/images/providers/provider-1.jpg",
+        image: "/home/providers/provider-1.jpg",
         profileHref: "/providers/kms-perera",
       },
       {
@@ -51,7 +51,7 @@ export const homePageMock: HomePageData = {
         rating: 4.9,
         reviewCount: 210,
         phone: "071XXXXXX2",
-        image: "/images/providers/provider-2.jpg",
+        image: "/home/providers/provider-2.jpg",
         profileHref: "/providers/rms-rajapaksha",
       },
       {
@@ -63,7 +63,7 @@ export const homePageMock: HomePageData = {
         rating: 4.7,
         reviewCount: 98,
         phone: "071XXXXXX3",
-        image: "/images/providers/provider-3.jpg",
+        image: "/home/providers/provider-3.jpg",
         profileHref: "/providers/cm-fernando",
       },
       {
@@ -75,7 +75,7 @@ export const homePageMock: HomePageData = {
         rating: 4.6,
         reviewCount: 72,
         phone: "071XXXXXX4",
-        image: "/images/providers/provider-4.jpg",
+        image: "/home/providers/provider-4.jpg",
         profileHref: "/providers/cm-fernando-it",
       },
       {
@@ -87,7 +87,7 @@ export const homePageMock: HomePageData = {
         rating: 4.9,
         reviewCount: 150,
         phone: "071XXXXXX5",
-        image: "/images/providers/provider-5.jpg",
+        image: "/home/providers/provider-5.webp",
         profileHref: "/providers/kms-perera-painting",
       },
       {
@@ -99,7 +99,7 @@ export const homePageMock: HomePageData = {
         rating: 4.7,
         reviewCount: 180,
         phone: "071XXXXXX6",
-        image: "/images/providers/provider-6.jpg",
+        image: "/home/providers/provider-6.jpg",
         profileHref: "/providers/rms-rajapaksha-handyman",
       },
       {
@@ -111,7 +111,7 @@ export const homePageMock: HomePageData = {
         rating: 5.0,
         reviewCount: 95,
         phone: "071XXXXXX7",
-        image: "/images/providers/provider-7.jpg",
+        image: "/home/providers/provider-7.webp",
         profileHref: "/providers/rms-rajapaksha-tutoring",
       },
       {
@@ -123,7 +123,7 @@ export const homePageMock: HomePageData = {
         rating: 4.9,
         reviewCount: 110,
         phone: "071XXXXXX8",
-        image: "/images/providers/provider-8.jpg",
+        image: "/home/providers/provider-8.png",
         profileHref: "/providers/cm-fernando-dog-walking",
       },
       {
@@ -135,7 +135,7 @@ export const homePageMock: HomePageData = {
         rating: 4.8,
         reviewCount: 60,
         phone: "071XXXXXX9",
-        image: "/images/providers/provider-9.jpg",
+        image: "/home/providers/provider-9.webp",
         profileHref: "/providers/kms-perera-car-detailing",
       },
     ],
@@ -153,7 +153,7 @@ export const homePageMock: HomePageData = {
         targetLabel: "Target",
         raisedValue: 7,
         targetValue: 12,
-        image: "/images/deals/deal-1.jpg",
+        image: "/home/deals/deal-1.jpeg",
         href: "/deals/gem-mining-ratnapura",
       },
       {
@@ -164,7 +164,7 @@ export const homePageMock: HomePageData = {
         targetLabel: "Target",
         raisedValue: 75,
         targetValue: 80,
-        image: "/images/deals/deal-2.jpg",
+        image: "/home/deals/deal-2.jpeg",
         href: "/deals/apartment-development-colombo-05",
       },
       {
@@ -176,7 +176,7 @@ export const homePageMock: HomePageData = {
         targetLabel: "Target",
         raisedValue: 10,
         targetValue: 15,
-        image: "/images/deals/deal-3.jpg",
+        image: "/home/deals/deal-3.jpeg",
         href: "/deals/ai-delivery-app",
       },
       {
@@ -187,7 +187,7 @@ export const homePageMock: HomePageData = {
         targetLabel: "Target",
         raisedValue: 7,
         targetValue: 12,
-        image: "/images/deals/deal-2.jpg",
+        image: "/home/deals/deal-2.jpeg",
         href: "/deals/gem-mining-ratnapura-2",
       },
       {
@@ -198,7 +198,7 @@ export const homePageMock: HomePageData = {
         targetLabel: "Target",
         raisedValue: 7,
         targetValue: 12,
-        image: "/images/deals/deal-3.jpg",
+        image: "/home/deals/deal-3.jpeg",
         href: "/deals/gem-mining-ratnapura-3",
       },
       {
@@ -209,7 +209,7 @@ export const homePageMock: HomePageData = {
         targetLabel: "Target",
         raisedValue: 7,
         targetValue: 12,
-        image: "/images/deals/deal-1.jpg",
+        image: "/home/deals/deal-1.jpeg",
         href: "/deals/gem-mining-ratnapura-4",
       },
       {
@@ -220,7 +220,7 @@ export const homePageMock: HomePageData = {
         targetLabel: "Target",
         raisedValue: 7,
         targetValue: 12,
-        image: "/images/deals/deal-3.jpg",
+        image: "/home/deals/deal-3.jpeg",
         href: "/deals/gem-mining-ratnapura-5",
       },
       {
@@ -231,7 +231,7 @@ export const homePageMock: HomePageData = {
         targetLabel: "Target",
         raisedValue: 7,
         targetValue: 12,
-        image: "/images/deals/deal-1.jpg",
+        image: "/home/deals/deal-1.jpeg",
         href: "/deals/gem-mining-ratnapura-6",
       },
       {
@@ -242,7 +242,7 @@ export const homePageMock: HomePageData = {
         targetLabel: "Target",
         raisedValue: 7,
         targetValue: 12,
-        image: "/images/deals/deal-2.jpg",
+        image: "/home/deals/deal-2.jpeg",
         href: "/deals/gem-mining-ratnapura-7",
       },
     ],

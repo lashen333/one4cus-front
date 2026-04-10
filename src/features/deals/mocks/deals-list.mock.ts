@@ -12,7 +12,7 @@ export const dealsListMock: DealsListingPageData = {
       "Discover verified, high-impact investment opportunities across real estate, green energy, and emerging tech sectors. Grow your portfolio with confidence.",
     primaryCtaLabel: "Explore All Deals",
     secondaryCtaLabel: "How it Works",
-    heroImage: "/images/deals/listing/deals-hero.jpg",
+    heroImage: "/home/deals/deals-hero.webp",
     heroMetricValue: "14.8%",
     heroMetricLabel: "Avg. Yearly Return",
   },
@@ -54,7 +54,7 @@ export const dealsListMock: DealsListingPageData = {
       verified: true,
       riskLevel: "Low Risk",
       fundingStatus: "Open for investment",
-      image: "/images/deals/listing/deal-1.jpg",
+      image: "/home/deals/deal-1.jpeg",
     },
     {
       id: "2",
@@ -72,7 +72,7 @@ export const dealsListMock: DealsListingPageData = {
       verified: true,
       riskLevel: "Medium Risk",
       fundingStatus: "Open for investment",
-      image: "/images/deals/listing/deal-2.jpg",
+      image: "/home/deals/deal-2.jpeg",
     },
     {
       id: "3",
@@ -90,7 +90,7 @@ export const dealsListMock: DealsListingPageData = {
       verified: true,
       riskLevel: "Low Risk",
       fundingStatus: "Open for investment",
-      image: "/images/deals/listing/deal-3.jpg",
+      image: "/home/deals/deal-3.jpeg",
     },
     {
       id: "4",
@@ -108,7 +108,7 @@ export const dealsListMock: DealsListingPageData = {
       verified: true,
       riskLevel: "Medium Risk",
       fundingStatus: "Open for investment",
-      image: "/images/deals/listing/deal-4.jpg",
+      image: "/home/deals/deal-2.jpeg",
     },
     {
       id: "5",
@@ -126,7 +126,7 @@ export const dealsListMock: DealsListingPageData = {
       verified: true,
       riskLevel: "High Risk",
       fundingStatus: "Open for investment",
-      image: "/images/deals/listing/deal-5.jpg",
+      image: "/home/deals/deal-1.jpeg",
     },
     {
       id: "6",
@@ -144,7 +144,7 @@ export const dealsListMock: DealsListingPageData = {
       verified: false,
       riskLevel: "High Risk",
       fundingStatus: "Open for investment",
-      image: "/images/deals/listing/deal-6.jpg",
+      image: "/home/deals/deal-3.jpeg",
     },
   ],
 };

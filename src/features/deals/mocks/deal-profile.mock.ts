@@ -8,7 +8,7 @@ export const dealProfileMock: DealProfileData = {
   title: "Gem Mining Investment – Ratnapura Project",
   location: "Ratnapura, Sri Lanka",
   projectedRoi: "18% - 30% Projected ROI",
-  heroImage: "/images/deals/detail/deal-hero.jpg",
+  heroImage: "/home/deals/deals-profile-hero.webp",
 
   riskProfile: "MEDIUM",
   expectedReturns: "18% - 30%",
@@ -62,22 +62,22 @@ export const dealProfileMock: DealProfileData = {
   gallery: [
     {
       id: "1",
-      image: "/images/deals/detail/gallery-1.jpg",
+      image: "/home/deals/gem1.webp",
       alt: "Gem sorting process",
     },
     {
       id: "2",
-      image: "/images/deals/detail/gallery-2.jpg",
+      image: "/home/deals/gem2.webp",
       alt: "Mining site equipment",
     },
     {
       id: "3",
-      image: "/images/deals/detail/gallery-3.jpg",
+      image: "/home/deals/gem3.webp",
       alt: "Finished gemstone display",
     },
     {
       id: "4",
-      image: "/images/deals/detail/gallery-4.jpg",
+      image: "/home/deals/gem4.jpeg",
       alt: "Gallery placeholder",
     },
   ],
@@ -86,7 +86,7 @@ export const dealProfileMock: DealProfileData = {
     name: "Sunil Perera",
     role: "Managing Director",
     company: "Ratnapura Minerals Ltd",
-    avatar: "/images/deals/detail/owner.jpg",
+    avatar: "/home/deals/deals-owner.jpeg",
     phoneMasked: "071 xxxxxxx",
     description:
       "Sunil has over 22 years of experience in the Sri Lankan gemstone sector and has successfully managed 14 previous extraction projects.",

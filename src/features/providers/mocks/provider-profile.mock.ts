@@ -4,7 +4,7 @@ import type { ProviderProfileData } from "../types/providers.types";
 export const providerProfileMock: ProviderProfileData = {
   slug: "rms-rajapaksha",
   name: "R.M.S.Rajapaksha",
-  avatar: "/images/providers/provider-profile-main.jpg",
+  avatar: "/home/providers/provider-2.jpg",
   phoneMasked: "071xxxxxxx",
   averageRating: 4,
   reviewCount: 124,

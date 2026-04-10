@@ -16,13 +16,8 @@ export function DealMainContent({ deal }: DealMainContentProps) {
   return (
     <div>
       <div className="grid gap-6 lg:grid-cols-[1.4fr_0.8fr]">
-        <div className="relative h-[340px] overflow-hidden rounded-2xl bg-slate-100">
-          <Image
-            src="/images/deals/detail/deal-main.jpg"
-            alt={deal.title}
-            fill
-            className="object-cover"
-          />
+        <div className="relative h-85 overflow-hidden rounded-2xl bg-slate-100">
+          <Image src="/home/deals/deals-page.webp" alt={deal.title} fill className="object-cover" />
         </div>
 
         <div className="rounded-2xl bg-[#eef5fb] p-6">

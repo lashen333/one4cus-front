@@ -1,3 +1,4 @@
+// src\app\error.tsx
 "use client";
 
 import { appMessages } from "@/lib/constants/messages";

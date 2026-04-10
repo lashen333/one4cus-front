@@ -1,7 +1,7 @@
 // src\features\home\components\providers-grid.tsx
 import { PageContainer } from "@/components/layout/page-container";
-import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { Button } from "@/components/ui/button";
 import type { ProviderItem } from "../types/home.types";
 import { ProviderCard } from "./provider-card";
 
@@ -12,12 +12,7 @@ type ProvidersGridProps = {
   ctaHref: string;
 };
 
-export function ProvidersGrid({
-  title,
-  items,
-  ctaLabel,
-  ctaHref,
-}: ProvidersGridProps) {
+export function ProvidersGrid({ title, items, ctaLabel, ctaHref }: ProvidersGridProps) {
   return (
     <section className="pt-6 pb-16">
       <PageContainer>

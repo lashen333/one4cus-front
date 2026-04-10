@@ -1,3 +1,4 @@
+/* src\app\globals.css */
 @import "tailwindcss";
 
 *,
@@ -33,4 +34,20 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+blue {
+  --primary-color: #1c75bc;
+}
+
+white {
+  --primary-color: #ffffff;
+}
+
+green {
+  --secondary-color: #2e8b57;
+}
+
+gray {
+  --secondary-color: #777777;
 }

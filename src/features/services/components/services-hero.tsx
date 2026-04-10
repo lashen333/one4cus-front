@@ -32,7 +32,7 @@ export function ServicesHero({
   onCityChange,
 }: ServicesHeroProps) {
   return (
-    <section className="bg-[#eef5fb] py-10">
+    <section className="bg-[#eef5fb] py-10 ">
       <PageContainer>
         <BrowsePageToggle active="services" />
         <div className="mx-auto max-w-5xl text-center mt-12">
@@ -58,7 +58,7 @@ export function ServicesHero({
               />
             </div>
 
-            <div className="relative md:w-[240px]">
+            <div className="relative md:w-60">
               <MapPin className="absolute left-5 top-1/2 size-5 -translate-y-1/2 text-slate-400" />
               <input
                 value={city}

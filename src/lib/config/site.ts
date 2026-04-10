@@ -4,34 +4,20 @@ export const siteConfig = {
   description: "Marketplace for services and deals",
 
   branding: {
-    logo: "/logo.svg",
+    logo: "/layout/Logo.png",
+    favicon: "/layout/favicon.svg",
   },
 
   nav: [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-      label: "Services",
-      href: "/services",
-    },
-    {
-      label: "Deals",
-      href: "/deals",
-    },
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/services" },
+    { label: "Deals", href: "/deals" },
   ],
 
   footer: {
     links: [
-      {
-        label: "Privacy Policy",
-        href: "/privacy",
-      },
-      {
-        label: "Terms of Service",
-        href: "/terms",
-      },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
     ],
   },
 
