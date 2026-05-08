@@ -30,7 +30,7 @@ export function ServiceDetailHero({ service }: ServiceDetailHeroProps) {
           </span>
         </div>
 
-        <h1 className="mt-5 text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
+        <h1 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
           {service.title}
         </h1>
 

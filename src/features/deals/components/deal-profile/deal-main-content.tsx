@@ -1,10 +1,8 @@
-// src\features\deals\components\deal-profile\deal-main-content.tsx
-import Image from "next/image";
+// src/features/deals/components/deal-profile/deal-main-content.tsx
 import type { DealProfileData } from "../../types/deals.types";
 import { DealDetailsGrid } from "./deal-details-grid";
 import { DealHighlightsGrid } from "./deal-highlights-grid";
 import { DealOverviewSection } from "./deal-overview-section";
-import { DealTabs } from "./deal-tabs";
 
 type DealMainContentProps = {
   deal: DealProfileData;
@@ -13,42 +11,50 @@ type DealMainContentProps = {
 export function DealMainContent({ deal }: DealMainContentProps) {
   return (
     <div>
-      <div className="grid gap-6 lg:grid-cols-[1.4fr_0.8fr]">
-        <div className="relative h-85 overflow-hidden rounded-2xl bg-slate-100">
-          <Image src="/home/deals/deals-page.webp" alt={deal.title} fill className="object-cover" />
-        </div>
-
-        <div className="rounded-2xl bg-[#eef5fb] p-6">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="rounded-2xl bg-[#eef5fb] p-6 shadow-sm">
           <div className="inline-flex rounded-full border border-[#cfe1f5] bg-white px-3 py-1 text-xs font-semibold text-[#1f78d1]">
             Risk Profile
           </div>
 
-          <h3 className="mt-4 text-3xl font-bold text-[#1f78d1]">{deal.riskProfile}</h3>
+          <h3 className="mt-5 text-3xl font-bold text-[#1f78d1]">{deal.riskProfile}</h3>
 
-          <div className="mt-8 space-y-6">
-            <div>
-              <p className="text-sm text-slate-400">Expected Returns</p>
-              <p className="mt-1 text-4xl font-bold text-slate-900">{deal.expectedReturns}</p>
-              <p className="mt-2 text-xs leading-6 text-slate-500">
-                Projected performance based on previous mining cycles in the region.
-              </p>
-            </div>
+          <p className="mt-4 text-sm leading-6 text-slate-500">
+            Risk level based on the available opportunity details.
+          </p>
+        </div>
 
-            <div>
-              <p className="text-sm text-slate-400">Minimum Entry</p>
-              <p className="mt-1 text-4xl font-bold text-slate-900">{deal.minimumEntry}</p>
-            </div>
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="inline-flex rounded-full border border-green-100 bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
+            Expected Returns
           </div>
+
+          <p className="mt-5 text-2xl font-bold leading-tight text-slate-900">
+            {deal.expectedReturns}
+          </p>
+
+          <p className="mt-4 text-sm leading-6 text-slate-500">
+            Projected return information shared by the provider.
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:col-span-2 xl:col-span-1">
+          <div className="inline-flex rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-semibold text-[#1f78d1]">
+            Minimum Entry
+          </div>
+
+          <p className="mt-5 text-3xl font-bold text-slate-900">{deal.minimumEntry}</p>
+
+          <p className="mt-4 text-sm leading-6 text-slate-500">
+            Minimum amount required to start this opportunity.
+          </p>
         </div>
       </div>
 
       <div className="mt-8">
-        <DealTabs />
         <DealOverviewSection title={deal.overviewTitle} paragraphs={deal.overviewParagraphs} />
         <DealDetailsGrid items={deal.detailItems} />
         <DealHighlightsGrid items={deal.highlights} />
-        {/* <DealGallerySection items={deal.gallery} /> */}
-        {/* <DealHowItWorksCard /> */}
       </div>
     </div>
   );

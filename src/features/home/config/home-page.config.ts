@@ -12,7 +12,7 @@ export const homePageStaticConfig: Omit<HomePageData, "servicesSection" | "deals
     },
     secondaryCta: {
       label: "Become a Provider",
-      href: "/become-a-provider",
+      href: "/",
     },
   },
   search: {

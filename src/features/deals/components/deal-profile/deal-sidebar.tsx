@@ -1,7 +1,6 @@
 // src\features\deals\components\deal-profile\deal-sidebar.tsx
 import type { DealProfileData } from "../../types/deals.types";
 import { DealInvestmentOverviewCard } from "./deal-investment-overview-card";
-import { DealKeyHighlightsCard } from "./deal-key-highlights-card";
 import { DealOwnerCard } from "./deal-owner-card";
 import { DealSupportCard } from "./deal-support-card";
 
@@ -13,7 +12,7 @@ export function DealSidebar({ deal }: DealSidebarProps) {
   return (
     <aside className="space-y-6">
       <DealInvestmentOverviewCard deal={deal} />
-      <DealKeyHighlightsCard />
+      {/* <DealKeyHighlightsCard /> */}
       <DealOwnerCard owner={deal.owner} />
       <DealSupportCard />
     </aside>

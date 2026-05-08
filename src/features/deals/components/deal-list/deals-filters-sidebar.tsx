@@ -81,7 +81,7 @@ export function DealsFiltersSidebar({
   onClearAll,
 }: DealsFiltersSidebarProps) {
   return (
-    <aside className="w-full max-w-[280px] shrink-0">
+    <aside className="hidden w-full max-w-70 shrink-0 xl:block">
       <div className="sticky top-24 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-semibold text-slate-900">Filters</h2>

@@ -18,9 +18,10 @@ function getAvailabilityClasses(state: "available" | "booked") {
 
 export function ServiceProviderCard({ item }: ServiceProviderCardProps) {
   const imageSrc = item.image || "/images/placeholders/service.png";
+
   return (
-    <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <div className="relative h-64 w-full">
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="relative h-52 w-full bg-slate-100 sm:h-56 lg:h-64">
         <Image
           src={imageSrc}
           alt={item.serviceTitle}
@@ -42,42 +43,42 @@ export function ServiceProviderCard({ item }: ServiceProviderCardProps) {
         </div>
       </div>
 
-      <div className="p-5">
-        <div className="flex items-center justify-between gap-4">
-          <p className="text-sm text-slate-500">{item.companyName}</p>
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-start justify-between gap-4">
+          <p className="line-clamp-1 text-sm text-slate-500">{item.companyName}</p>
 
           {item.verified ? (
-            <div className="inline-flex items-center gap-1 text-sm font-medium text-[#20b9a7]">
+            <div className="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-[#20b9a7]">
               <BadgeCheck className="size-4" />
               Verified
             </div>
           ) : null}
         </div>
 
-        <h3 className="mt-2 text-[1.7rem] font-semibold leading-tight text-slate-900">
+        <h3 className="mt-2 line-clamp-2 text-[1.45rem] font-semibold leading-tight text-slate-900 sm:text-[1.55rem] lg:text-[1.7rem]">
           {item.serviceTitle}
         </h3>
 
-        <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-slate-600">
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
           <div className="flex items-center gap-1.5">
-            <Star className="size-4 text-slate-500" />
+            <Star className="size-4 shrink-0 text-slate-500" />
             <span>
               {item.rating} ({item.reviewCount})
             </span>
           </div>
 
           <div className="flex items-center gap-1.5">
-            <Clock3 className="size-4 text-slate-500" />
+            <Clock3 className="size-4 shrink-0 text-slate-500" />
             <span>{item.yearsExperience}+ Years</span>
           </div>
         </div>
 
-        <div className="mt-4 flex items-center gap-1.5 text-sm text-slate-600">
-          <MapPin className="size-4 text-slate-500" />
-          <span>{item.location}</span>
+        <div className="mt-4 flex items-start gap-1.5 text-sm text-slate-600">
+          <MapPin className="mt-0.5 size-4 shrink-0 text-slate-500" />
+          <span className="line-clamp-2">{item.location}</span>
         </div>
 
-        <div className="mt-6 border-t border-slate-100 pt-5">
+        <div className="mt-auto border-t border-slate-100 pt-5">
           {/*<p className="text-xs font-bold uppercase tracking-wide text-slate-400">Starting Rate</p>*/}
 
           {/*<div className="mt-2 flex items-end justify-between gap-4">*/}
@@ -88,7 +89,7 @@ export function ServiceProviderCard({ item }: ServiceProviderCardProps) {
 
           <Link
             href={`/services/${item.slug}`}
-            className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-xl bg-[#1f78d1] px-5 text-sm font-medium text-white transition hover:bg-[#1768b7]"
+            className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-[#1f78d1] px-5 text-sm font-medium text-white transition hover:bg-[#1768b7]"
           >
             View Profile
           </Link>

@@ -1,7 +1,6 @@
 // src\features\deals\components\deal-profile\deal-hero-banner.tsx
 import { PageContainer } from "@/components/layout/page-container";
-import { Button } from "@/components/ui/button";
-import { Bookmark, MapPin, Share2, TrendingUp } from "lucide-react";
+import { MapPin, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import type { DealProfileData } from "../../types/deals.types";
 
@@ -11,7 +10,7 @@ type DealHeroBannerProps = {
 
 export function DealHeroBanner({ deal }: DealHeroBannerProps) {
   return (
-    <section className="relative h-[520px] overflow-hidden">
+    <section className="relative h-130 overflow-hidden">
       <Image src={deal.heroImage} alt={deal.title} fill priority className="object-cover" />
 
       <div className="absolute inset-0 bg-black/40" />
@@ -41,7 +40,7 @@ export function DealHeroBanner({ deal }: DealHeroBannerProps) {
             </div>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          {/*<div className="mt-8 flex flex-wrap items-center gap-3">
             <Button className="h-12 px-6">Download Project Proposal</Button>
 
             <button
@@ -57,7 +56,7 @@ export function DealHeroBanner({ deal }: DealHeroBannerProps) {
             >
               <Share2 className="size-5" />
             </button>
-          </div>
+          </div>*/}
         </div>
       </PageContainer>
     </section>

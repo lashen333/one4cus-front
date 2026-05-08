@@ -2,6 +2,7 @@
 "use client";
 
 import { PageContainer } from "@/components/layout/page-container";
+import { SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { ServicesPageData } from "../../types/services-list.types";
 import {
@@ -13,6 +14,7 @@ import { ServicesActiveFilters } from "./services-active-filters";
 import { ServicesFiltersSidebar } from "./services-filters-sidebar";
 import { ServicesGrid } from "./services-grid";
 import { ServicesHero } from "./services-hero";
+import { ServicesMobileFiltersDrawer } from "./services-mobile-filters-drawer";
 import { ServicesPagination } from "./services-pagination";
 
 type ServicesListClientProps = {
@@ -38,6 +40,7 @@ function toggleArrayValue(values: string[], value: string) {
 export function ServicesListClient({ data }: ServicesListClientProps) {
   const [filters, setFilters] = useState<ServicesFiltersState>(initialFilters);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
   const filteredItems = useMemo(() => {
     return filterServices(data.items, filters);
@@ -109,9 +112,29 @@ export function ServicesListClient({ data }: ServicesListClientProps) {
             />
 
             <div className="min-w-0 flex-1">
+              <div className="mb-5 flex items-center justify-between gap-3 xl:hidden">
+                <div>
+                  <p className="text-sm text-slate-500">
+                    Showing{" "}
+                    <span className="font-semibold text-slate-900">{filteredItems.length}</span>{" "}
+                    service providers
+                  </p>
+                  <p className="mt-1 text-xs text-slate-400">Use filters to narrow results</p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsMobileFiltersOpen(true)}
+                  className="inline-flex h-10 shrink-0 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50"
+                >
+                  <SlidersHorizontal className="size-4" />
+                  Filters
+                </button>
+              </div>
+
               <div className="flex flex-col gap-4 border-b border-slate-200 pb-5 lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex flex-wrap items-center gap-6">
-                  <p className="text-sm text-slate-500">
+                  <p className="hidden text-sm text-slate-500 xl:block">
                     Showing{" "}
                     <span className="font-semibold text-slate-900">{filteredItems.length}</span>{" "}
                     service providers
@@ -159,6 +182,40 @@ export function ServicesListClient({ data }: ServicesListClientProps) {
           </div>
         </PageContainer>
       </section>
+
+      <ServicesMobileFiltersDrawer
+        isOpen={isMobileFiltersOpen}
+        categories={data.filters.categories}
+        ratingOptions={data.filters.ratingOptions}
+        providerStatusOptions={data.filters.providerStatusOptions}
+        availabilityOptions={data.filters.availabilityOptions}
+        selectedCategories={filters.selectedCategories}
+        selectedRating={filters.selectedRating}
+        selectedProviderStatus={filters.selectedProviderStatus}
+        selectedAvailability={filters.selectedAvailability}
+        onCategoryToggle={(value) =>
+          updateFilters({
+            selectedCategories: toggleArrayValue(filters.selectedCategories, value),
+          })
+        }
+        onRatingToggle={(value) =>
+          updateFilters({
+            selectedRating: toggleArrayValue(filters.selectedRating, value),
+          })
+        }
+        onProviderStatusToggle={(value) =>
+          updateFilters({
+            selectedProviderStatus: toggleArrayValue(filters.selectedProviderStatus, value),
+          })
+        }
+        onAvailabilityToggle={(value) =>
+          updateFilters({
+            selectedAvailability: toggleArrayValue(filters.selectedAvailability, value),
+          })
+        }
+        onResetAll={resetAllFilters}
+        onClose={() => setIsMobileFiltersOpen(false)}
+      />
     </main>
   );
 }

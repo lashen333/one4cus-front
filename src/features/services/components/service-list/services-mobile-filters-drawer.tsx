@@ -1,5 +1,9 @@
-// src/features/services/components/service-list/services-filters-sidebar.tsx
-type ServicesFiltersSidebarProps = {
+// src\features\services\components\service-list\services-mobile-filters-drawer.tsx
+// src/features/services/components/service-list/services-mobile-filters-drawer.tsx
+import { X } from "lucide-react";
+
+type ServicesMobileFiltersDrawerProps = {
+  isOpen: boolean;
   categories: string[];
   ratingOptions: string[];
   providerStatusOptions: string[];
@@ -13,6 +17,7 @@ type ServicesFiltersSidebarProps = {
   onProviderStatusToggle: (value: string) => void;
   onAvailabilityToggle: (value: string) => void;
   onResetAll: () => void;
+  onClose: () => void;
 };
 
 function FilterCheckbox({
@@ -37,7 +42,8 @@ function FilterCheckbox({
   );
 }
 
-export function ServicesFiltersSidebar({
+export function ServicesMobileFiltersDrawer({
+  isOpen,
   categories,
   ratingOptions,
   providerStatusOptions,
@@ -51,22 +57,36 @@ export function ServicesFiltersSidebar({
   onProviderStatusToggle,
   onAvailabilityToggle,
   onResetAll,
-}: ServicesFiltersSidebarProps) {
+  onClose,
+}: ServicesMobileFiltersDrawerProps) {
+  if (!isOpen) return null;
+
   return (
-    <aside className="hidden w-full max-w-70 shrink-0 lg:block">
-      <div className="sticky top-24">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-slate-900">Filters</h2>
+    <div className="fixed inset-0 z-50 lg:hidden">
+      <button
+        type="button"
+        aria-label="Close filters"
+        onClick={onClose}
+        className="absolute inset-0 bg-black/40"
+      />
+
+      <div className="absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto rounded-t-3xl bg-white p-5 shadow-2xl">
+        <div className="sticky top-0 z-10 -mx-5 -mt-5 flex items-center justify-between border-b border-slate-100 bg-white px-5 py-4">
+          <div>
+            <h2 className="text-xl font-semibold text-slate-900">Filters</h2>
+            <p className="mt-1 text-sm text-slate-500">Refine service providers</p>
+          </div>
+
           <button
             type="button"
-            onClick={onResetAll}
-            className="text-sm font-medium text-slate-500 hover:text-slate-900"
+            onClick={onClose}
+            className="inline-flex size-10 items-center justify-center rounded-full bg-slate-100 text-slate-600"
           >
-            Reset All
+            <X className="size-5" />
           </button>
         </div>
 
-        <div className="mt-8 space-y-8">
+        <div className="space-y-8 py-6">
           <section>
             <h3 className="text-xs font-bold uppercase tracking-wide text-slate-600">
               Service Category
@@ -131,7 +151,27 @@ export function ServicesFiltersSidebar({
             </div>
           </section>
         </div>
+
+        <div className="sticky bottom-0 -mx-5 border-t border-slate-100 bg-white px-5 py-4">
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={onResetAll}
+              className="h-11 rounded-xl border border-slate-300 text-sm font-medium text-slate-700"
+            >
+              Reset
+            </button>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="h-11 rounded-xl bg-[#1f78d1] text-sm font-medium text-white"
+            >
+              Apply Filters
+            </button>
+          </div>
+        </div>
       </div>
-    </aside>
+    </div>
   );
 }
