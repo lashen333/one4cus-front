@@ -1,4 +1,4 @@
-// src\features\services\components\services-active-filters.tsx
+// src\features\services\components\service-list\services-active-filters.tsx
 type ServicesActiveFiltersProps = {
   selectedCategories: string[];
   selectedRating: string[];

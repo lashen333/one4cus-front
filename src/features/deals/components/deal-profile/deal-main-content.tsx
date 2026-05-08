@@ -2,9 +2,7 @@
 import Image from "next/image";
 import type { DealProfileData } from "../../types/deals.types";
 import { DealDetailsGrid } from "./deal-details-grid";
-import { DealGallerySection } from "./deal-gallery-section";
 import { DealHighlightsGrid } from "./deal-highlights-grid";
-import { DealHowItWorksCard } from "./deal-how-it-works-card";
 import { DealOverviewSection } from "./deal-overview-section";
 import { DealTabs } from "./deal-tabs";
 
@@ -49,8 +47,8 @@ export function DealMainContent({ deal }: DealMainContentProps) {
         <DealOverviewSection title={deal.overviewTitle} paragraphs={deal.overviewParagraphs} />
         <DealDetailsGrid items={deal.detailItems} />
         <DealHighlightsGrid items={deal.highlights} />
-        <DealGallerySection items={deal.gallery} />
-        <DealHowItWorksCard />
+        {/* <DealGallerySection items={deal.gallery} /> */}
+        {/* <DealHowItWorksCard /> */}
       </div>
     </div>
   );

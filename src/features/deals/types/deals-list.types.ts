@@ -1,5 +1,6 @@
 // src\features\deals\types\deals-list.types.ts
 export type DealCategory =
+  | "Investment"
   | "Real Estate"
   | "Natural Resources"
   | "Startups / Tech"

@@ -1,14 +1,14 @@
-// src\features\services\components\services-list-client.tsx
+// src\features\services\components\service-list\services-list-client.tsx
 "use client";
 
 import { PageContainer } from "@/components/layout/page-container";
 import { useMemo, useState } from "react";
-import type { ServicesPageData } from "../types/services.types";
+import type { ServicesPageData } from "../../types/services-list.types";
 import {
   filterServices,
   paginateItems,
   type ServicesFiltersState,
-} from "../utils/services-filter.utils";
+} from "../../utils/services-filter.utils";
 import { ServicesActiveFilters } from "./services-active-filters";
 import { ServicesFiltersSidebar } from "./services-filters-sidebar";
 import { ServicesGrid } from "./services-grid";

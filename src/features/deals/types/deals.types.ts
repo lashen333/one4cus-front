@@ -21,9 +21,10 @@ export type DealOwner = {
   name: string;
   role: string;
   company: string;
-  avatar: string;
+  avatar: string | null;
   phoneMasked: string;
   description: string;
+  entitySlug: string;
 };
 
 export type DealProfileData = {

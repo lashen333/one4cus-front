@@ -1,5 +1,5 @@
 // src\features\home\components\provider-card.tsx
-import { Phone, Star } from "lucide-react";
+import { Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ProviderItem } from "../types/home.types";
@@ -29,12 +29,12 @@ export function ProviderCard({ item }: ProviderCardProps) {
 
         <p className="mt-3 line-clamp-3 text-base leading-7 text-slate-500">{item.description}</p>
 
-        <div className="mt-4 flex items-center gap-2 text-sm text-slate-600">
+        {/*<div className="mt-4 flex items-center gap-2 text-sm text-slate-600">
           <Star className="size-4 fill-yellow-400 text-yellow-400" />
           <span>
             {item.rating} ({item.reviewCount} reviews)
           </span>
-        </div>
+        </div>*/}
 
         <div className="mt-3 flex items-center gap-2 text-sm text-slate-600">
           <Phone className="size-4 text-[#1677c8]" />

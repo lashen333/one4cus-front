@@ -1,5 +1,5 @@
-// src\features\services\components\services-grid.tsx
-import type { ServiceProviderListItem } from "../types/services.types";
+// src\features\services\components\service-list\services-grid.tsx
+import type { ServiceProviderListItem } from "../../types/services-list.types";
 import { ServiceProviderCard } from "./service-provider-card";
 
 type ServicesGridProps = {

@@ -1,4 +1,4 @@
-// src\features\services\components\services-hero.tsx
+// src\features\services\components\service-list\services-hero.tsx
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { BrowsePageToggle } from "@/features/browse/components/browse-page-toggle";

@@ -1,8 +1,8 @@
-// src\features\services\components\service-provider-card.tsx
+// src\features\services\components\service-list\service-provider-card.tsx
 import { BadgeCheck, Clock3, MapPin, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { ServiceProviderListItem } from "../types/services.types";
+import type { ServiceProviderListItem } from "../../types/services-list.types";
 
 type ServiceProviderCardProps = {
   item: ServiceProviderListItem;
@@ -17,10 +17,17 @@ function getAvailabilityClasses(state: "available" | "booked") {
 }
 
 export function ServiceProviderCard({ item }: ServiceProviderCardProps) {
+  const imageSrc = item.image || "/images/placeholders/service.png";
   return (
     <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       <div className="relative h-64 w-full">
-        <Image src={item.image} alt={item.serviceTitle} fill className="object-cover" />
+        <Image
+          src={imageSrc}
+          alt={item.serviceTitle}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          className="object-cover"
+        />
 
         <div className="absolute left-3 top-3 rounded-full bg-[#1f78d1] px-3 py-1 text-xs font-semibold text-white">
           {item.category}
@@ -71,21 +78,21 @@ export function ServiceProviderCard({ item }: ServiceProviderCardProps) {
         </div>
 
         <div className="mt-6 border-t border-slate-100 pt-5">
-          <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Starting Rate</p>
+          {/*<p className="text-xs font-bold uppercase tracking-wide text-slate-400">Starting Rate</p>*/}
 
-          <div className="mt-2 flex items-end justify-between gap-4">
-            <p className="text-3xl font-bold text-slate-900">
+          {/*<div className="mt-2 flex items-end justify-between gap-4">*/}
+          {/*<p className="text-3xl font-bold text-slate-900">
               {item.startRateLkr}LKR
               <span className="ml-1 text-sm font-medium text-slate-500">/{item.pricingUnit}</span>
-            </p>
+            </p>*/}
 
-            <Link
-              href={`/providers/${item.slug}`}
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-[#1f78d1] px-5 text-sm font-medium text-white transition hover:bg-[#1768b7]"
-            >
-              View Profile
-            </Link>
-          </div>
+          <Link
+            href={`/services/${item.slug}`}
+            className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-xl bg-[#1f78d1] px-5 text-sm font-medium text-white transition hover:bg-[#1768b7]"
+          >
+            View Profile
+          </Link>
+          {/*</div>*/}
         </div>
       </div>
     </article>

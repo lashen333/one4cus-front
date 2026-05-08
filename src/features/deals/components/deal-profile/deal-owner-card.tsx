@@ -1,6 +1,8 @@
 // src\features\deals\components\deal-profile\deal-owner-card.tsx
+import { RevealContactButton } from "@/components/shared/reveal-contact-button";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Phone } from "lucide-react";
+import { getProviderInitials } from "@/lib/utils/image-fallbacks";
+import { MessageSquare } from "lucide-react";
 import Image from "next/image";
 import type { DealOwner } from "../../types/deals.types";
 
@@ -9,13 +11,22 @@ type DealOwnerCardProps = {
 };
 
 export function DealOwnerCard({ owner }: DealOwnerCardProps) {
+  const initials = getProviderInitials(owner.name);
+  const avatarSrc = owner.avatar?.trim() ? owner.avatar : null;
+
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
       <h3 className="text-xl font-semibold text-slate-900">Project Ownership</h3>
 
       <div className="mt-5 flex items-start gap-4">
-        <div className="relative size-14 overflow-hidden rounded-full">
-          <Image src={owner.avatar} alt={owner.name} fill className="object-cover" />
+        <div className="relative size-14 shrink-0 overflow-hidden rounded-full bg-slate-100">
+          {avatarSrc ? (
+            <Image src={avatarSrc} alt={owner.name} fill sizes="56px" className="object-cover" />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-[#1677c8] text-lg font-bold text-white">
+              {initials}
+            </div>
+          )}
         </div>
 
         <div>
@@ -33,14 +44,11 @@ export function DealOwnerCard({ owner }: DealOwnerCardProps) {
       </div>
 
       <div className="mt-4 space-y-3">
-        <button
-          type="button"
-          className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md border border-[#1f78d1] text-sm font-medium text-[#1f78d1] transition hover:bg-blue-50"
-        >
-          <Phone className="size-4" />
-          Reveal Phone Number
-        </button>
-
+        <RevealContactButton
+          entityType="deal"
+          entitySlug={owner.entitySlug}
+          sourceTitle={owner.company}
+        />
         <Button className="w-full">
           <span className="inline-flex items-center gap-2">
             <MessageSquare className="size-4" />

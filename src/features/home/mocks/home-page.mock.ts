@@ -7,11 +7,11 @@ export const homePageMock: HomePageData = {
     subtitle: "Connect with local service providers and discover amazing deals in your area",
     primaryCta: {
       label: "Browse Services/Deals",
-      href: "/services",
+      href: "/",
     },
     secondaryCta: {
       label: "Become a Provider",
-      href: "/become-a-provider",
+      href: "/",
     },
   },
   search: {

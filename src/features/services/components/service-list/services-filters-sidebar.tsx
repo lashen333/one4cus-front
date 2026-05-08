@@ -1,4 +1,4 @@
-// src\features\services\components\services-filters-sidebar.tsx
+// src\features\services\components\service-list\services-filters-sidebar.tsx
 type ServicesFiltersSidebarProps = {
   categories: string[];
   ratingOptions: string[];
@@ -53,7 +53,7 @@ export function ServicesFiltersSidebar({
   onResetAll,
 }: ServicesFiltersSidebarProps) {
   return (
-    <aside className="w-full max-w-[280px] shrink-0">
+    <aside className="w-full max-w-70 shrink-0">
       <div className="sticky top-24">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold text-slate-900">Filters</h2>

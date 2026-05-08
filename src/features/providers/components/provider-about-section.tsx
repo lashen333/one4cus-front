@@ -1,3 +1,4 @@
+// src\features\providers\components\provider-about-section.tsx
 import { PageContainer } from "@/components/layout/page-container";
 
 type ProviderAboutSectionProps = {

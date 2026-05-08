@@ -60,18 +60,18 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-6 lg:flex">
-          <Button href="/become-a-provider" variant="secondary" className="h-10">
+          <Button href="/" variant="secondary" className="h-10">
             Become a Provider
           </Button>
 
           <Link
-            href="/login"
+            href="/"
             className="text-sm font-medium text-slate-700 transition hover:text-slate-900"
           >
             Login
           </Link>
 
-          <Button href="/signup" className="h-10">
+          <Button href="/" className="h-10">
             Sign Up
           </Button>
         </div>
@@ -110,19 +110,19 @@ export function SiteHeader() {
             </nav>
 
             <div className="mt-4 flex flex-col gap-3 border-t border-slate-200 pt-4">
-              <Button href="/become-a-provider" variant="secondary" className="h-11 w-full">
+              <Button href="/" variant="secondary" className="h-11 w-full">
                 Become a Provider
               </Button>
 
               <Link
-                href="/login"
+                href="/"
                 onClick={closeMobileMenu}
                 className="flex h-11 items-center justify-center rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
               >
                 Login
               </Link>
 
-              <Button href="/signup" className="h-11 w-full">
+              <Button href="/" className="h-11 w-full">
                 Sign Up
               </Button>
             </div>

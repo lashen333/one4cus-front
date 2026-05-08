@@ -26,7 +26,7 @@ export function DealInvestmentOverviewCard({ deal }: DealInvestmentOverviewCardP
           <span className="font-semibold text-slate-900">{deal.entryLevel}</span>
         </div>
       </div>
-
+      {/*
       <div className="mt-8">
         <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Funding Status</p>
         <p className="mt-2 text-3xl font-bold text-[#1f78d1]">{deal.fundingRaised}</p>
@@ -42,7 +42,7 @@ export function DealInvestmentOverviewCard({ deal }: DealInvestmentOverviewCardP
           <span>Goal: {deal.fundingGoal}</span>
           <span>{deal.fundingProgress}% Funded</span>
         </div>
-      </div>
+      </div>*/}
     </div>
   );
 }

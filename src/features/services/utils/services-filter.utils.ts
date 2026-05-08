@@ -1,5 +1,5 @@
 // src\features\services\utils\services-filter.utils.ts
-import type { ServiceProviderListItem } from "../types/services.types";
+import type { ServiceProviderListItem } from "../types/services-list.types";
 
 export type ServicesFiltersState = {
   searchTerm: string;
@@ -11,18 +11,25 @@ export type ServicesFiltersState = {
   verifiedOnly: boolean;
 };
 
-export function filterServices(items: ServiceProviderListItem[], filters: ServicesFiltersState) {
-  return items.filter((item) => {
+export function filterServices(
+  items: ServiceProviderListItem[] = [],
+  filters: ServicesFiltersState,
+) {
+  const safeItems = Array.isArray(items) ? items : [];
+  const searchValue = filters.searchTerm.trim().toLowerCase();
+  const cityValue = filters.city.trim().toLowerCase();
+
+  return safeItems.filter((item) => {
     const matchesSearch =
-      !filters.searchTerm ||
-      item.serviceTitle.toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
-      item.companyName.toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
-      item.category.toLowerCase().includes(filters.searchTerm.toLowerCase());
+      !searchValue ||
+      item.serviceTitle.toLowerCase().includes(searchValue) ||
+      item.companyName.toLowerCase().includes(searchValue) ||
+      item.category.toLowerCase().includes(searchValue);
 
     const matchesCity =
-      !filters.city ||
-      item.location.toLowerCase().includes(filters.city.toLowerCase()) ||
-      item.city.toLowerCase().includes(filters.city.toLowerCase());
+      !cityValue ||
+      item.location.toLowerCase().includes(cityValue) ||
+      item.city.toLowerCase().includes(cityValue);
 
     const matchesCategory =
       filters.selectedCategories.length === 0 || filters.selectedCategories.includes(item.category);
@@ -60,7 +67,9 @@ export function filterServices(items: ServiceProviderListItem[], filters: Servic
   });
 }
 
-export function paginateItems<T>(items: T[], page: number, pageSize: number) {
+export function paginateItems<T>(items: T[] = [], page: number, pageSize: number) {
+  const safeItems = Array.isArray(items) ? items : [];
   const startIndex = (page - 1) * pageSize;
-  return items.slice(startIndex, startIndex + pageSize);
+
+  return safeItems.slice(startIndex, startIndex + pageSize);
 }

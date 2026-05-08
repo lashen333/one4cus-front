@@ -1,11 +1,13 @@
-// src\features\services\types\services.types.ts
+// src\features\services\types\services-list.types.ts
 export type ServiceCategory =
+  | "Service"
   | "Plumbing"
   | "Electrical"
   | "Cleaning"
   | "Landscaping"
   | "IT Support"
-  | "Carpentry";
+  | "Carpentry"
+  | "caregiver";
 
 export type ProviderStatus = "Verified Professionals" | "Background Checked" | "Licensed & Insured";
 

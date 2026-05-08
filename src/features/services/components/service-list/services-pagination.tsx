@@ -1,4 +1,4 @@
-// src\features\services\components\services-pagination.tsx
+// src\features\services\components\service-list\services-pagination.tsx
 type ServicesPaginationProps = {
   currentPage: number;
   totalPages: number;

@@ -1,5 +1,5 @@
 // src\features\services\mocks\services-list.mock.ts
-import type { ServicesPageData } from "../types/services.types";
+import type { ServicesPageData } from "../types/services-list.types";
 
 export const servicesListMock: ServicesPageData = {
   badge: "Over 10,000 Verified Professionals",

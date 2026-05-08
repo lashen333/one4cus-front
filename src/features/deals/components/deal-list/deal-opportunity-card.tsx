@@ -32,10 +32,17 @@ function getFundingClasses(status: string) {
 }
 
 export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
+  const imageSrc = item.image || "/images/placeholders/deal.png";
   return (
     <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       <div className="relative h-44 w-full">
-        <Image src={item.image} alt={item.title} fill className="object-cover" />
+        <Image
+          src={imageSrc}
+          alt={item.title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          className="object-cover"
+        />
 
         <div
           className={`absolute right-3 top-3 rounded-full px-3 py-1 text-[11px] font-semibold ${getRiskClasses(
@@ -103,7 +110,7 @@ export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
           <p className="mt-1 text-lg font-semibold text-slate-900">{item.minimumInvestment}</p>
         </div>
 
-        <div className="mt-5">
+        {/*<div className="mt-5">
           <div className="flex items-center justify-between gap-4 text-sm">
             <div>
               <p className="font-semibold text-[#1f78d1]">Raised</p>
@@ -121,7 +128,7 @@ export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
               style={{ width: `${item.progress}%` }}
             />
           </div>
-        </div>
+        </div>*/}
 
         <Link
           href={`/deals/${item.slug}`}
