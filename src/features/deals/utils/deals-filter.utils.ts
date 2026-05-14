@@ -1,4 +1,4 @@
-// src/features/deals/utils/deals-filter.utils.ts
+// src\features\deals\utils\deals-filter.utils.ts
 import type { DealListItem } from "../types/deals-list.types";
 
 export type DealsFiltersState = {
@@ -70,7 +70,6 @@ export function filterDeals(items: DealListItem[] = [], filters: DealsFiltersSta
     const matchesDealType =
       filters.selectedDealTypes.length === 0 || filters.selectedDealTypes.includes(item.dealType);
 
-    // Important:
     // If backend ROI text has no number, do not filter it out.
     const matchesRoi = itemRoi === null || (itemRoi >= filters.roiMin && itemRoi <= filters.roiMax);
 

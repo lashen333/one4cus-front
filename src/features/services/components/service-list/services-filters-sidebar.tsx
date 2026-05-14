@@ -1,4 +1,4 @@
-// src/features/services/components/service-list/services-filters-sidebar.tsx
+// src\features\services\components\service-list\services-filters-sidebar.tsx
 type ServicesFiltersSidebarProps = {
   categories: string[];
   ratingOptions: string[];
@@ -83,7 +83,7 @@ export function ServicesFiltersSidebar({
             </div>
           </section>
 
-          <section>
+          {/*<section>
             <h3 className="text-xs font-bold uppercase tracking-wide text-slate-600">
               Minimum Rating
             </h3>
@@ -97,7 +97,7 @@ export function ServicesFiltersSidebar({
                 />
               ))}
             </div>
-          </section>
+          </section>*/}
 
           <section>
             <h3 className="text-xs font-bold uppercase tracking-wide text-slate-600">

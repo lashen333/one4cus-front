@@ -7,7 +7,10 @@ export type ServiceCategory =
   | "Landscaping"
   | "IT Support"
   | "Carpentry"
-  | "caregiver";
+  | "caregiver"
+  | "Consulting"
+  | "Architectural Design"
+  | "Other";
 
 export type ProviderStatus = "Verified Professionals" | "Background Checked" | "Licensed & Insured";
 

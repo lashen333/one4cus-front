@@ -1,4 +1,4 @@
-// src/features/deals/components/deal-profile/deal-main-content.tsx
+// src\features\deals\components\deal-profile\deal-main-content.tsx
 import type { DealProfileData } from "../../types/deals.types";
 import { DealDetailsGrid } from "./deal-details-grid";
 import { DealHighlightsGrid } from "./deal-highlights-grid";

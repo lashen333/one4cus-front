@@ -1,8 +1,6 @@
 // src\features\deals\components\deal-profile\deal-owner-card.tsx
 import { RevealContactButton } from "@/components/shared/reveal-contact-button";
-import { Button } from "@/components/ui/button";
 import { getProviderInitials } from "@/lib/utils/image-fallbacks";
-import { MessageSquare } from "lucide-react";
 import Image from "next/image";
 import type { DealOwner } from "../../types/deals.types";
 
@@ -49,22 +47,22 @@ export function DealOwnerCard({ owner }: DealOwnerCardProps) {
           entitySlug={owner.entitySlug}
           sourceTitle={owner.company}
         />
-        <Button className="w-full">
+        {/*<Button className="w-full">
           <span className="inline-flex items-center gap-2">
             <MessageSquare className="size-4" />
             Send Message
           </span>
-        </Button>
+        </Button>*/}
       </div>
 
       <p className="mt-5 text-sm leading-7 text-slate-500">{owner.description}</p>
 
-      <button
+      {/*<button
         type="button"
         className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-md border border-red-300 text-sm font-medium text-red-500 transition hover:bg-red-50"
       >
         Report
-      </button>
+      </button>*/}
     </div>
   );
 }

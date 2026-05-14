@@ -1,3 +1,4 @@
+// src\components\layout\site-footer.tsx
 import Link from "next/link";
 //import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { PageContainer } from "./page-container";
@@ -17,33 +18,43 @@ export function SiteFooter() {
           <div>
             <h4 className="text-xl font-semibold text-slate-900">Company</h4>
             <div className="mt-4 space-y-3 text-base text-slate-500">
-              <Link href="/about" className="block hover:text-slate-900">About Us</Link>
-              <Link href="/privacy-policy" className="block hover:text-slate-900">Privacy Policy</Link>
-              <Link href="/terms" className="block hover:text-slate-900">Terms & Conditions</Link>
+              <Link href="/about" className="block hover:text-slate-900">
+                About Us
+              </Link>
+              <Link href="/privacy-policy" className="block hover:text-slate-900">
+                Privacy Policy
+              </Link>
+              <Link href="/terms-and-conditions" className="block hover:text-slate-900">
+                Terms & Conditions
+              </Link>
             </div>
           </div>
 
           <div>
             <h4 className="text-xl font-semibold text-slate-900">Support</h4>
             <div className="mt-4 space-y-3 text-base text-slate-500">
-              <Link href="/help-center" className="block hover:text-slate-900">Help Center</Link>
-              <Link href="/contact" className="block hover:text-slate-900">Contact Us</Link>
+              <p className="block hover:text-slate-900">Help Center</p>
+              <Link href="/contact" className="block hover:text-slate-900">
+                Contact Us
+              </Link>
             </div>
           </div>
 
           <div>
             <h4 className="text-xl font-semibold text-slate-900">Providers</h4>
             <div className="mt-4 space-y-3 text-base text-slate-500">
-              <Link href="/become-a-provider" className="block hover:text-slate-900">Become a Provider</Link>
-              <Link href="/provider-login" className="block hover:text-slate-900">Provider Login</Link>
+              <Link href="/become-a-provider" className="block hover:text-slate-900">
+                Become a Provider
+              </Link>
+              <Link href="/provider-login" className="block hover:text-slate-900">
+                Provider Login
+              </Link>
             </div>
           </div>
         </div>
 
         <div className="mt-12 flex flex-col gap-5 border-t border-slate-200 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-slate-500">
-            © 2026 One4cus. All rights reserved.
-          </p>
+          <p className="text-sm text-slate-500">© 2026 One4cus. All rights reserved.</p>
 
           {/* <div className="flex items-center gap-4 text-slate-500">
             <Link href="#"><Facebook className="size-4" /></Link>

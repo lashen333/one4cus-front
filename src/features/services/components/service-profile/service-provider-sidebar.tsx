@@ -1,8 +1,6 @@
 // src\features\services\components\service-profile\service-provider-sidebar.tsx
 import { RevealContactButton } from "@/components/shared/reveal-contact-button";
-import { Button } from "@/components/ui/button";
 import { getProviderInitials } from "@/lib/utils/image-fallbacks";
-import { MessageSquare } from "lucide-react";
 import Image from "next/image";
 import type { ServiceDetailData } from "../../types/service-profile.types";
 
@@ -62,12 +60,12 @@ export function ServiceProviderSidebar({ service }: ServiceProviderSidebarProps)
             sourceTitle={service.title}
           />
 
-          <Button className="w-full">
+          {/*<Button className="w-full">
             <span className="inline-flex items-center gap-2">
               <MessageSquare className="size-4" />
               Send Message
             </span>
-          </Button>
+          </Button>*/}
         </div>
 
         {/*{provider.id ? (

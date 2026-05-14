@@ -42,6 +42,8 @@ function normalizeCategory(category: string | null): ServiceCategory {
     "IT Support",
     "Carpentry",
     "caregiver",
+    "Consulting",
+    "Architectural Design",
     "Service",
   ];
 

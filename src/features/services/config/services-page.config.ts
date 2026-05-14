@@ -14,7 +14,17 @@ export const servicesPageStaticConfig: Omit<ServicesPageData, "items"> = {
   cityPlaceholder: "Zip or City",
   resultCount: 0,
   filters: {
-    categories: ["Plumbing", "Electrical", "Cleaning", "Landscaping", "IT Support", "Carpentry"],
+    categories: [
+      "Plumbing",
+      "Electrical",
+      "Cleaning",
+      "Landscaping",
+      "IT Support",
+      "Carpentry",
+      "Consulting",
+      "Architectural Design",
+      "Other",
+    ],
     ratingOptions: ["5.0", "4.0 & Up", "3.0 & Up"],
     providerStatusOptions: ["Verified Professionals", "Background Checked", "Licensed & Insured"],
     availabilityOptions: ["Available Today", "Accepting New Clients", "Emergency Services (24/7)"],
