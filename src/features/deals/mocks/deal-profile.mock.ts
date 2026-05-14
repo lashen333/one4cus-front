@@ -86,6 +86,7 @@ export const dealProfileMock: DealProfileData = {
     name: "Sunil Perera",
     role: "Managing Director",
     company: "Ratnapura Minerals Ltd",
+    entitySlug: "ratnapura-minerals-ltd",
     avatar: "/home/deals/deals-owner.jpeg",
     phoneMasked: "071 xxxxxxx",
     description:
