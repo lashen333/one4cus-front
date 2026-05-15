@@ -43,12 +43,8 @@ export function SiteFooter() {
           <div>
             <h4 className="text-xl font-semibold text-slate-900">Providers</h4>
             <div className="mt-4 space-y-3 text-base text-slate-500">
-              <Link href="/become-a-provider" className="block hover:text-slate-900">
-                Become a Provider
-              </Link>
-              <Link href="/provider-login" className="block hover:text-slate-900">
-                Provider Login
-              </Link>
+              <p className="block hover:text-slate-900">Become a Provider</p>
+              <p className="block hover:text-slate-900">Provider Login</p>
             </div>
           </div>
         </div>
