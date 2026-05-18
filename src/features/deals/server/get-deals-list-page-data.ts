@@ -8,6 +8,7 @@ export async function getDealsPageData() {
 
 import { publicApiFetch } from "@/lib/api/public-api";
 import { unwrapApiResponse } from "@/lib/api/unwrap-api-response";
+import { CACHE_TAGS } from "@/lib/cache/cache-tags";
 import type { ApiResponse } from "@/types/api";
 import { dealsPageStaticConfig } from "../config/deals-page.config";
 import {
@@ -32,7 +33,8 @@ export async function getDealsPageData(): Promise<DealsListingPageData> {
   const response = await publicApiFetch<ApiResponse<OpportunitiesApiPayload>>(
     "/api/public/opportunities",
     {
-      revalidate: 60,
+      revalidate: 300,
+      tags: [CACHE_TAGS.deals, CACHE_TAGS.home],
     },
   );
 

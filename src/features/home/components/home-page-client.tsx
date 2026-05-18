@@ -1,4 +1,4 @@
-// src/features/home/components/home-page-client.tsx
+// src\features\home\components\home-page-client.tsx
 "use client";
 
 import { useMemo, useState } from "react";

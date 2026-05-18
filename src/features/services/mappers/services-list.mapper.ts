@@ -1,6 +1,8 @@
 // src\features\services\mappers\services-list.mapper.ts
 
-// This file contains the mapping logic to transform raw service data from the API into the format used by the services list components.
+// This file contains the mapping logic to transform raw service data from the API
+// into the clean frontend view-model used by the services list components.
+
 import { getServiceFallbackImage } from "@/lib/utils/image-fallbacks";
 import type {
   AvailabilityOption,
@@ -31,24 +33,108 @@ export type ServiceListDto = {
   providerCity: string | null;
 };
 
-const DEFAULT_CATEGORY: ServiceCategory = "Service";
+const DEFAULT_CATEGORY: ServiceCategory = "Other";
 
-function normalizeCategory(category: string | null): ServiceCategory {
-  const allowedCategories: ServiceCategory[] = [
-    "Plumbing",
-    "Electrical",
-    "Cleaning",
-    "Landscaping",
-    "IT Support",
-    "Carpentry",
-    "caregiver",
-    "Consulting",
-    "Architectural Design",
-    "Service",
-  ];
+function getSearchableCategoryText(dto: ServiceListDto) {
+  return [
+    dto.category,
+    dto.title,
+    dto.description,
+    dto.tagsJson?.join(" "),
+    dto.providerBusinessName,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+}
 
-  if (category && allowedCategories.includes(category as ServiceCategory)) {
-    return category as ServiceCategory;
+function normalizeCategory(dto: ServiceListDto): ServiceCategory {
+  const value = getSearchableCategoryText(dto);
+
+  if (!value.trim()) {
+    return DEFAULT_CATEGORY;
+  }
+
+  if (value.includes("plumb") || value.includes("pipe") || value.includes("water line")) {
+    return "Plumbing";
+  }
+
+  if (
+    value.includes("electric") ||
+    value.includes("electrical") ||
+    value.includes("wiring") ||
+    value.includes("power") ||
+    value.includes("circuit")
+  ) {
+    return "Electrical";
+  }
+
+  if (
+    value.includes("clean") ||
+    value.includes("housekeeping") ||
+    value.includes("janitorial") ||
+    value.includes("maid")
+  ) {
+    return "Cleaning";
+  }
+
+  if (
+    value.includes("landscap") ||
+    value.includes("garden") ||
+    value.includes("lawn") ||
+    value.includes("yard")
+  ) {
+    return "Landscaping";
+  }
+
+  if (
+    value.includes("it support") ||
+    value.includes("computer") ||
+    value.includes("software") ||
+    value.includes("network") ||
+    value.includes("tech support") ||
+    value.includes("website")
+  ) {
+    return "IT Support";
+  }
+
+  if (
+    value.includes("carpentry") ||
+    value.includes("carpenter") ||
+    value.includes("wood") ||
+    value.includes("furniture")
+  ) {
+    return "Carpentry";
+  }
+
+  if (
+    value.includes("caregiver") ||
+    value.includes("elder care") ||
+    value.includes("eldercare") ||
+    value.includes("senior") ||
+    value.includes("dementia") ||
+    value.includes("nursing") ||
+    value.includes("home care")
+  ) {
+    return "Caregiver";
+  }
+
+  if (
+    value.includes("consult") ||
+    value.includes("advisor") ||
+    value.includes("advisory") ||
+    value.includes("business support")
+  ) {
+    return "Consulting";
+  }
+
+  if (
+    value.includes("architect") ||
+    value.includes("architecture") ||
+    value.includes("house plan") ||
+    value.includes("building design")
+  ) {
+    return "Architectural Design";
   }
 
   return DEFAULT_CATEGORY;
@@ -70,6 +156,17 @@ function getAvailabilityState(
   }
 
   return "available";
+}
+
+function getAvailabilityLabel(
+  availability: string | null,
+  availabilityState: ServiceProviderListItem["availabilityState"],
+) {
+  if (availability?.trim()) {
+    return availability;
+  }
+
+  return availabilityState === "available" ? "Available" : "Booked Solid";
 }
 
 function getAvailabilityTags(
@@ -105,12 +202,23 @@ function getRate(value: number | string | null) {
   return Number.isFinite(numericValue) ? numericValue : 0;
 }
 
-function getHomeServiceImage(dto: ServiceListDto) {
-  return dto.thumbnailImageUrl ?? getServiceFallbackImage(dto.category);
+function getLocation(dto: ServiceListDto) {
+  const location = dto.locationText?.trim() || dto.providerCity?.trim();
+
+  return location || "Sri Lanka";
+}
+
+function getCity(dto: ServiceListDto) {
+  return dto.providerCity?.trim() || "Sri Lanka";
+}
+
+function getServiceImage(dto: ServiceListDto, category: ServiceCategory) {
+  return dto.thumbnailImageUrl ?? getServiceFallbackImage(category);
 }
 
 export function mapServiceDtoToListItem(dto: ServiceListDto): ServiceProviderListItem {
   const availabilityState = getAvailabilityState(dto.availability);
+  const category = normalizeCategory(dto);
 
   return {
     id: dto.id,
@@ -119,14 +227,13 @@ export function mapServiceDtoToListItem(dto: ServiceListDto): ServiceProviderLis
     companyName: dto.providerBusinessName ?? "Unknown Provider",
     serviceTitle: dto.title ?? "Untitled Service",
 
-    category: normalizeCategory(dto.category),
+    category,
 
-    availabilityLabel:
-      dto.availability ?? (availabilityState === "available" ? "Available" : "Booked Solid"),
+    availabilityLabel: getAvailabilityLabel(dto.availability, availabilityState),
 
     availabilityState,
 
-    image: getHomeServiceImage(dto),
+    image: getServiceImage(dto, category),
 
     verified: dto.status === "published",
 
@@ -135,8 +242,8 @@ export function mapServiceDtoToListItem(dto: ServiceListDto): ServiceProviderLis
 
     yearsExperience: extractYearsExperience(dto.experienceText),
 
-    location: dto.locationText ?? dto.providerCity ?? "Sri Lanka",
-    city: dto.providerCity ?? "Sri Lanka",
+    location: getLocation(dto),
+    city: getCity(dto),
 
     startRateLkr: getRate(dto.perWorkRate),
 

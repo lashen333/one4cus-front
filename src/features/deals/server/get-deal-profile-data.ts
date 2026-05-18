@@ -12,6 +12,7 @@ export async function getDealProfileData(slug: string) {
 // src/features/deals/server/get-deal-profile-data.ts
 import { publicApiFetch } from "@/lib/api/public-api";
 import { unwrapApiResponse } from "@/lib/api/unwrap-api-response";
+import { CACHE_TAGS } from "@/lib/cache/cache-tags";
 import type { ApiResponse } from "@/types/api";
 import { notFound } from "next/navigation";
 import {
@@ -37,7 +38,8 @@ export async function getDealProfileData(slug: string) {
   const response = await publicApiFetch<ApiResponse<OpportunityDetailApiPayload | null>>(
     `/api/public/opportunities/slug/${slug}`,
     {
-      revalidate: 60,
+      revalidate: 300,
+      tags: [CACHE_TAGS.deals, CACHE_TAGS.deal(slug)],
     },
   );
 

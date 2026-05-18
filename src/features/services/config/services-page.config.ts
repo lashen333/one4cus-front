@@ -21,6 +21,7 @@ export const servicesPageStaticConfig: Omit<ServicesPageData, "items"> = {
       "Landscaping",
       "IT Support",
       "Carpentry",
+      "Caregiver",
       "Consulting",
       "Architectural Design",
       "Other",

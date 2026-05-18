@@ -8,6 +8,7 @@ export async function getServicesPageData() {
 
 import { publicApiFetch } from "@/lib/api/public-api";
 import { unwrapApiResponse } from "@/lib/api/unwrap-api-response";
+import { CACHE_TAGS } from "@/lib/cache/cache-tags";
 import type { ApiResponse } from "@/types/api";
 import { servicesPageStaticConfig } from "../config/services-page.config";
 import { mapServiceDtoToListItem, type ServiceListDto } from "../mappers/services-list.mapper";
@@ -27,7 +28,8 @@ type ServicesApiPayload = {
 
 export async function getServicesPageData(): Promise<ServicesPageData> {
   const response = await publicApiFetch<ApiResponse<ServicesApiPayload>>("/api/public/services", {
-    revalidate: 60,
+    revalidate: 300,
+    tags: [CACHE_TAGS.services, CACHE_TAGS.home],
   });
 
   const payload = unwrapApiResponse(response);

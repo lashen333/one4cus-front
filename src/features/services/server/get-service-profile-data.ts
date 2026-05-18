@@ -1,6 +1,7 @@
 // src\features\services\server\get-service-profile-data.ts
 import { publicApiFetch } from "@/lib/api/public-api";
 import { unwrapApiResponse } from "@/lib/api/unwrap-api-response";
+import { CACHE_TAGS } from "@/lib/cache/cache-tags";
 import type { ApiResponse } from "@/types/api";
 import { notFound } from "next/navigation";
 import {
@@ -26,7 +27,8 @@ export async function getServiceDetailData(slug: string) {
   const response = await publicApiFetch<ApiResponse<ServiceDetailApiPayload | null>>(
     `/api/public/services/slug/${slug}`,
     {
-      revalidate: 60,
+      revalidate: 300,
+      tags: [CACHE_TAGS.services, CACHE_TAGS.service(slug)],
     },
   );
 

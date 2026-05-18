@@ -1,4 +1,4 @@
-// src/features/home/components/search-panel.tsx
+// src\features\home\components\search-panel.tsx
 "use client";
 
 import { PageContainer } from "@/components/layout/page-container";

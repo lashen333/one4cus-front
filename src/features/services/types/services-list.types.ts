@@ -1,13 +1,12 @@
 // src\features\services\types\services-list.types.ts
 export type ServiceCategory =
-  | "Service"
   | "Plumbing"
   | "Electrical"
   | "Cleaning"
   | "Landscaping"
   | "IT Support"
   | "Carpentry"
-  | "caregiver"
+  | "Caregiver"
   | "Consulting"
   | "Architectural Design"
   | "Other";

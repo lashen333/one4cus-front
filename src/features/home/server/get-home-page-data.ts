@@ -8,6 +8,7 @@ export async function getHomePageData() {
 
 import { publicApiFetch } from "@/lib/api/public-api";
 import { unwrapApiResponse } from "@/lib/api/unwrap-api-response";
+import { CACHE_TAGS } from "@/lib/cache/cache-tags";
 import type { ApiResponse } from "@/types/api";
 import { homePageStaticConfig } from "../config/home-page.config";
 import {
@@ -33,12 +34,14 @@ type PaginatedApiPayload<T> = {
 export async function getHomePageData(): Promise<HomePageData> {
   const [servicesResponse, opportunitiesResponse] = await Promise.all([
     publicApiFetch<ApiResponse<PaginatedApiPayload<HomeServiceDto>>>("/api/public/services", {
-      revalidate: 60,
+      revalidate: 300,
+      tags: [CACHE_TAGS.services, CACHE_TAGS.home],
     }),
     publicApiFetch<ApiResponse<PaginatedApiPayload<HomeOpportunityDto>>>(
       "/api/public/opportunities",
       {
-        revalidate: 60,
+        revalidate: 300,
+        tags: [CACHE_TAGS.deals, CACHE_TAGS.home],
       },
     ),
   ]);

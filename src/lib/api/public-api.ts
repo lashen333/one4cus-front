@@ -1,24 +1,37 @@
-// src\lib\api\public-api.ts
-// This is a reusable typed fetch helper for calling a backend API
+// src/lib/api/public-api.ts
+// Reusable typed fetch helper for calling the backend public API from Server Components / server loaders.
+
 const BACKEND_API_URL = process.env.BACKEND_API_URL;
 
 type PublicApiFetchOptions = {
   revalidate?: number;
+  tags?: string[];
   cache?: RequestCache;
 };
+
+function getBackendApiUrl() {
+  if (!BACKEND_API_URL) {
+    throw new Error("BACKEND_API_URL is missing in .env");
+  }
+
+  return BACKEND_API_URL.replace(/\/$/, "");
+}
+
+function normalizePath(path: string) {
+  return path.startsWith("/") ? path : `/${path}`;
+}
 
 export async function publicApiFetch<T>(
   path: string,
   options: PublicApiFetchOptions = {},
 ): Promise<T> {
-  if (!BACKEND_API_URL) {
-    throw new Error("BACKEND_API_URL is missing in .env.local");
-  }
-
-  const url = `${BACKEND_API_URL}${path}`;
+  const baseUrl = getBackendApiUrl();
+  const normalizedPath = normalizePath(path);
+  const url = `${baseUrl}${normalizedPath}`;
 
   const response = await fetch(url, {
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
     cache: options.cache,
@@ -26,7 +39,8 @@ export async function publicApiFetch<T>(
       options.cache === "no-store"
         ? undefined
         : {
-            revalidate: options.revalidate ?? 60,
+            revalidate: options.revalidate ?? 300,
+            tags: options.tags,
           },
   });
 
