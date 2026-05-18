@@ -1,10 +1,10 @@
 // src\features\legal\data\privacy-policy.data.ts
-// src/features/legal/data/privacy-policy.data.ts
+
 import type { LegalPageData } from "../types/legal.types";
 
 export const privacyPolicyData: LegalPageData = {
   title: "Privacy Policy",
-  lastUpdated: "May 13, 2026",
+  lastUpdated: "May 18, 2026",
   sections: [
     {
       id: "introduction",
@@ -12,7 +12,7 @@ export const privacyPolicyData: LegalPageData = {
       paragraphs: [
         {
           id: "intro-1",
-          text: "one4cus respects your privacy and is committed to protecting your personal information.",
+          text: "one4cus is an online platform that connects people for better deals and business growth. one4cus respects your privacy and is committed to protecting your personal information.",
         },
         {
           id: "intro-2",
@@ -247,7 +247,7 @@ export const privacyPolicyData: LegalPageData = {
     },
     {
       id: "childrens-privacy",
-      title: "11. Children’s Privacy",
+      title: "11. Children's Privacy",
       paragraphs: [
         {
           id: "children-1",

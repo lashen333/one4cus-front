@@ -3,7 +3,7 @@ import type { LegalPageData } from "../types/legal.types";
 
 export const termsAndConditionsData: LegalPageData = {
   title: "Terms and Conditions",
-  lastUpdated: "May 13, 2026",
+  lastUpdated: "May 18, 2026",
   sections: [
     {
       id: "about-one4cus",
@@ -11,11 +11,15 @@ export const termsAndConditionsData: LegalPageData = {
       paragraphs: [
         {
           id: "about-one4cus-1",
-          text: "one4cus is an online platform that connects businesses, investors, service providers, and service seekers for business opportunities, investments, partnerships, projects, and professional services.",
+          text: "one4cus is an online platform that connects people — businesses, investors, service providers, and service seekers — for better deals, business growth, investment opportunities, partnerships, projects, and professional services.",
         },
         {
           id: "about-one4cus-2",
-          text: "The platform acts only as a facilitator and does not guarantee any transaction, investment return, business outcome, or service quality.",
+          text: "The platform acts only as a facilitator and connector. one4cus does not guarantee any transaction, investment return, business outcome, or service quality.",
+        },
+        {
+          id: "about-one4cus-3",
+          text: "one4cus does not participate in, manage, or oversee any payment, financial transfer, or business dealings between users. All payments and transactions occur solely between the parties involved.",
         },
       ],
     },
@@ -296,6 +300,10 @@ export const termsAndConditionsData: LegalPageData = {
       title: "13. Limitation of Liability",
       paragraphs: [
         {
+          id: "liability-intro",
+          text: "one4cus is a connecting platform only. The platform takes no responsibility for any payment loss, damage, or harm arising from transactions, dealings, or interactions between users.",
+        },
+        {
           id: "liability-1",
           text: "To the maximum extent permitted by law, one4cus shall not be liable for:",
         },
@@ -305,19 +313,49 @@ export const termsAndConditionsData: LegalPageData = {
           id: "liability-list",
           title: "",
           items: [
-            { id: "liability-item-1", text: "Indirect or consequential damages" },
-            { id: "liability-item-2", text: "Loss of profits or opportunities" },
-            { id: "liability-item-3", text: "Business interruption" },
-            { id: "liability-item-4", text: "Data loss" },
-            { id: "liability-item-5", text: "User disputes" },
-            { id: "liability-item-6", text: "Investment losses" },
+            {
+              id: "liability-item-1",
+              text: "Any payment loss or failed payment transactions between users",
+            },
+            {
+              id: "liability-item-2",
+              text: "Any damage, loss, or harm arising from user interactions or deals",
+            },
+            { id: "liability-item-3", text: "Indirect or consequential damages" },
+            { id: "liability-item-4", text: "Loss of profits or business opportunities" },
+            { id: "liability-item-5", text: "Business interruption" },
+            { id: "liability-item-6", text: "Data loss" },
+            { id: "liability-item-7", text: "User disputes" },
+            { id: "liability-item-8", text: "Investment losses" },
           ],
         },
       ],
     },
     {
+      id: "payment-disclaimer",
+      title: "14. Payment Disclaimer",
+      paragraphs: [
+        {
+          id: "payment-disclaimer-1",
+          text: "one4cus does not process, hold, transfer, or manage any payments between users.",
+        },
+        {
+          id: "payment-disclaimer-2",
+          text: "All financial transactions conducted through or as a result of connections made on the platform are solely between the parties involved.",
+        },
+        {
+          id: "payment-disclaimer-3",
+          text: "one4cus holds no responsibility for any payment loss, fraud, non-payment, delayed payment, or financial damage of any kind arising from such transactions.",
+        },
+        {
+          id: "payment-disclaimer-4",
+          text: "Users are strongly advised to conduct due diligence, verify the identity of counterparties, and use secure and trusted payment methods before engaging in any financial transaction.",
+        },
+      ],
+    },
+    {
       id: "indemnification",
-      title: "14. Indemnification",
+      title: "15. Indemnification",
       paragraphs: [
         {
           id: "indemnification-1",
@@ -327,7 +365,7 @@ export const termsAndConditionsData: LegalPageData = {
     },
     {
       id: "termination",
-      title: "15. Termination",
+      title: "16. Termination",
       paragraphs: [
         {
           id: "termination-1",
@@ -341,7 +379,7 @@ export const termsAndConditionsData: LegalPageData = {
     },
     {
       id: "governing-law",
-      title: "16. Governing Law",
+      title: "17. Governing Law",
       paragraphs: [
         {
           id: "governing-law-1",
@@ -355,7 +393,7 @@ export const termsAndConditionsData: LegalPageData = {
     },
     {
       id: "changes-to-terms",
-      title: "17. Changes to Terms",
+      title: "18. Changes to Terms",
       paragraphs: [
         {
           id: "changes-1",
@@ -373,7 +411,7 @@ export const termsAndConditionsData: LegalPageData = {
     },
     {
       id: "contact-information",
-      title: "18. Contact Information",
+      title: "19. Contact Information",
       paragraphs: [
         {
           id: "contact-1",
