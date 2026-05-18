@@ -1,5 +1,5 @@
 // src\features\services\components\service-list\service-provider-card.tsx
-import { BadgeCheck, Clock3, MapPin, Star } from "lucide-react";
+import { BadgeCheck, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ServiceProviderListItem } from "../../types/services-list.types";
@@ -59,7 +59,7 @@ export function ServiceProviderCard({ item }: ServiceProviderCardProps) {
           {item.serviceTitle}
         </h3>
 
-        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
+        {/*<div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
           <div className="flex items-center gap-1.5">
             <Star className="size-4 shrink-0 text-slate-500" />
             <span>
@@ -71,7 +71,7 @@ export function ServiceProviderCard({ item }: ServiceProviderCardProps) {
             <Clock3 className="size-4 shrink-0 text-slate-500" />
             <span>{item.yearsExperience}+ Years</span>
           </div>
-        </div>
+        </div>*/}
 
         <div className="mt-4 flex items-start gap-1.5 text-sm text-slate-600">
           <MapPin className="mt-0.5 size-4 shrink-0 text-slate-500" />
