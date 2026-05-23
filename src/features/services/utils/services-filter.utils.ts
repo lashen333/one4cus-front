@@ -1,5 +1,4 @@
-// src\features\services\utils\services-filter.utils.ts
-import type { ServiceProviderListItem } from "../types/services-list.types";
+// src/features/services/utils/services-filter.utils.ts
 
 export type ServicesFiltersState = {
   searchTerm: string;
@@ -11,65 +10,104 @@ export type ServicesFiltersState = {
   verifiedOnly: boolean;
 };
 
-export function filterServices(
-  items: ServiceProviderListItem[] = [],
-  filters: ServicesFiltersState,
-) {
-  const safeItems = Array.isArray(items) ? items : [];
-  const searchValue = filters.searchTerm.trim().toLowerCase();
-  const cityValue = filters.city.trim().toLowerCase();
+export type ServicesQueryParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  city?: string;
+  categories?: string[];
+  verified?: boolean;
+};
 
-  return safeItems.filter((item) => {
-    const matchesSearch =
-      !searchValue ||
-      item.serviceTitle.toLowerCase().includes(searchValue) ||
-      item.companyName.toLowerCase().includes(searchValue) ||
-      item.category.toLowerCase().includes(searchValue);
+export const initialServicesFilters: ServicesFiltersState = {
+  searchTerm: "",
+  city: "",
+  selectedCategories: [],
+  selectedRating: [],
+  selectedProviderStatus: [],
+  selectedAvailability: [],
+  verifiedOnly: false,
+};
 
-    const matchesCity =
-      !cityValue ||
-      item.location.toLowerCase().includes(cityValue) ||
-      item.city.toLowerCase().includes(cityValue);
-
-    const matchesCategory =
-      filters.selectedCategories.length === 0 || filters.selectedCategories.includes(item.category);
-
-    const matchesVerified = !filters.verifiedOnly || item.verified;
-
-    const matchesProviderStatus =
-      filters.selectedProviderStatus.length === 0 ||
-      filters.selectedProviderStatus.every((status) => item.statusTags.includes(status as never));
-
-    const matchesAvailability =
-      filters.selectedAvailability.length === 0 ||
-      filters.selectedAvailability.every((availability) =>
-        item.availabilityTags.includes(availability as never),
-      );
-
-    const matchesRating =
-      filters.selectedRating.length === 0 ||
-      filters.selectedRating.some((rating) => {
-        if (rating === "5.0") return item.rating >= 5;
-        if (rating === "4.0 & Up") return item.rating >= 4;
-        if (rating === "3.0 & Up") return item.rating >= 3;
-        return true;
-      });
-
-    return (
-      matchesSearch &&
-      matchesCity &&
-      matchesCategory &&
-      matchesVerified &&
-      matchesProviderStatus &&
-      matchesAvailability &&
-      matchesRating
-    );
-  });
+export function toggleArrayValue(values: string[], value: string) {
+  return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
 }
 
-export function paginateItems<T>(items: T[] = [], page: number, pageSize: number) {
-  const safeItems = Array.isArray(items) ? items : [];
-  const startIndex = (page - 1) * pageSize;
+function parseList(value: string | null) {
+  if (!value) return [];
 
-  return safeItems.slice(startIndex, startIndex + pageSize);
+  return value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+export function parseServicesFiltersFromSearchParams(
+  searchParams: URLSearchParams,
+): ServicesFiltersState {
+  return {
+    searchTerm: searchParams.get("search") ?? "",
+    city: searchParams.get("city") ?? "",
+    selectedCategories: parseList(searchParams.get("category")),
+    selectedRating: [],
+    selectedProviderStatus: [],
+    selectedAvailability: [],
+    verifiedOnly: searchParams.get("verified") === "true",
+  };
+}
+
+export function buildServicesSearchParams(
+  filters: ServicesFiltersState,
+  options?: {
+    page?: number;
+    limit?: number;
+  },
+) {
+  const params = new URLSearchParams();
+
+  params.set("page", String(options?.page ?? 1));
+  params.set("limit", String(options?.limit ?? 12));
+
+  if (filters.searchTerm.trim()) {
+    params.set("search", filters.searchTerm.trim());
+  }
+
+  if (filters.city.trim()) {
+    params.set("city", filters.city.trim());
+  }
+
+  if (filters.selectedCategories.length > 0) {
+    params.set("category", filters.selectedCategories.join(","));
+  }
+
+  if (filters.verifiedOnly) {
+    params.set("verified", "true");
+  }
+
+  return params;
+}
+
+export function buildServicesApiQuery(params: ServicesQueryParams) {
+  const searchParams = new URLSearchParams();
+
+  searchParams.set("page", String(params.page ?? 1));
+  searchParams.set("limit", String(params.limit ?? 12));
+
+  if (params.search?.trim()) {
+    searchParams.set("search", params.search.trim());
+  }
+
+  if (params.city?.trim()) {
+    searchParams.set("city", params.city.trim());
+  }
+
+  if (params.categories && params.categories.length > 0) {
+    searchParams.set("category", params.categories.join(","));
+  }
+
+  if (params.verified) {
+    searchParams.set("verified", "true");
+  }
+
+  return searchParams.toString();
 }

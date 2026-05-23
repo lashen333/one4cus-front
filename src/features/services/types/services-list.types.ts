@@ -57,4 +57,14 @@ export type ServicesPageData = {
     providerStatusOptions: ProviderStatus[];
     availabilityOptions: AvailabilityOption[];
   };
+  pagination: PaginationMeta;
+};
+
+export type PaginationMeta = {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
 };

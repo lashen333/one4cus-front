@@ -18,6 +18,7 @@ type ServicesHeroProps = {
   city: string;
   onSearchTermChange: (value: string) => void;
   onCityChange: (value: string) => void;
+  onSubmitSearch: () => void;
 };
 
 export function ServicesHero({
@@ -30,6 +31,7 @@ export function ServicesHero({
   city,
   onSearchTermChange,
   onCityChange,
+  onSubmitSearch,
 }: ServicesHeroProps) {
   return (
     <section className="bg-[#eef5fb] py-10 ">
@@ -70,7 +72,9 @@ export function ServicesHero({
             </div>
 
             <div className="p-2">
-              <Button className="h-12 w-full px-8 md:w-auto">Search</Button>
+              <Button className="h-12 w-full px-8 md:w-auto" type="button" onClick={onSubmitSearch}>
+                Search
+              </Button>
             </div>
           </div>
         </div>

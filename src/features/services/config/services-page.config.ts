@@ -1,7 +1,7 @@
 // src\features\services\config\services-page.config.ts
 import type { ServicesPageData } from "../types/services-list.types";
 
-export const servicesPageStaticConfig: Omit<ServicesPageData, "items"> = {
+export const servicesPageStaticConfig: Omit<ServicesPageData, "items" | "pagination"> = {
   badge: "Over 10,000 Verified Professionals",
   title: {
     prefix: "Find the Perfect",

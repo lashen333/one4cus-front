@@ -1,13 +1,14 @@
-// src\features\services\components\service-list\services-list-client.tsx
 "use client";
 
 import { PageContainer } from "@/components/layout/page-container";
 import { SlidersHorizontal } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import type { ServicesPageData } from "../../types/services-list.types";
 import {
-  filterServices,
-  paginateItems,
+  buildServicesSearchParams,
+  parseServicesFiltersFromSearchParams,
+  toggleArrayValue,
   type ServicesFiltersState,
 } from "../../utils/services-filter.utils";
 import { ServicesActiveFilters } from "./services-active-filters";
@@ -21,45 +22,103 @@ type ServicesListClientProps = {
   data: ServicesPageData;
 };
 
-const PAGE_SIZE = 6;
-
-const initialFilters: ServicesFiltersState = {
-  searchTerm: "",
-  city: "",
-  selectedCategories: [],
-  selectedRating: [],
-  selectedProviderStatus: [],
-  selectedAvailability: [],
-  verifiedOnly: false,
-};
-
-function toggleArrayValue(values: string[], value: string) {
-  return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
-}
-
 export function ServicesListClient({ data }: ServicesListClientProps) {
-  const [filters, setFilters] = useState<ServicesFiltersState>(initialFilters);
-  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const filters = useMemo(() => {
+    return parseServicesFiltersFromSearchParams(new URLSearchParams(searchParams.toString()));
+  }, [searchParams]);
+
+  const [draftFilters, setDraftFilters] = useState<ServicesFiltersState>(filters);
+
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
-  const filteredItems = useMemo(() => {
-    return filterServices(data.items, filters);
-  }, [data.items, filters]);
+  const visibleItems = data.items;
+  const currentPage = data.pagination.page;
+  const totalPages = data.pagination.totalPages;
 
-  const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
+  function pushFiltersToUrl(nextFilters: ServicesFiltersState) {
+    const params = buildServicesSearchParams(nextFilters, {
+      page: 1,
+      limit: data.pagination.limit,
+    });
 
-  const paginatedItems = useMemo(() => {
-    return paginateItems(filteredItems, currentPage, PAGE_SIZE);
-  }, [filteredItems, currentPage]);
-
-  function resetAllFilters() {
-    setFilters(initialFilters);
-    setCurrentPage(1);
+    router.push(`${pathname}?${params.toString()}`, {
+      scroll: false,
+    });
   }
 
-  function updateFilters(partial: Partial<ServicesFiltersState>) {
-    setFilters((prev) => ({ ...prev, ...partial }));
-    setCurrentPage(1);
+  function resetAllFilters() {
+    const params = new URLSearchParams();
+    params.set("page", "1");
+    params.set("limit", String(data.pagination.limit));
+
+    router.push(`${pathname}?${params.toString()}`, {
+      scroll: false,
+    });
+  }
+
+  function updateDraftFilters(partial: Partial<ServicesFiltersState>) {
+    setDraftFilters((prev) => ({ ...prev, ...partial }));
+  }
+
+  function submitSearch() {
+    pushFiltersToUrl({
+      ...filters,
+      searchTerm: draftFilters.searchTerm,
+      city: draftFilters.city,
+    });
+  }
+
+  function toggleCategory(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedCategories: toggleArrayValue(filters.selectedCategories, value),
+    });
+  }
+
+  function toggleRating(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedRating: toggleArrayValue(filters.selectedRating, value),
+    });
+  }
+
+  function toggleProviderStatus(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedProviderStatus: toggleArrayValue(filters.selectedProviderStatus, value),
+    });
+  }
+
+  function toggleAvailability(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedAvailability: toggleArrayValue(filters.selectedAvailability, value),
+    });
+  }
+
+  function toggleVerifiedOnly(value: boolean) {
+    pushFiltersToUrl({
+      ...filters,
+      verifiedOnly: value,
+    });
+  }
+
+  function removeCategory(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedCategories: filters.selectedCategories.filter((item) => item !== value),
+    });
+  }
+
+  function removeRating(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedRating: filters.selectedRating.filter((item) => item !== value),
+    });
   }
 
   return (
@@ -70,10 +129,11 @@ export function ServicesListClient({ data }: ServicesListClientProps) {
         subtitle={data.subtitle}
         searchPlaceholder={data.searchPlaceholder}
         cityPlaceholder={data.cityPlaceholder}
-        searchTerm={filters.searchTerm}
-        city={filters.city}
-        onSearchTermChange={(value) => updateFilters({ searchTerm: value })}
-        onCityChange={(value) => updateFilters({ city: value })}
+        searchTerm={draftFilters.searchTerm}
+        city={draftFilters.city}
+        onSearchTermChange={(value) => updateDraftFilters({ searchTerm: value })}
+        onCityChange={(value) => updateDraftFilters({ city: value })}
+        onSubmitSearch={submitSearch}
       />
 
       <section className="py-10">
@@ -88,26 +148,10 @@ export function ServicesListClient({ data }: ServicesListClientProps) {
               selectedRating={filters.selectedRating}
               selectedProviderStatus={filters.selectedProviderStatus}
               selectedAvailability={filters.selectedAvailability}
-              onCategoryToggle={(value) =>
-                updateFilters({
-                  selectedCategories: toggleArrayValue(filters.selectedCategories, value),
-                })
-              }
-              onRatingToggle={(value) =>
-                updateFilters({
-                  selectedRating: toggleArrayValue(filters.selectedRating, value),
-                })
-              }
-              onProviderStatusToggle={(value) =>
-                updateFilters({
-                  selectedProviderStatus: toggleArrayValue(filters.selectedProviderStatus, value),
-                })
-              }
-              onAvailabilityToggle={(value) =>
-                updateFilters({
-                  selectedAvailability: toggleArrayValue(filters.selectedAvailability, value),
-                })
-              }
+              onCategoryToggle={toggleCategory}
+              onRatingToggle={toggleRating}
+              onProviderStatusToggle={toggleProviderStatus}
+              onAvailabilityToggle={toggleAvailability}
               onResetAll={resetAllFilters}
             />
 
@@ -116,8 +160,9 @@ export function ServicesListClient({ data }: ServicesListClientProps) {
                 <div>
                   <p className="text-sm text-slate-500">
                     Showing{" "}
-                    <span className="font-semibold text-slate-900">{filteredItems.length}</span>{" "}
-                    service providers
+                    <span className="font-semibold text-slate-900">{visibleItems.length}</span> of{" "}
+                    <span className="font-semibold text-slate-900">{data.resultCount}</span> service
+                    providers
                   </p>
                   <p className="mt-1 text-xs text-slate-400">Use filters to narrow results</p>
                 </div>
@@ -136,25 +181,16 @@ export function ServicesListClient({ data }: ServicesListClientProps) {
                 <div className="flex flex-wrap items-center gap-6">
                   <p className="hidden text-sm text-slate-500 xl:block">
                     Showing{" "}
-                    <span className="font-semibold text-slate-900">{filteredItems.length}</span>{" "}
-                    service providers
+                    <span className="font-semibold text-slate-900">{visibleItems.length}</span> of{" "}
+                    <span className="font-semibold text-slate-900">{data.resultCount}</span> service
+                    providers
                   </p>
 
                   <ServicesActiveFilters
                     selectedCategories={filters.selectedCategories}
                     selectedRating={filters.selectedRating}
-                    onRemoveCategory={(value) =>
-                      updateFilters({
-                        selectedCategories: filters.selectedCategories.filter(
-                          (item) => item !== value,
-                        ),
-                      })
-                    }
-                    onRemoveRating={(value) =>
-                      updateFilters({
-                        selectedRating: filters.selectedRating.filter((item) => item !== value),
-                      })
-                    }
+                    onRemoveCategory={removeCategory}
+                    onRemoveRating={removeRating}
                     onClearAll={resetAllFilters}
                   />
                 </div>
@@ -163,7 +199,7 @@ export function ServicesListClient({ data }: ServicesListClientProps) {
                   <input
                     type="checkbox"
                     checked={filters.verifiedOnly}
-                    onChange={(e) => updateFilters({ verifiedOnly: e.target.checked })}
+                    onChange={(event) => toggleVerifiedOnly(event.target.checked)}
                     className="size-4 rounded border-slate-300"
                   />
                   <span>Verified Only</span>
@@ -171,12 +207,9 @@ export function ServicesListClient({ data }: ServicesListClientProps) {
               </div>
 
               <div className="mt-6">
-                <ServicesGrid items={paginatedItems} />
-                <ServicesPagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
-                />
+                <ServicesGrid items={visibleItems} />
+
+                <ServicesPagination currentPage={currentPage} totalPages={totalPages} />
               </div>
             </div>
           </div>
@@ -193,26 +226,10 @@ export function ServicesListClient({ data }: ServicesListClientProps) {
         selectedRating={filters.selectedRating}
         selectedProviderStatus={filters.selectedProviderStatus}
         selectedAvailability={filters.selectedAvailability}
-        onCategoryToggle={(value) =>
-          updateFilters({
-            selectedCategories: toggleArrayValue(filters.selectedCategories, value),
-          })
-        }
-        onRatingToggle={(value) =>
-          updateFilters({
-            selectedRating: toggleArrayValue(filters.selectedRating, value),
-          })
-        }
-        onProviderStatusToggle={(value) =>
-          updateFilters({
-            selectedProviderStatus: toggleArrayValue(filters.selectedProviderStatus, value),
-          })
-        }
-        onAvailabilityToggle={(value) =>
-          updateFilters({
-            selectedAvailability: toggleArrayValue(filters.selectedAvailability, value),
-          })
-        }
+        onCategoryToggle={toggleCategory}
+        onRatingToggle={toggleRating}
+        onProviderStatusToggle={toggleProviderStatus}
+        onAvailabilityToggle={toggleAvailability}
         onResetAll={resetAllFilters}
         onClose={() => setIsMobileFiltersOpen(false)}
       />
