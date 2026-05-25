@@ -1,6 +1,7 @@
 // src\features\services\mappers\service-profile.mapper.ts
 import { getServiceFallbackImage } from "@/lib/utils/image-fallbacks";
 import type { ServiceDetailData } from "../types/service-profile.types";
+import { normalizeServiceCategory } from "../utils/service-category.utils";
 
 export type ServiceDetailDto = {
   id: string;
@@ -70,8 +71,8 @@ function getProviderAvatar(dto: ServiceDetailDto) {
   return dto.providerLogoUrl ?? dto.providerCoverImageUrl ?? null;
 }
 
-function getServiceImage(dto: ServiceDetailDto) {
-  return dto.thumbnailImageUrl ?? getServiceFallbackImage(dto.category);
+function getServiceImage(dto: ServiceDetailDto, category: string) {
+  return dto.thumbnailImageUrl ?? getServiceFallbackImage(category);
 }
 
 function getStatusLabel(status: string) {
@@ -86,13 +87,21 @@ export function mapServiceDetailDtoToViewModel(dto: ServiceDetailDto): ServiceDe
   const priceLabel = formatMoney(dto.perWorkRate, dto.currency ?? "LKR");
   const location = getLocation(dto);
 
+  const category = normalizeServiceCategory({
+    category: dto.category,
+    title: dto.title,
+    description: dto.description,
+    tags: dto.tagsJson,
+    providerName: dto.providerBusinessName,
+  });
+
   return {
     id: dto.id,
     slug: dto.slug,
     title: dto.title ?? "Untitled Service",
-    category: dto.category ?? "Service",
+    category,
     statusLabel: getStatusLabel(dto.status),
-    image: getServiceImage(dto),
+    image: getServiceImage(dto, category),
 
     description: dto.description ?? "No service description available yet.",
     location,
@@ -105,7 +114,7 @@ export function mapServiceDetailDtoToViewModel(dto: ServiceDetailDto): ServiceDe
       {
         id: "category",
         label: "Category",
-        value: dto.category ?? "Service",
+        value: category,
       },
       {
         id: "rate",

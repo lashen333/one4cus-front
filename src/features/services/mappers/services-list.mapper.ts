@@ -10,6 +10,7 @@ import type {
   ServiceCategory,
   ServiceProviderListItem,
 } from "../types/services-list.types";
+import { normalizeServiceCategory } from "../utils/service-category.utils";
 
 export type ServiceListDto = {
   id: string;
@@ -33,7 +34,8 @@ export type ServiceListDto = {
   providerCity: string | null;
 };
 
-const DEFAULT_CATEGORY: ServiceCategory = "Other";
+{
+  /*const DEFAULT_CATEGORY: ServiceCategory = "Other";
 
 function getSearchableCategoryText(dto: ServiceListDto) {
   return [
@@ -139,7 +141,8 @@ function normalizeCategory(dto: ServiceListDto): ServiceCategory {
 
   return DEFAULT_CATEGORY;
 }
-
+*/
+}
 function getAvailabilityState(
   availability: string | null,
 ): ServiceProviderListItem["availabilityState"] {
@@ -218,7 +221,13 @@ function getServiceImage(dto: ServiceListDto, category: ServiceCategory) {
 
 export function mapServiceDtoToListItem(dto: ServiceListDto): ServiceProviderListItem {
   const availabilityState = getAvailabilityState(dto.availability);
-  const category = normalizeCategory(dto);
+  const category = normalizeServiceCategory({
+    category: dto.category,
+    title: dto.title,
+    description: dto.description,
+    tags: dto.tagsJson,
+    providerName: dto.providerBusinessName,
+  });
 
   return {
     id: dto.id,

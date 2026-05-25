@@ -40,7 +40,7 @@ export function DealsHero({ hero }: DealsHeroProps) {
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Button href="/deals">{hero.primaryCtaLabel}</Button>
-              <Button href="/how-it-works" variant="secondary">
+              <Button href="#" variant="secondary">
                 {hero.secondaryCtaLabel}
               </Button>
             </div>
@@ -48,7 +48,7 @@ export function DealsHero({ hero }: DealsHeroProps) {
 
           <div className="relative">
             <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
-              <div className="relative h-[420px]">
+              <div className="relative h-105">
                 <Image src={hero.heroImage} alt="Deals hero visual" fill className="object-cover" />
               </div>
             </div>

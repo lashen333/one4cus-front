@@ -1,5 +1,6 @@
 // src\features\services\components\service-list\services-pagination.tsx
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 
 type ServicesPaginationProps = {
   currentPage: number;
@@ -19,14 +20,23 @@ function getVisiblePages(currentPage: number, totalPages: number) {
   return Array.from(pages).sort((a, b) => a - b);
 }
 
-function getPageHref(page: number) {
-  return `/services?page=${page}`;
-}
-
 export function ServicesPagination({ currentPage, totalPages }: ServicesPaginationProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   if (totalPages <= 1) return null;
 
   const pages = getVisiblePages(currentPage, totalPages);
+
+  function getPageHref(page: number) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(page));
+
+    if (!params.get("limit")) {
+      params.set("limit", "12");
+    }
+    return `${pathname}?${params.toString()}`;
+  }
 
   return (
     <div className="mt-10 flex items-center justify-center gap-2">
