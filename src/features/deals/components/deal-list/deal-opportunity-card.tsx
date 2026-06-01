@@ -34,8 +34,8 @@ function getFundingClasses(status: string) {
 export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
   const imageSrc = item.image || "/images/placeholders/deal.png";
   return (
-    <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <div className="relative h-44 w-full">
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="relative h-44 w-full shrink-0">
         <Image
           src={imageSrc}
           alt={item.title}
@@ -61,9 +61,9 @@ export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
         </div>
       </div>
 
-      <div className="p-5">
+      <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-[1.55rem] font-semibold leading-tight text-slate-900">
+          <h3 className="line-clamp-2 min-h-16 text-[1.55rem] font-semibold leading-tight text-slate-900">
             {item.title}
           </h3>
 
@@ -71,8 +71,8 @@ export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
         </div>
 
         <div className="mt-3 flex items-center gap-2 text-sm text-slate-500">
-          <MapPin className="size-4" />
-          <span>{item.location}</span>
+          <MapPin className="size-4 shrink-0" />
+          <span className="line-clamp-1">{item.location}</span>
         </div>
 
         <div className="mt-5 grid grid-cols-2 gap-4 text-sm">
@@ -129,13 +129,14 @@ export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
             />
           </div>
         </div>*/}
-
-        <Link
-          href={`/deals/${item.slug}`}
-          className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-xl bg-[#1f78d1] px-5 text-sm font-medium text-white transition hover:bg-[#1768b7]"
-        >
-          View Opportunity
-        </Link>
+        <div className="mt-auto pt-1">
+          <Link
+            href={`/deals/${item.slug}`}
+            className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-xl bg-[#1f78d1] px-5 text-sm font-medium text-white transition hover:bg-[#1768b7]"
+          >
+            View Opportunity
+          </Link>
+        </div>
       </div>
     </article>
   );
