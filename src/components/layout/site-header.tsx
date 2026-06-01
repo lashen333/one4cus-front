@@ -26,7 +26,7 @@ export function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur ">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur ">
       <PageContainer className="flex h-20 items-center justify-between gap-6">
         <Link href="/" className="shrink-0 flex items-center" onClick={closeMobileMenu}>
           <Image
@@ -35,7 +35,7 @@ export function SiteHeader() {
             width={120}
             height={40}
             priority
-            className="h-8 w-auto sm:h-12 md:h-16 object-contain"
+            className="h-22 w-auto sm:h-22 md:h-25 object-contain"
           />
         </Link>
 
