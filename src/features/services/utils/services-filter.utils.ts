@@ -1,4 +1,4 @@
-// src/features/services/utils/services-filter.utils.ts
+// src\features\services\utils\services-filter.utils.ts
 
 export type ServicesFiltersState = {
   searchTerm: string;

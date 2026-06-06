@@ -1,5 +1,4 @@
-// src\features\deals\utils\deals-filter.utils.ts
-import type { DealListItem } from "../types/deals-list.types";
+// src/features/deals/utils/deals-filter.utils.ts
 
 export type DealsFiltersState = {
   searchTerm: string;
@@ -14,103 +13,100 @@ export type DealsFiltersState = {
   sortBy: string;
 };
 
-function extractNumericValue(value: string | number | null | undefined) {
-  if (value === null || value === undefined) return 0;
+export type DealsQueryParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  categories?: string[];
+  verified?: boolean;
+};
 
-  const match = String(value).match(/(\d+(\.\d+)?)/);
-  return match ? Number(match[1]) : 0;
+export const initialDealsFilters: DealsFiltersState = {
+  searchTerm: "",
+  verifiedOnly: false,
+  selectedCategories: [],
+  selectedFundingStatuses: [],
+  selectedRiskLevels: [],
+  selectedMinimumInvestments: [],
+  selectedDealTypes: [],
+  roiMin: 0,
+  roiMax: 100,
+  sortBy: "Newest",
+};
+
+export function toggleArrayValue(values: string[], value: string) {
+  return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
 }
 
-function extractNumericRoi(roi: string | null | undefined) {
-  if (!roi) return null;
+function parseList(value: string | null) {
+  if (!value) return [];
 
-  const match = roi.match(/(\d+(\.\d+)?)/);
-  return match ? Number(match[1]) : null;
+  return value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
 }
 
-export function filterDeals(items: DealListItem[] = [], filters: DealsFiltersState) {
-  const safeItems = Array.isArray(items) ? items : [];
-  const searchValue = filters.searchTerm.trim().toLowerCase();
-
-  return safeItems.filter((item) => {
-    const itemRoi = extractNumericRoi(item.estRoi);
-
-    const matchesSearch =
-      !searchValue ||
-      item.title.toLowerCase().includes(searchValue) ||
-      item.location.toLowerCase().includes(searchValue) ||
-      item.category.toLowerCase().includes(searchValue);
-
-    const matchesVerified = !filters.verifiedOnly || item.verified;
-
-    const matchesCategory =
-      filters.selectedCategories.length === 0 || filters.selectedCategories.includes(item.category);
-
-    const matchesFundingStatus =
-      filters.selectedFundingStatuses.length === 0 ||
-      filters.selectedFundingStatuses.includes(item.fundingStatus);
-
-    const matchesRiskLevel =
-      filters.selectedRiskLevels.length === 0 ||
-      filters.selectedRiskLevels.includes(item.riskLevel);
-
-    const matchesMinimumInvestment =
-      filters.selectedMinimumInvestments.length === 0 ||
-      filters.selectedMinimumInvestments.some((range) => {
-        const value = extractNumericValue(item.minimumInvestment);
-
-        if (range === "Under LKR 100,000") return value < 100000;
-        if (range === "100K – 250K") return value >= 100000 && value <= 250000;
-        if (range === "250K – 500K") return value > 250000 && value <= 500000;
-        if (range === "500K+") return value > 500000;
-
-        return true;
-      });
-
-    const matchesDealType =
-      filters.selectedDealTypes.length === 0 || filters.selectedDealTypes.includes(item.dealType);
-
-    // If backend ROI text has no number, do not filter it out.
-    const matchesRoi = itemRoi === null || (itemRoi >= filters.roiMin && itemRoi <= filters.roiMax);
-
-    return (
-      matchesSearch &&
-      matchesVerified &&
-      matchesCategory &&
-      matchesFundingStatus &&
-      matchesRiskLevel &&
-      matchesMinimumInvestment &&
-      matchesDealType &&
-      matchesRoi
-    );
-  });
+export function parseDealsFiltersFromSearchParams(
+  searchParams: URLSearchParams,
+): DealsFiltersState {
+  return {
+    ...initialDealsFilters,
+    searchTerm: searchParams.get("search") ?? "",
+    selectedCategories: parseList(searchParams.get("category")),
+    verifiedOnly: searchParams.get("verified") === "true",
+    sortBy: searchParams.get("sort") ?? "Newest",
+  };
 }
 
-export function sortDeals(items: DealListItem[] = [], sortBy: string) {
-  const safeItems = Array.isArray(items) ? items : [];
-  const sorted = [...safeItems];
+export function buildDealsSearchParams(
+  filters: DealsFiltersState,
+  options?: {
+    page?: number;
+    limit?: number;
+  },
+) {
+  const params = new URLSearchParams();
 
-  if (sortBy === "Highest ROI") {
-    sorted.sort((a, b) => {
-      const bRoi = extractNumericRoi(b.estRoi) ?? 0;
-      const aRoi = extractNumericRoi(a.estRoi) ?? 0;
+  params.set("page", String(options?.page ?? 1));
+  params.set("limit", String(options?.limit ?? 12));
 
-      return bRoi - aRoi;
-    });
-  } else if (sortBy === "Lowest Investment") {
-    sorted.sort(
-      (a, b) => extractNumericValue(a.minimumInvestment) - extractNumericValue(b.minimumInvestment),
-    );
-  } else if (sortBy === "Most Funded") {
-    sorted.sort((a, b) => b.progress - a.progress);
+  if (filters.searchTerm.trim()) {
+    params.set("search", filters.searchTerm.trim());
   }
 
-  return sorted;
+  if (filters.selectedCategories.length > 0) {
+    params.set("category", filters.selectedCategories.join(","));
+  }
+
+  if (filters.verifiedOnly) {
+    params.set("verified", "true");
+  }
+
+  if (filters.sortBy && filters.sortBy !== "Newest") {
+    params.set("sort", filters.sortBy);
+  }
+
+  return params;
 }
 
-export function paginateDeals<T>(items: T[] = [], page: number, pageSize: number) {
-  const safeItems = Array.isArray(items) ? items : [];
-  const start = (page - 1) * pageSize;
+export function buildDealsApiQuery(params: DealsQueryParams) {
+  const searchParams = new URLSearchParams();
 
-  return safeItems.slice(start, start + pageSize);
+  searchParams.set("page", String(params.page ?? 1));
+  searchParams.set("limit", String(params.limit ?? 12));
+
+  if (params.search?.trim()) {
+    searchParams.set("search", params.search.trim());
+  }
+
+  if (params.categories && params.categories.length > 0) {
+    searchParams.set("category", params.categories.join(","));
+  }
+
+  if (params.verified) {
+    searchParams.set("verified", "true");
+  }
+
+  return searchParams.toString();
 }

@@ -1,7 +1,10 @@
 // src\features\deals\config\deals-page.config.ts
 import type { DealsListingPageData } from "../types/deals-list.types";
 
-export const dealsPageStaticConfig: Omit<DealsListingPageData, "items"> = {
+export const dealsPageStaticConfig: Omit<
+  DealsListingPageData,
+  "items" | "resultCount" | "pagination"
+> = {
   hero: {
     badge: "Opportunities Available",
     title: {
@@ -18,12 +21,14 @@ export const dealsPageStaticConfig: Omit<DealsListingPageData, "items"> = {
   },
   filters: {
     categories: [
+      "Investment",
       "Real Estate",
       "Natural Resources",
       "Startups / Tech",
       "Agriculture / Export",
       "Renewable Energy",
       "Tourism / Hospitality",
+      "Other",
     ],
     fundingStatuses: ["Open for investment", "Fully funded", "Closed", "Coming soon"],
     riskLevels: ["Low Risk", "Medium Risk", "High Risk"],

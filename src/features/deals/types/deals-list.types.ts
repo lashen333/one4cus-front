@@ -6,7 +6,8 @@ export type DealCategory =
   | "Startups / Tech"
   | "Agriculture / Export"
   | "Renewable Energy"
-  | "Tourism / Hospitality";
+  | "Tourism / Hospitality"
+  | "Other";
 
 export type FundingStatus = "Open for investment" | "Fully funded" | "Closed" | "Coming soon";
 
@@ -63,5 +64,15 @@ export type DealsListingPageData = {
     };
   };
   sortOptions: string[];
+  resultCount: number;
+  pagination: DealsPaginationMeta;
   items: DealListItem[];
+};
+export type DealsPaginationMeta = {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
 };

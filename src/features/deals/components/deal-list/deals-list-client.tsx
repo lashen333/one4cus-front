@@ -1,14 +1,15 @@
-// src\features\deals\components\deal-list\deals-list-client.tsx
+// src/features/deals/components/deal-list/deals-list-client.tsx
 "use client";
 
 import { PageContainer } from "@/components/layout/page-container";
 import { Search, SlidersHorizontal } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import type { DealsListingPageData } from "../../types/deals-list.types";
 import {
-  filterDeals,
-  paginateDeals,
-  sortDeals,
+  buildDealsSearchParams,
+  parseDealsFiltersFromSearchParams,
+  toggleArrayValue,
   type DealsFiltersState,
 } from "../../utils/deals-filter.utils";
 import { DealsActiveFilters } from "./deals-active-filters";
@@ -22,50 +23,115 @@ type DealsListClientProps = {
   data: DealsListingPageData;
 };
 
-const PAGE_SIZE = 6;
-
-function toggleArrayItem(items: string[], value: string) {
-  return items.includes(value) ? items.filter((item) => item !== value) : [...items, value];
-}
-
-const initialFilters = (data: DealsListingPageData): DealsFiltersState => ({
-  searchTerm: "",
-  verifiedOnly: true,
-  selectedCategories: [],
-  selectedFundingStatuses: ["Open for investment"],
-  selectedRiskLevels: ["Medium Risk"],
-  selectedMinimumInvestments: [],
-  selectedDealTypes: [],
-  roiMin: data.filters.roiRange.selectedMin,
-  roiMax: data.filters.roiRange.selectedMax,
-  sortBy: data.sortOptions[0],
-});
-
 export function DealsListClient({ data }: DealsListClientProps) {
-  const [filters, setFilters] = useState<DealsFiltersState>(() => initialFilters(data));
-  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const filters = useMemo(() => {
+    return parseDealsFiltersFromSearchParams(new URLSearchParams(searchParams.toString()));
+  }, [searchParams]);
+
+  const [draftSearchTerm, setDraftSearchTerm] = useState(filters.searchTerm);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
-  function updateFilters(partial: Partial<DealsFiltersState>) {
-    setFilters((prev) => ({ ...prev, ...partial }));
-    setCurrentPage(1);
+  const visibleItems = data.items;
+  const currentPage = data.pagination.page;
+  const totalPages = data.pagination.totalPages;
+  const totalResults = data.pagination.total;
+
+  function pushFiltersToUrl(nextFilters: DealsFiltersState) {
+    const params = buildDealsSearchParams(nextFilters, {
+      page: 1,
+      limit: data.pagination.limit,
+    });
+
+    router.push(`${pathname}?${params.toString()}`, {
+      scroll: false,
+    });
   }
 
   function clearAllFilters() {
-    setFilters(initialFilters(data));
-    setCurrentPage(1);
+    setDraftSearchTerm("");
+
+    const params = new URLSearchParams();
+    params.set("page", "1");
+    params.set("limit", String(data.pagination.limit));
+
+    router.push(`${pathname}?${params.toString()}`, {
+      scroll: false,
+    });
   }
 
-  const filteredItems = useMemo(() => {
-    const filtered = filterDeals(data.items, filters);
-    return sortDeals(filtered, filters.sortBy);
-  }, [data.items, filters]);
+  function submitSearch() {
+    pushFiltersToUrl({
+      ...filters,
+      searchTerm: draftSearchTerm,
+    });
+  }
 
-  const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
+  function toggleCategory(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedCategories: toggleArrayValue(filters.selectedCategories, value),
+    });
+  }
 
-  const paginatedItems = useMemo(() => {
-    return paginateDeals(filteredItems, currentPage, PAGE_SIZE);
-  }, [filteredItems, currentPage]);
+  function toggleFundingStatus(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedFundingStatuses: toggleArrayValue(filters.selectedFundingStatuses, value),
+    });
+  }
+
+  function toggleRiskLevel(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedRiskLevels: toggleArrayValue(filters.selectedRiskLevels, value),
+    });
+  }
+
+  function toggleMinimumInvestment(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedMinimumInvestments: toggleArrayValue(filters.selectedMinimumInvestments, value),
+    });
+  }
+
+  function toggleDealType(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedDealTypes: toggleArrayValue(filters.selectedDealTypes, value),
+    });
+  }
+
+  function toggleVerifiedOnly(value: boolean) {
+    pushFiltersToUrl({
+      ...filters,
+      verifiedOnly: value,
+    });
+  }
+
+  function removeCategory(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedCategories: filters.selectedCategories.filter((item) => item !== value),
+    });
+  }
+
+  function removeRiskLevel(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      selectedRiskLevels: filters.selectedRiskLevels.filter((item) => item !== value),
+    });
+  }
+
+  function updateSort(value: string) {
+    pushFiltersToUrl({
+      ...filters,
+      sortBy: value,
+    });
+  }
 
   return (
     <main>
@@ -87,41 +153,20 @@ export function DealsListClient({ data }: DealsListClientProps) {
               selectedDealTypes={filters.selectedDealTypes}
               roiMin={filters.roiMin}
               roiMax={filters.roiMax}
-              onCategoryToggle={(value) =>
-                updateFilters({
-                  selectedCategories: toggleArrayItem(filters.selectedCategories, value),
-                })
-              }
-              onFundingStatusToggle={(value) =>
-                updateFilters({
-                  selectedFundingStatuses: toggleArrayItem(filters.selectedFundingStatuses, value),
-                })
-              }
-              onRiskLevelToggle={(value) =>
-                updateFilters({
-                  selectedRiskLevels: toggleArrayItem(filters.selectedRiskLevels, value),
-                })
-              }
-              onMinimumInvestmentToggle={(value) =>
-                updateFilters({
-                  selectedMinimumInvestments: toggleArrayItem(
-                    filters.selectedMinimumInvestments,
-                    value,
-                  ),
-                })
-              }
-              onDealTypeToggle={(value) =>
-                updateFilters({
-                  selectedDealTypes: toggleArrayItem(filters.selectedDealTypes, value),
-                })
-              }
+              onCategoryToggle={toggleCategory}
+              onFundingStatusToggle={toggleFundingStatus}
+              onRiskLevelToggle={toggleRiskLevel}
+              onMinimumInvestmentToggle={toggleMinimumInvestment}
+              onDealTypeToggle={toggleDealType}
               onRoiMinChange={(value) =>
-                updateFilters({
+                pushFiltersToUrl({
+                  ...filters,
                   roiMin: Math.min(value, filters.roiMax),
                 })
               }
               onRoiMaxChange={(value) =>
-                updateFilters({
+                pushFiltersToUrl({
+                  ...filters,
                   roiMax: Math.max(value, filters.roiMin),
                 })
               }
@@ -134,7 +179,8 @@ export function DealsListClient({ data }: DealsListClientProps) {
                 <div>
                   <p className="text-sm text-slate-500">
                     Showing{" "}
-                    <span className="font-semibold text-slate-900">{filteredItems.length}</span>{" "}
+                    <span className="font-semibold text-slate-900">{visibleItems.length}</span> of{" "}
+                    <span className="font-semibold text-slate-900">{totalResults}</span>{" "}
                     opportunities
                   </p>
                   <p className="mt-1 text-xs text-slate-400">Use filters to narrow results</p>
@@ -153,22 +199,28 @@ export function DealsListClient({ data }: DealsListClientProps) {
               <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                   <div className="flex min-w-0 flex-1 flex-col gap-4 md:flex-row">
-                    <div className="relative min-w-0 flex-1">
+                    <form
+                      className="relative min-w-0 flex-1"
+                      onSubmit={(event) => {
+                        event.preventDefault();
+                        submitSearch();
+                      }}
+                    >
                       <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
                       <input
-                        value={filters.searchTerm}
-                        onChange={(e) => updateFilters({ searchTerm: e.target.value })}
+                        value={draftSearchTerm}
+                        onChange={(event) => setDraftSearchTerm(event.target.value)}
                         type="text"
                         placeholder="Search by project name, location, or keyword..."
                         className="h-12 w-full rounded-xl border border-slate-200 pl-10 pr-4 text-sm outline-none"
                       />
-                    </div>
+                    </form>
 
                     <label className="inline-flex h-12 items-center gap-3 rounded-xl border border-slate-200 px-4 text-sm text-slate-700">
                       <input
                         type="checkbox"
                         checked={filters.verifiedOnly}
-                        onChange={(e) => updateFilters({ verifiedOnly: e.target.checked })}
+                        onChange={(event) => toggleVerifiedOnly(event.target.checked)}
                         className="size-4 rounded border-slate-300"
                       />
                       <span>Verified Only</span>
@@ -181,7 +233,7 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
                       <select
                         value={filters.sortBy}
-                        onChange={(e) => updateFilters({ sortBy: e.target.value })}
+                        onChange={(event) => updateSort(event.target.value)}
                         className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700 outline-none md:min-w-48"
                       >
                         {data.sortOptions.map((option) => (
@@ -198,27 +250,16 @@ export function DealsListClient({ data }: DealsListClientProps) {
                   <div className="flex flex-wrap items-center gap-4">
                     <p className="hidden text-sm text-slate-500 xl:block">
                       Showing{" "}
-                      <span className="font-semibold text-slate-900">{filteredItems.length}</span>{" "}
+                      <span className="font-semibold text-slate-900">{visibleItems.length}</span> of{" "}
+                      <span className="font-semibold text-slate-900">{totalResults}</span>{" "}
                       opportunities
                     </p>
 
                     <DealsActiveFilters
                       selectedCategories={filters.selectedCategories}
                       selectedRiskLevels={filters.selectedRiskLevels}
-                      onRemoveCategory={(value) =>
-                        updateFilters({
-                          selectedCategories: filters.selectedCategories.filter(
-                            (item) => item !== value,
-                          ),
-                        })
-                      }
-                      onRemoveRiskLevel={(value) =>
-                        updateFilters({
-                          selectedRiskLevels: filters.selectedRiskLevels.filter(
-                            (item) => item !== value,
-                          ),
-                        })
-                      }
+                      onRemoveCategory={removeCategory}
+                      onRemoveRiskLevel={removeRiskLevel}
                     />
                   </div>
 
@@ -240,12 +281,9 @@ export function DealsListClient({ data }: DealsListClientProps) {
               </div>
 
               <div className="mt-6">
-                <DealsGrid items={paginatedItems} />
-                <DealsPagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
-                />
+                <DealsGrid items={visibleItems} />
+
+                <DealsPagination currentPage={currentPage} totalPages={totalPages} />
               </div>
             </div>
           </div>
@@ -264,31 +302,11 @@ export function DealsListClient({ data }: DealsListClientProps) {
         selectedRiskLevels={filters.selectedRiskLevels}
         selectedMinimumInvestments={filters.selectedMinimumInvestments}
         selectedDealTypes={filters.selectedDealTypes}
-        onCategoryToggle={(value) =>
-          updateFilters({
-            selectedCategories: toggleArrayItem(filters.selectedCategories, value),
-          })
-        }
-        onFundingStatusToggle={(value) =>
-          updateFilters({
-            selectedFundingStatuses: toggleArrayItem(filters.selectedFundingStatuses, value),
-          })
-        }
-        onRiskLevelToggle={(value) =>
-          updateFilters({
-            selectedRiskLevels: toggleArrayItem(filters.selectedRiskLevels, value),
-          })
-        }
-        onMinimumInvestmentToggle={(value) =>
-          updateFilters({
-            selectedMinimumInvestments: toggleArrayItem(filters.selectedMinimumInvestments, value),
-          })
-        }
-        onDealTypeToggle={(value) =>
-          updateFilters({
-            selectedDealTypes: toggleArrayItem(filters.selectedDealTypes, value),
-          })
-        }
+        onCategoryToggle={toggleCategory}
+        onFundingStatusToggle={toggleFundingStatus}
+        onRiskLevelToggle={toggleRiskLevel}
+        onMinimumInvestmentToggle={toggleMinimumInvestment}
+        onDealTypeToggle={toggleDealType}
         onResetAll={clearAllFilters}
         onClose={() => setIsMobileFiltersOpen(false)}
       />

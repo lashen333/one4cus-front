@@ -1,4 +1,4 @@
-// src\features\deals\mappers\deals-list.mapper.ts
+// src/features/deals/mappers/deals-list.mapper.ts
 import { getDealFallbackImage } from "@/lib/utils/image-fallbacks";
 import type {
   DealCategory,
@@ -6,6 +6,7 @@ import type {
   FundingStatus,
   RiskLevel,
 } from "../types/deals-list.types";
+import { normalizeDealCategory } from "../utils/deal-category.utils";
 
 export type OpportunityListDto = {
   id: string;
@@ -33,36 +34,8 @@ export type OpportunityListDto = {
   providerCity: string | null;
 };
 
-const DEFAULT_CATEGORY: DealCategory = "Investment";
 const DEFAULT_RISK_LEVEL: RiskLevel = "Medium Risk";
 const DEFAULT_FUNDING_STATUS: FundingStatus = "Open for investment";
-
-function normalizeDealCategory(category: string | null): DealCategory {
-  const value = category?.toLowerCase();
-
-  if (!value) return DEFAULT_CATEGORY;
-
-  if (value.includes("real")) return "Real Estate";
-  if (value.includes("resource") || value.includes("mining") || value.includes("gem")) {
-    return "Natural Resources";
-  }
-  if (value.includes("startup") || value.includes("tech")) {
-    return "Startups / Tech";
-  }
-  if (value.includes("agri") || value.includes("export")) {
-    return "Agriculture / Export";
-  }
-  if (value.includes("renewable") || value.includes("energy")) {
-    return "Renewable Energy";
-  }
-  if (value.includes("tourism") || value.includes("hospitality")) {
-    return "Tourism / Hospitality";
-  }
-
-  // Your backend currently sends category: "Investment".
-  // That does not exist in frontend categories, so we fallback safely.
-  return DEFAULT_CATEGORY;
-}
 
 function normalizeRiskLevel(riskLevel: string | null): RiskLevel {
   const value = riskLevel?.toLowerCase();
@@ -133,7 +106,20 @@ function getProgress(fundingGoal: string | number | null) {
   return 0;
 }
 
+function getDealImage(dto: OpportunityListDto, category: DealCategory) {
+  return dto.coverImageUrl ?? getDealFallbackImage(category);
+}
+
 export function mapOpportunityDtoToDealListItem(dto: OpportunityListDto): DealListItem {
+  const category = normalizeDealCategory({
+    category: dto.category,
+    title: dto.title,
+    summary: dto.shortSummary,
+    description: dto.fullDescription,
+    investmentType: dto.investmentType,
+    providerName: dto.providerBusinessName,
+  });
+
   return {
     id: dto.id,
     slug: dto.slug,
@@ -142,7 +128,7 @@ export function mapOpportunityDtoToDealListItem(dto: OpportunityListDto): DealLi
     estRoi: dto.expectedRoiText ?? "ROI on agreement",
     duration: "Contract based",
     dealType: dto.investmentType ?? "Investment",
-    category: normalizeDealCategory(dto.category),
+    category,
     minimumInvestment: getMinimumInvestment(dto.minimumInvestment),
     raised: "LKR 0",
     target: getFundingGoal(dto.fundingGoal),
@@ -150,6 +136,6 @@ export function mapOpportunityDtoToDealListItem(dto: OpportunityListDto): DealLi
     verified: dto.status === "published",
     riskLevel: normalizeRiskLevel(dto.riskLevel),
     fundingStatus: normalizeFundingStatus(dto.status),
-    image: dto.coverImageUrl ?? getDealFallbackImage(dto.category),
+    image: getDealImage(dto, category),
   };
 }

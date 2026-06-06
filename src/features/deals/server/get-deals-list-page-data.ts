@@ -16,6 +16,7 @@ import {
   type OpportunityListDto,
 } from "../mappers/deals-list.mapper";
 import type { DealsListingPageData } from "../types/deals-list.types";
+import { buildDealsApiQuery, type DealsQueryParams } from "../utils/deals-filter.utils";
 
 type OpportunitiesApiPayload = {
   data: OpportunityListDto[];
@@ -29,9 +30,18 @@ type OpportunitiesApiPayload = {
   };
 };
 
-export async function getDealsPageData(): Promise<DealsListingPageData> {
+export async function getDealsPageData(
+  query: DealsQueryParams = {},
+): Promise<DealsListingPageData> {
+  const apiQuery = buildDealsApiQuery({
+    page: query.page ?? 1,
+    limit: query.limit ?? 12,
+    search: query.search,
+    categories: query.categories,
+    verified: query.verified,
+  });
   const response = await publicApiFetch<ApiResponse<OpportunitiesApiPayload>>(
-    "/api/public/opportunities",
+    `/api/public/opportunities?${apiQuery}`,
     {
       revalidate: 300,
       tags: [CACHE_TAGS.deals, CACHE_TAGS.home],
@@ -43,6 +53,8 @@ export async function getDealsPageData(): Promise<DealsListingPageData> {
 
   return {
     ...dealsPageStaticConfig,
+    resultCount: payload.meta.total,
+    pagination: payload.meta,
     items,
   };
 }
