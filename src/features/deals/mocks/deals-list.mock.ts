@@ -1,5 +1,6 @@
 // src\features\deals\mocks\deals-list.mock.ts
-import type { DealsListingPageData } from "../types/deals-list.types";
+{
+  /*import type { DealsListingPageData } from "../types/deals-list.types";
 
 export const dealsListMock: DealsListingPageData = {
   hero: {
@@ -148,3 +149,5 @@ export const dealsListMock: DealsListingPageData = {
     },
   ],
 };
+*/
+}
