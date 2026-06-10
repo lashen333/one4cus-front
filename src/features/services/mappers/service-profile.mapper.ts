@@ -72,7 +72,10 @@ function getProviderAvatar(dto: ServiceDetailDto) {
 }
 
 function getServiceImage(dto: ServiceDetailDto, category: string) {
-  return dto.thumbnailImageUrl ?? getServiceFallbackImage(category);
+  return (
+    dto.thumbnailImageUrl ??
+    getServiceFallbackImage(category, dto.slug || dto.id || dto.providerBusinessName)
+  );
 }
 
 function getStatusLabel(status: string) {

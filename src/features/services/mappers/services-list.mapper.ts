@@ -216,7 +216,10 @@ function getCity(dto: ServiceListDto) {
 }
 
 function getServiceImage(dto: ServiceListDto, category: ServiceCategory) {
-  return dto.thumbnailImageUrl ?? getServiceFallbackImage(category);
+  return (
+    dto.thumbnailImageUrl ??
+    getServiceFallbackImage(category, dto.slug || dto.id || dto.providerBusinessName)
+  );
 }
 
 export function mapServiceDtoToListItem(dto: ServiceListDto): ServiceProviderListItem {

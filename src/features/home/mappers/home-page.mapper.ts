@@ -77,7 +77,10 @@ function getMillionValue(value: string | number | null | undefined) {
 }
 
 function getHomeServiceImage(dto: HomeServiceDto) {
-  return dto.thumbnailImageUrl ?? getServiceFallbackImage(dto.category);
+  return (
+    dto.thumbnailImageUrl ??
+    getServiceFallbackImage(dto.category, dto.slug || dto.id || dto.providerBusinessName)
+  );
 }
 
 export function mapHomeServiceDtoToProviderItem(dto: HomeServiceDto): ProviderItem {
