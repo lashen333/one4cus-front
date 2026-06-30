@@ -10,6 +10,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@next/third-parties": "^16.2.9",
     "clsx": "^2.1.1",
     "lucide-react": "^1.7.0",
     "next": "16.2.1",

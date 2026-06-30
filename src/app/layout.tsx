@@ -1,7 +1,10 @@
 // src\app\layout.tsx
 import { siteConfig } from "@/lib/config/site";
+import { GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import "./globals.css";
+
+const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -19,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>{children}</body>
+      {gtmId ? <GoogleTagManager gtmId={gtmId} /> : null}
     </html>
   );
 }
