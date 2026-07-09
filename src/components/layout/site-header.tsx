@@ -2,6 +2,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { pushToDataLayer } from "@/lib/analytics/gtm";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +15,6 @@ const navItems = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Deals", href: "/deals" },
-
   { label: "Contact", href: "/contact" },
 ];
 
@@ -25,10 +25,33 @@ export function SiteHeader() {
 
   const pathname = usePathname();
 
+  const trackHeaderNavClick = (
+    item: { label: string; href: string },
+    location: "desktop_header" | "mobile_header",
+  ) => {
+    pushToDataLayer({
+      event: "click_header_nav",
+      nav_label: item.label,
+      nav_href: item.href,
+      nav_location: location,
+    });
+  };
+
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur ">
       <PageContainer className="flex h-20 items-center justify-between gap-6">
-        <Link href="/" className="shrink-0 flex items-center" onClick={closeMobileMenu}>
+        <Link
+          href="/"
+          className="shrink-0 flex items-center"
+          onClick={() => {
+            pushToDataLayer({
+              event: "click_header_logo",
+              nav_href: "/",
+              nav_location: "desktop_header",
+            });
+            closeMobileMenu();
+          }}
+        >
           <Image
             src="/layout/Logo.png"
             alt="one4cus logo"
@@ -47,6 +70,7 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => trackHeaderNavClick(item, "desktop_header")}
                 className={
                   isActive
                     ? "rounded-full bg-white px-5 py-2 text-sm font-medium text-[#1677c8]"
@@ -66,7 +90,16 @@ export function SiteHeader() {
             Become a Provider
           </Button>
 
-          <Link href="" className="font-medium text-slate-700 transition hover:text-slate-900">
+          <Link
+            href=""
+            onClick={() => {
+              pushToDataLayer({
+                event: "click_header_login",
+                nav_location: "desktop_header",
+              });
+            }}
+            className="font-medium text-slate-700 transition hover:text-slate-900"
+          >
             Login
           </Link>
 
@@ -78,7 +111,13 @@ export function SiteHeader() {
           type="button"
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileMenuOpen}
-          onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          onClick={() => {
+            pushToDataLayer({
+              event: isMobileMenuOpen ? "close_mobile_menu" : "open_mobile_menu",
+              nav_location: "mobile_header",
+            });
+            setIsMobileMenuOpen((prev) => !prev);
+          }}
           className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-slate-700 transition hover:bg-slate-50 lg:hidden"
         >
           {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -95,7 +134,10 @@ export function SiteHeader() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={closeMobileMenu}
+                    onClick={() => {
+                      trackHeaderNavClick(item, "mobile_header");
+                      closeMobileMenu();
+                    }}
                     className={
                       isActive
                         ? "rounded-xl bg-[#1677c8] px-4 py-3 text-sm font-medium text-white"
@@ -115,7 +157,13 @@ export function SiteHeader() {
 
               <Link
                 href=""
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  pushToDataLayer({
+                    event: "click_header_login",
+                    nav_location: "mobile_header",
+                  });
+                  closeMobileMenu();
+                }}
                 className="flex h-11 items-center justify-center rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
               >
                 Login
