@@ -1,6 +1,6 @@
 // src\features\home\components\hero-section.tsx
-import { Button } from "@/components/ui/button";
 import { PageContainer } from "@/components/layout/page-container";
+import { Button } from "@/components/ui/button";
 import type { HeroContent } from "../types/home.types";
 
 type HeroSectionProps = {
@@ -16,13 +16,26 @@ export function HeroSection({ hero }: HeroSectionProps) {
             {hero.title}
           </h1>
 
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-slate-500">
-            {hero.subtitle}
-          </p>
+          <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-slate-500">{hero.subtitle}</p>
 
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button href={hero.primaryCta.href}>{hero.primaryCta.label}</Button>
-            <Button href={hero.secondaryCta.href} variant="secondary">
+            <Button
+              href={hero.primaryCta.href}
+              data-analytics-event="click_hero_cta"
+              data-cta-label={hero.primaryCta.label}
+              data-cta-href={hero.primaryCta.href}
+              data-page-section="homepage_hero"
+            >
+              {hero.primaryCta.label}
+            </Button>
+            <Button
+              href={hero.secondaryCta.href}
+              variant="secondary"
+              data-analytics-event="click_hero_cta"
+              data-cta-label={hero.secondaryCta.label}
+              data-cta-href={hero.secondaryCta.href}
+              data-page-section="homepage_hero"
+            >
               {hero.secondaryCta.label}
             </Button>
           </div>
