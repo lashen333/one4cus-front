@@ -3,6 +3,7 @@
 
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
+import { pushToDataLayer } from "@/lib/analytics/gtm";
 import { Search } from "lucide-react";
 import type { HomePageData } from "../types/home.types";
 
@@ -21,6 +22,14 @@ export function SearchPanel({
 }: SearchPanelProps) {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const cleanedSearchTerm = searchTerm.trim();
+
+    pushToDataLayer({
+      event: "search_submit",
+      search_term: cleanedSearchTerm || "empty",
+      page_section: "homepage_search",
+    });
     onSubmitSearch();
   }
 
@@ -51,7 +60,15 @@ export function SearchPanel({
                 <button
                   key={chip.id}
                   type="button"
-                  onClick={() => onSearchTermChange(chip.label)}
+                  onClick={() => {
+                    pushToDataLayer({
+                      event: "quick_search_click",
+                      search_term: chip.label,
+                      chip_id: chip.id,
+                      page_section: "homepage_search_chips",
+                    });
+                    onSearchTermChange(chip.label);
+                  }}
                   className={`rounded-md border px-4 py-2 text-sm transition ${
                     searchTerm.toLowerCase() === chip.label.toLowerCase()
                       ? "border-[#1677c8] bg-[#1677c8] text-white"
@@ -67,7 +84,14 @@ export function SearchPanel({
               <div className="mt-5 text-center">
                 <button
                   type="button"
-                  onClick={() => onSearchTermChange("")}
+                  onClick={() => {
+                    pushToDataLayer({
+                      event: "search_clear",
+                      search_term: searchTerm.trim() || "empty",
+                      page_section: "homepage_search",
+                    });
+                    onSearchTermChange("");
+                  }}
                   className="text-sm font-medium text-[#1677c8] hover:underline"
                 >
                   Clear search
