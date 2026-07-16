@@ -19,8 +19,14 @@ export function ProvidersGrid({ title, items, ctaLabel, ctaHref }: ProvidersGrid
         <SectionHeading title={title} />
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {items.map((item) => (
-            <ProviderCard key={item.id} item={item} />
+          {items.map((item, index) => (
+            <ProviderCard
+              key={item.id}
+              item={item}
+              cardPosition={index + 1}
+              sourcePage="home"
+              pageSection="home_services"
+            />
           ))}
         </div>
 

@@ -6,6 +6,9 @@ import type { ProviderItem } from "../types/home.types";
 
 type ProviderCardProps = {
   item: ProviderItem;
+  cardPosition?: number; // Optional prop to indicate the position of the card
+  sourcePage?: string; // Optional prop to indicate the source page of the card
+  pageSection?: string; // Optional prop to indicate the page section of the card
 };
 
 function getProviderCardTitle(item: ProviderItem) {
@@ -24,7 +27,12 @@ function getProviderCardTitle(item: ProviderItem) {
   return `${name} - ${category}`;
 }
 
-export function ProviderCard({ item }: ProviderCardProps) {
+export function ProviderCard({
+  item,
+  cardPosition,
+  sourcePage = "home",
+  pageSection = "home_services",
+}: ProviderCardProps) {
   const imageSrc = item.image || "/images/placeholders/service.jpg";
   const title = getProviderCardTitle(item);
 
@@ -64,6 +72,15 @@ export function ProviderCard({ item }: ProviderCardProps) {
         <div className="mt-auto pt-6">
           <Link
             href={item.profileHref}
+            data-analytics-event="click_view_profile"
+            data-profile-type="service_provider"
+            data-source-page={sourcePage}
+            data-page-section={pageSection}
+            data-item-id={item.id}
+            data-item-name={title}
+            data-item-category={item.category || "unknown"}
+            data-card-position={cardPosition ?? ""}
+            data-destination-url={item.profileHref}
             className="inline-flex h-11 w-full items-center justify-center rounded-md border border-[#1677c8] text-sm font-medium text-[#1677c8] transition hover:bg-blue-50"
           >
             View Profile
