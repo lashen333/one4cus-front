@@ -12,10 +12,7 @@ type HomeTabsSectionProps = {
   dealsSection: HomePageData["dealsSection"];
 };
 
-export function HomeTabsSection({
-  servicesSection,
-  dealsSection,
-}: HomeTabsSectionProps) {
+export function HomeTabsSection({ servicesSection, dealsSection }: HomeTabsSectionProps) {
   const [activeTab, setActiveTab] = useState<HomeTabKey>("services");
 
   return (
@@ -30,6 +27,8 @@ export function HomeTabsSection({
           items={servicesSection.items}
           ctaLabel={servicesSection.ctaLabel}
           ctaHref={servicesSection.ctaHref}
+          sourcePage="home"
+          pageSection="home_services"
         />
       ) : (
         <DealsGrid
@@ -37,6 +36,8 @@ export function HomeTabsSection({
           items={dealsSection.items}
           ctaLabel={dealsSection.ctaLabel}
           ctaHref={dealsSection.ctaHref}
+          sourcePage="home"
+          pageSection="home_deals"
         />
       )}
     </section>

@@ -5,6 +5,9 @@ import type { DealItem } from "../types/home.types";
 
 type DealCardProps = {
   item: DealItem;
+  cardPosition?: number;
+  sourcePage?: string;
+  pageSection?: string;
 };
 
 {
@@ -14,7 +17,12 @@ type DealCardProps = {
 }*/
 }
 
-export function DealCard({ item }: DealCardProps) {
+export function DealCard({
+  item,
+  cardPosition,
+  sourcePage = "home",
+  pageSection = "home_deals",
+}: DealCardProps) {
   //const percentage = getProgressPercentage(item.raisedValue, item.targetValue);
 
   return (
@@ -55,6 +63,14 @@ export function DealCard({ item }: DealCardProps) {
 
           <Link
             href={item.href}
+            data-analytics-event="click_view_profile"
+            data-profile-type="deal"
+            data-source-page={sourcePage}
+            data-page-section={pageSection}
+            data-item-id={item.id}
+            data-item-name={item.title}
+            data-card-position={cardPosition ?? ""}
+            data-destination-url={item.href}
             className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-md border border-[#1677c8] text-sm font-medium text-[#1677c8] transition hover:bg-blue-50"
           >
             View Opportunity

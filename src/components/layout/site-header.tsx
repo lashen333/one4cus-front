@@ -38,8 +38,9 @@ export function SiteHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur ">
-      <PageContainer className="flex h-20 items-center justify-between gap-6">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur">
+      {/* Added `relative` here so absolute positioning on the nav targets this container */}
+      <PageContainer className="relative flex h-20 items-center justify-between gap-6">
         <Link
           href="/"
           className="shrink-0 flex items-center"
@@ -62,7 +63,8 @@ export function SiteHeader() {
           />
         </Link>
 
-        <nav className="hidden rounded-full bg-[#1c75bc] p-2 lg:flex lg:items-center lg:gap-1">
+        {/* Centered navigation pill using absolute positioning */}
+        <nav className="hidden rounded-full bg-[#1c75bc] p-2 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:flex lg:items-center lg:gap-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
 
@@ -90,7 +92,7 @@ export function SiteHeader() {
             Become a Provider
           </Button>
 
-          <Link
+          {/*<Link
             href=""
             onClick={() => {
               pushToDataLayer({
@@ -101,7 +103,7 @@ export function SiteHeader() {
             className="font-medium text-slate-700 transition hover:text-slate-900"
           >
             Login
-          </Link>
+          </Link>*/}
 
           <Button type="button" disabled className="h-10">
             Sign Up
@@ -155,7 +157,7 @@ export function SiteHeader() {
                 Become a Provider
               </Button>
 
-              <Link
+              {/*<Link
                 href=""
                 onClick={() => {
                   pushToDataLayer({
@@ -167,7 +169,7 @@ export function SiteHeader() {
                 className="flex h-11 items-center justify-center rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
               >
                 Login
-              </Link>
+              </Link>*/}
 
               <Button type="button" disabled className="h-11 w-full">
                 Sign Up

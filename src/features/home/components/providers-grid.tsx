@@ -10,9 +10,18 @@ type ProvidersGridProps = {
   items: ProviderItem[];
   ctaLabel: string;
   ctaHref: string;
+  sourcePage: string;
+  pageSection: string;
 };
 
-export function ProvidersGrid({ title, items, ctaLabel, ctaHref }: ProvidersGridProps) {
+export function ProvidersGrid({
+  title,
+  items,
+  ctaLabel,
+  ctaHref,
+  sourcePage = "home",
+  pageSection = "home_services",
+}: ProvidersGridProps) {
   return (
     <section className="pt-6 pb-16">
       <PageContainer>
@@ -24,14 +33,22 @@ export function ProvidersGrid({ title, items, ctaLabel, ctaHref }: ProvidersGrid
               key={item.id}
               item={item}
               cardPosition={index + 1}
-              sourcePage="home"
-              pageSection="home_services"
+              sourcePage={sourcePage}
+              pageSection={pageSection}
             />
           ))}
         </div>
 
         <div className="mt-10 flex justify-center">
-          <Button href={ctaHref} className="min-w-56">
+          <Button
+            href={ctaHref}
+            data-analytics-event="click_section_cta"
+            data-cta-label={ctaLabel}
+            data-cta-href={ctaHref}
+            data-source-page={sourcePage}
+            data-page-section={pageSection}
+            className="min-w-56"
+          >
             {ctaLabel}
           </Button>
         </div>
