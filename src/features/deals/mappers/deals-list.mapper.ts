@@ -1,4 +1,4 @@
-// src/features/deals/mappers/deals-list.mapper.ts
+// src\features\deals\mappers\deals-list.mapper.ts
 import { getDealFallbackImage } from "@/lib/utils/image-fallbacks";
 import type {
   DealCategory,
@@ -75,7 +75,7 @@ function getLocation(dto: OpportunityListDto) {
 }
 
 function getMinimumInvestment(value: string | number | null) {
-  if (value === null || value === undefined) return "LKR 0";
+  if (value === null || value === undefined) return "Price on Request";
 
   const numericValue = Number(value);
 
