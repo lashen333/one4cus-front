@@ -101,7 +101,7 @@ export function mapServiceDetailDtoToViewModel(dto: ServiceDetailDto): ServiceDe
   return {
     id: dto.id,
     slug: dto.slug,
-    title: dto.title ?? "Untitled Service",
+    title: dto.title ?? "General Service",
     category,
     statusLabel: getStatusLabel(dto.status),
     image: getServiceImage(dto, category),
