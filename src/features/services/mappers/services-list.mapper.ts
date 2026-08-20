@@ -237,7 +237,7 @@ export function mapServiceDtoToListItem(dto: ServiceListDto): ServiceProviderLis
     slug: dto.slug,
 
     companyName: dto.providerBusinessName ?? "Unknown Provider",
-    serviceTitle: dto.title ?? "Untitled Service",
+    serviceTitle: dto.title ?? "General Service",
 
     category,
 
