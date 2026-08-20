@@ -63,7 +63,7 @@ export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
 
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="line-clamp-2 min-h-16 text-[1.55rem] font-semibold leading-tight text-slate-900">
+          <h3 className="line-clamp-2 min-h-16 text-[1.55rem] font-semibold leading-tight text-slate-700">
             {item.title}
           </h3>
 
@@ -107,7 +107,7 @@ export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
           <p className="text-[11px] font-bold uppercase tracking-wide text-slate-400">
             Min. Investment
           </p>
-          <p className="mt-1 text-lg font-semibold text-slate-900">{item.minimumInvestment}</p>
+          <p className="mt-1 text-lg font-semibold text-slate-700">{item.minimumInvestment}</p>
         </div>
 
         {/*<div className="mt-5">

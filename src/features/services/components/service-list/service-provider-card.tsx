@@ -55,7 +55,7 @@ export function ServiceProviderCard({ item }: ServiceProviderCardProps) {
           ) : null}
         </div>
 
-        <h3 className="mt-2 line-clamp-2 text-[1.45rem] font-semibold leading-tight text-slate-900 sm:text-[1.55rem] lg:text-[1.7rem]">
+        <h3 className="mt-2 line-clamp-2 text-[1.45rem] font-semibold leading-tight text-slate-700 sm:text-[1.55rem] lg:text-[1.7rem]">
           {item.serviceTitle}
         </h3>
 

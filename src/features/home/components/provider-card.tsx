@@ -51,7 +51,7 @@ export function ProviderCard({
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="line-clamp-3 text-[1.35rem] font-semibold leading-8 text-slate-900">
+        <h3 className="line-clamp-3 text-[1.35rem] font-semibold leading-8 text-slate-700">
           {title}
         </h3>
 

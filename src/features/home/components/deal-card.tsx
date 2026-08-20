@@ -34,7 +34,7 @@ export function DealCard({
       {/* Added flex-grow to make this div fill available space */}
       <div className="flex grow flex-col p-5">
         {/* Set a fixed height or min-height for title to prevent alignment shifts */}
-        <h3 className="text-[1.35rem] font-semibold leading-8 text-slate-900 line-clamp-2">
+        <h3 className="text-[1.35rem] font-semibold leading-8 text-slate-700 line-clamp-2">
           {item.title}
         </h3>
 
