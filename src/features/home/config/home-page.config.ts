@@ -11,7 +11,7 @@ export const homePageStaticConfig: Omit<HomePageData, "servicesSection" | "deals
       href: "/services",
     },
     secondaryCta: {
-      label: "Become a Provider",
+      label: "List My Services/Deals",
       href: "/",
     },
   },

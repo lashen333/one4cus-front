@@ -1,4 +1,4 @@
-// src/lib/api/public-api.ts
+// src\lib\api\public-api.ts
 // Reusable typed fetch helper for calling the backend public API from Server Components / server loaders.
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL;

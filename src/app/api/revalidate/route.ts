@@ -1,4 +1,4 @@
-// src/app/api/revalidate/route.ts
+// src\app\api\revalidate\route.ts
 
 import { CACHE_TAGS } from "@/lib/cache/cache-tags";
 import { revalidatePath, revalidateTag } from "next/cache";
