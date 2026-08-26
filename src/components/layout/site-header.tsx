@@ -110,7 +110,7 @@ export function SiteHeader() {
             >
               {" "}
               {/*href="" want to use type="button" disabled*/}
-              Become a Provider
+              List My Services/Deals
             </Button>
 
             {/*<Link
