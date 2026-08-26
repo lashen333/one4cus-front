@@ -28,6 +28,7 @@ export function SearchPanel({
     pushToDataLayer({
       event: "search_submit",
       search_term: cleanedSearchTerm || "empty",
+      element_name: "search_input_home",
       page_section: "homepage_search",
     });
     onSubmitSearch();
@@ -65,6 +66,7 @@ export function SearchPanel({
                       event: "quick_search_click",
                       search_term: chip.label,
                       chip_id: chip.id,
+                      element_name: "filter_tag_(category_name)",
                       page_section: "homepage_search_chips",
                     });
                     onSearchTermChange(chip.label);
@@ -88,6 +90,7 @@ export function SearchPanel({
                     pushToDataLayer({
                       event: "search_clear",
                       search_term: searchTerm.trim() || "empty",
+                      element_name: "clear_search_home",
                       page_section: "homepage_search",
                     });
                     onSearchTermChange("");

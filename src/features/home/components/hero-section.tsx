@@ -4,7 +4,7 @@
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { pushToDataLayer } from "@/lib/analytics/gtm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { HeroContent } from "../types/home.types";
 import { LeadFormModal } from "./lead-form-modal";
 
@@ -14,6 +14,15 @@ type HeroSectionProps = {
 
 export function HeroSection({ hero }: HeroSectionProps) {
   const [activeForm, setActiveForm] = useState<"provider" | "signup" | null>(null);
+
+  useEffect(() => {
+    pushToDataLayer({
+      event: "section_view",
+      page_name: "homepage",
+      section_name: "hero_section",
+      element_name: "home_hero_section",
+    });
+  }, []);
 
   const openLeadForm = (formType: "provider" | "signup") => {
     pushToDataLayer({
@@ -46,6 +55,7 @@ export function HeroSection({ hero }: HeroSectionProps) {
                 data-analytics-event="click_hero_cta"
                 data-cta-label={hero.primaryCta.label}
                 data-cta-href={hero.primaryCta.href}
+                data-element-name="home_hero_browse"
                 data-page-section="homepage_hero"
               >
                 {hero.primaryCta.label}
@@ -57,6 +67,7 @@ export function HeroSection({ hero }: HeroSectionProps) {
                 data-analytics-event="click_hero_cta"
                 data-cta-label={hero.secondaryCta.label}
                 data-cta-href="lead_form"
+                data-element-name="home_hero_list"
                 data-page-section="homepage_hero"
                 onClick={() => {
                   openLeadForm("provider");
