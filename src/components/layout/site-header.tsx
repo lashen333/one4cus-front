@@ -33,6 +33,7 @@ export function SiteHeader() {
   ) => {
     pushToDataLayer({
       event: "click_header_nav",
+      element_name: `nav_${item.label.toLowerCase()}`,
       nav_label: item.label,
       nav_href: item.href,
       nav_location: location,
@@ -44,7 +45,10 @@ export function SiteHeader() {
     location: "desktop_header" | "mobile_header",
   ) => {
     pushToDataLayer({
-      event: formType === "provider" ? "click_become_provider" : "click_signup",
+      event: "click_header_cta",
+      element_name: formType === "provider" ? "btn_service_provider" : "btn_signup",
+      cta_label: formType === "provider" ? "List My Services/Deals" : "Sign Up",
+      form_type: formType,
       nav_location: location,
     });
 
@@ -63,6 +67,7 @@ export function SiteHeader() {
             onClick={() => {
               pushToDataLayer({
                 event: "click_header_logo",
+                element_name: "nav_logo",
                 nav_href: "/",
                 nav_location: "desktop_header",
               });
@@ -142,6 +147,7 @@ export function SiteHeader() {
             onClick={() => {
               pushToDataLayer({
                 event: isMobileMenuOpen ? "close_mobile_menu" : "open_mobile_menu",
+                element_name: isMobileMenuOpen ? "btn_close_mobile_menu" : "btn_open_mobile_menu",
                 nav_location: "mobile_header",
               });
               setIsMobileMenuOpen((prev) => !prev);
@@ -186,7 +192,7 @@ export function SiteHeader() {
                   className="h-11 w-full"
                   onClick={() => openLeadForm("provider", "mobile_header")}
                 >
-                  Become a Provider
+                  List My Services/Deals
                 </Button>
 
                 {/*<Link
