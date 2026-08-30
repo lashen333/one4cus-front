@@ -1,8 +1,12 @@
-// src\features\services\components\service-list\services-hero.tsx
+// src/features/services/components/service-list/services-hero.tsx
+"use client";
+
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { BrowsePageToggle } from "@/features/browse/components/browse-page-toggle";
+import { pushToDataLayer } from "@/lib/analytics/gtm";
 import { MapPin, Search } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 type ServicesHeroProps = {
   badge: string;
@@ -33,11 +37,52 @@ export function ServicesHero({
   onCityChange,
   onSubmitSearch,
 }: ServicesHeroProps) {
+  const hasTrackedSearchFocus = useRef(false);
+
+  useEffect(() => {
+    pushToDataLayer({
+      event: "section_view",
+      page_name: "services_page",
+      section_name: "hero_section",
+      element_name: "services_hero_section",
+    });
+  }, []);
+
+  const trackSearchInputFocus = () => {
+    if (hasTrackedSearchFocus.current) return;
+
+    hasTrackedSearchFocus.current = true;
+
+    pushToDataLayer({
+      event: "search_input_focus",
+      page_name: "services_page",
+      section_name: "hero_section",
+      element_name: "search_input_services",
+    });
+  };
+
+  const handleSubmitSearch = () => {
+    const cleanedSearchTerm = searchTerm.trim();
+    const cleanedCity = city.trim();
+
+    pushToDataLayer({
+      event: "search_submit",
+      page_name: "services_page",
+      section_name: "hero_section",
+      element_name: "btn_search_services",
+      search_term: cleanedSearchTerm || "empty",
+      city: cleanedCity || "empty",
+    });
+
+    onSubmitSearch();
+  };
+
   return (
-    <section className="bg-[#eef5fb] py-10 ">
+    <section className="bg-[#eef5fb] py-10">
       <PageContainer>
         <BrowsePageToggle active="services" />
-        <div className="mx-auto max-w-5xl text-center mt-12">
+
+        <div className="mx-auto mt-12 max-w-5xl text-center">
           <div className="inline-flex rounded-full border border-[#b9d5ef] bg-white px-4 py-1 text-sm font-medium text-[#1f78d1]">
             {badge}
           </div>
@@ -53,6 +98,7 @@ export function ServicesHero({
               <Search className="absolute left-5 top-1/2 size-5 -translate-y-1/2 text-slate-400" />
               <input
                 value={searchTerm}
+                onFocus={trackSearchInputFocus}
                 onChange={(e) => onSearchTermChange(e.target.value)}
                 type="text"
                 placeholder={searchPlaceholder}
@@ -72,7 +118,11 @@ export function ServicesHero({
             </div>
 
             <div className="p-2">
-              <Button className="h-12 w-full px-8 md:w-auto" type="button" onClick={onSubmitSearch}>
+              <Button
+                className="h-12 w-full px-8 md:w-auto"
+                type="button"
+                onClick={handleSubmitSearch}
+              >
                 Search
               </Button>
             </div>

@@ -43,6 +43,8 @@ export function ProvidersGrid({
           <Button
             href={ctaHref}
             data-analytics-event="click_section_cta"
+            data-page-name="home_page"
+            data-element-name="btn_browse_all_services"
             data-cta-label={ctaLabel}
             data-cta-href={ctaHref}
             data-source-page={sourcePage}
