@@ -6,6 +6,9 @@ import type { ServiceProviderListItem } from "../../types/services-list.types";
 
 type ServiceProviderCardProps = {
   item: ServiceProviderListItem;
+  cardPosition?: number;
+  sourcePage?: string;
+  pageSection?: string;
 };
 
 function getAvailabilityClasses(state: "available" | "booked") {
@@ -16,7 +19,12 @@ function getAvailabilityClasses(state: "available" | "booked") {
   return "bg-[#ead28b] text-slate-800";
 }
 
-export function ServiceProviderCard({ item }: ServiceProviderCardProps) {
+export function ServiceProviderCard({
+  item,
+  cardPosition,
+  sourcePage = "services_page",
+  pageSection = "listing_section",
+}: ServiceProviderCardProps) {
   const imageSrc = item.image || "/images/placeholders/service.png";
 
   return (
@@ -89,6 +97,18 @@ export function ServiceProviderCard({ item }: ServiceProviderCardProps) {
 
           <Link
             href={`/services/${item.slug}`}
+            data-analytics-event="click_view_profile"
+            data-page-name="services_page"
+            data-section-name="listing_section"
+            data-element-name={`card_${item.slug}`}
+            data-profile-type="service_provider"
+            data-source-page={sourcePage}
+            data-page-section={pageSection}
+            data-item-id={item.id}
+            data-item-name={item.serviceTitle}
+            data-item-category={item.category || "unknown"}
+            data-card-position={cardPosition ?? ""}
+            data-destination-url={`/services/${item.slug}`}
             className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-[#1f78d1] px-5 text-sm font-medium text-white transition hover:bg-[#1768b7]"
           >
             View Profile

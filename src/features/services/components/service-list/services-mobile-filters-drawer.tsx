@@ -1,5 +1,7 @@
-// src\features\services\components\service-list\services-mobile-filters-drawer.tsx
 // src/features/services/components/service-list/services-mobile-filters-drawer.tsx
+"use client";
+
+import { pushToDataLayer } from "@/lib/analytics/gtm";
 import { X } from "lucide-react";
 
 type ServicesMobileFiltersDrawerProps = {
@@ -20,21 +22,49 @@ type ServicesMobileFiltersDrawerProps = {
   onClose: () => void;
 };
 
+function toTrackingName(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
 function FilterCheckbox({
   label,
   checked,
+  filterGroup,
   onToggle,
 }: {
   label: string;
   checked: boolean;
+  filterGroup: "category" | "rating" | "provider_status" | "availability";
   onToggle: () => void;
 }) {
+  const trackingName = toTrackingName(label);
+  const nextState = checked ? "deselected" : "selected";
+
   return (
     <label className="flex cursor-pointer items-center gap-3 text-sm text-slate-700">
       <input
         type="checkbox"
         checked={checked}
-        onChange={onToggle}
+        onChange={() => {
+          pushToDataLayer({
+            event: "filter_toggle",
+            page_name: "services_page",
+            section_name: "listing_section",
+            element_name: `filter_checkbox_${trackingName}`,
+            filter_group: filterGroup,
+            filter_name: label,
+            filter_value: trackingName,
+            filter_state: nextState,
+            filter_location: "mobile_drawer",
+          });
+
+          onToggle();
+        }}
         className="size-4 rounded border-slate-300"
       />
       <span>{label}</span>
@@ -61,12 +91,24 @@ export function ServicesMobileFiltersDrawer({
 }: ServicesMobileFiltersDrawerProps) {
   if (!isOpen) return null;
 
+  const trackClose = (elementName: string) => {
+    pushToDataLayer({
+      event: "filter_drawer_close",
+      page_name: "services_page",
+      section_name: "listing_section",
+      element_name: elementName,
+      filter_location: "mobile_drawer",
+    });
+
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 z-50 lg:hidden">
       <button
         type="button"
         aria-label="Close filters"
-        onClick={onClose}
+        onClick={() => trackClose("filter_drawer_overlay_close")}
         className="absolute inset-0 bg-black/40"
       />
 
@@ -79,7 +121,7 @@ export function ServicesMobileFiltersDrawer({
 
           <button
             type="button"
-            onClick={onClose}
+            onClick={() => trackClose("btn_close_mobile_filters")}
             className="inline-flex size-10 items-center justify-center rounded-full bg-slate-100 text-slate-600"
           >
             <X className="size-5" />
@@ -96,6 +138,7 @@ export function ServicesMobileFiltersDrawer({
                 <FilterCheckbox
                   key={item}
                   label={item}
+                  filterGroup="category"
                   checked={selectedCategories.includes(item)}
                   onToggle={() => onCategoryToggle(item)}
                 />
@@ -112,6 +155,7 @@ export function ServicesMobileFiltersDrawer({
                 <FilterCheckbox
                   key={item}
                   label={item}
+                  filterGroup="rating"
                   checked={selectedRating.includes(item)}
                   onToggle={() => onRatingToggle(item)}
                 />
@@ -128,6 +172,7 @@ export function ServicesMobileFiltersDrawer({
                 <FilterCheckbox
                   key={item}
                   label={item}
+                  filterGroup="provider_status"
                   checked={selectedProviderStatus.includes(item)}
                   onToggle={() => onProviderStatusToggle(item)}
                 />
@@ -144,6 +189,7 @@ export function ServicesMobileFiltersDrawer({
                 <FilterCheckbox
                   key={item}
                   label={item}
+                  filterGroup="availability"
                   checked={selectedAvailability.includes(item)}
                   onToggle={() => onAvailabilityToggle(item)}
                 />
@@ -156,7 +202,17 @@ export function ServicesMobileFiltersDrawer({
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
-              onClick={onResetAll}
+              onClick={() => {
+                pushToDataLayer({
+                  event: "filter_reset",
+                  page_name: "services_page",
+                  section_name: "listing_section",
+                  element_name: "btn_reset_mobile_filters",
+                  filter_location: "mobile_drawer",
+                });
+
+                onResetAll();
+              }}
               className="h-11 rounded-xl border border-slate-300 text-sm font-medium text-slate-700"
             >
               Reset
@@ -164,7 +220,17 @@ export function ServicesMobileFiltersDrawer({
 
             <button
               type="button"
-              onClick={onClose}
+              onClick={() => {
+                pushToDataLayer({
+                  event: "filter_apply",
+                  page_name: "services_page",
+                  section_name: "listing_section",
+                  element_name: "btn_apply_mobile_filters",
+                  filter_location: "mobile_drawer",
+                });
+
+                onClose();
+              }}
               className="h-11 rounded-xl bg-[#1f78d1] text-sm font-medium text-white"
             >
               Apply Filters

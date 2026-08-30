@@ -1,4 +1,8 @@
-// src\features\services\components\service-list\services-filters-sidebar.tsx
+// src/features/services/components/service-list/services-filters-sidebar.tsx
+"use client";
+
+import { pushToDataLayer } from "@/lib/analytics/gtm";
+
 type ServicesFiltersSidebarProps = {
   categories: string[];
   ratingOptions: string[];
@@ -15,21 +19,49 @@ type ServicesFiltersSidebarProps = {
   onResetAll: () => void;
 };
 
+function toTrackingName(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
 function FilterCheckbox({
   label,
   checked,
+  filterGroup,
   onToggle,
 }: {
   label: string;
   checked: boolean;
+  filterGroup: "category" | "rating" | "provider_status" | "availability";
   onToggle: () => void;
 }) {
+  const trackingName = toTrackingName(label);
+  const nextState = checked ? "deselected" : "selected";
+
   return (
     <label className="flex cursor-pointer items-center gap-3 text-sm text-slate-700">
       <input
         type="checkbox"
         checked={checked}
-        onChange={onToggle}
+        onChange={() => {
+          pushToDataLayer({
+            event: "filter_toggle",
+            page_name: "services_page",
+            section_name: "listing_section",
+            element_name: `filter_checkbox_${trackingName}`,
+            filter_group: filterGroup,
+            filter_name: label,
+            filter_value: trackingName,
+            filter_state: nextState,
+            filter_location: "desktop_sidebar",
+          });
+
+          onToggle();
+        }}
         className="size-4 rounded border-slate-300"
       />
       <span>{label}</span>
@@ -59,7 +91,17 @@ export function ServicesFiltersSidebar({
           <h2 className="text-xl font-semibold text-slate-900">Filters</h2>
           <button
             type="button"
-            onClick={onResetAll}
+            onClick={() => {
+              pushToDataLayer({
+                event: "filter_reset",
+                page_name: "services_page",
+                section_name: "listing_section",
+                element_name: "btn_reset_all_filters",
+                filter_location: "desktop_sidebar",
+              });
+
+              onResetAll();
+            }}
             className="text-sm font-medium text-slate-500 hover:text-slate-900"
           >
             Reset All
@@ -76,6 +118,7 @@ export function ServicesFiltersSidebar({
                 <FilterCheckbox
                   key={item}
                   label={item}
+                  filterGroup="category"
                   checked={selectedCategories.includes(item)}
                   onToggle={() => onCategoryToggle(item)}
                 />
@@ -92,6 +135,7 @@ export function ServicesFiltersSidebar({
                 <FilterCheckbox
                   key={item}
                   label={item}
+                  filterGroup="rating"
                   checked={selectedRating.includes(item)}
                   onToggle={() => onRatingToggle(item)}
                 />
@@ -108,6 +152,7 @@ export function ServicesFiltersSidebar({
                 <FilterCheckbox
                   key={item}
                   label={item}
+                  filterGroup="provider_status"
                   checked={selectedProviderStatus.includes(item)}
                   onToggle={() => onProviderStatusToggle(item)}
                 />
@@ -124,6 +169,7 @@ export function ServicesFiltersSidebar({
                 <FilterCheckbox
                   key={item}
                   label={item}
+                  filterGroup="availability"
                   checked={selectedAvailability.includes(item)}
                   onToggle={() => onAvailabilityToggle(item)}
                 />

@@ -43,6 +43,11 @@ export function ServicesPagination({ currentPage, totalPages }: ServicesPaginati
       {currentPage > 1 ? (
         <Link
           href={getPageHref(currentPage - 1)}
+          data-analytics-event="pagination_click"
+          data-page-name="services_page"
+          data-section-name="listing_section"
+          data-element-name="pagination_previous"
+          data-pagination-page={currentPage - 1}
           scroll={false}
           className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50"
         >
@@ -65,6 +70,11 @@ export function ServicesPagination({ currentPage, totalPages }: ServicesPaginati
             <Link
               href={getPageHref(page)}
               scroll={false}
+              data-analytics-event="pagination_click"
+              data-page-name="services_page"
+              data-section-name="listing_section"
+              data-element-name={`pagination_page_${page}`}
+              data-pagination-page={page}
               className={
                 page === currentPage
                   ? "flex size-10 items-center justify-center rounded-xl bg-[#1f78d1] text-white"
@@ -81,6 +91,11 @@ export function ServicesPagination({ currentPage, totalPages }: ServicesPaginati
         <Link
           href={getPageHref(currentPage + 1)}
           scroll={false}
+          data-analytics-event="pagination_click"
+          data-page-name="services_page"
+          data-section-name="listing_section"
+          data-element-name="pagination_next"
+          data-pagination-page={currentPage + 1}
           className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50"
         >
           ›

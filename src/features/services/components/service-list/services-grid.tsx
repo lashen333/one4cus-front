@@ -18,8 +18,14 @@ export function ServicesGrid({ items }: ServicesGridProps) {
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 2xl:grid-cols-3">
-      {items.map((item) => (
-        <ServiceProviderCard key={item.id} item={item} />
+      {items.map((item, index) => (
+        <ServiceProviderCard
+          key={item.id}
+          item={item}
+          cardPosition={index + 1}
+          sourcePage="services_page"
+          pageSection="listing_section"
+        />
       ))}
     </div>
   );
