@@ -1,8 +1,9 @@
 // src\app\(public)\contact\page.tsx
-// src/app/(public)/contact/page.tsx
+
 import { PageContainer } from "@/components/layout/page-container";
 import { Mail, MapPin, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import { ContactPageTracker } from "./contact-page-tracker";
 
 export const metadata = {
   title: "Contact Us | One4cus",
@@ -12,6 +13,8 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <main className="bg-white">
+      <ContactPageTracker />
+
       <section className="bg-[#f3f8fc] py-16 md:py-24">
         <PageContainer>
           <div className="mx-auto max-w-3xl text-center">
@@ -45,6 +48,13 @@ export default function ContactPage() {
 
               <Link
                 href="mailto:one4cus.support@gmail.com"
+                data-analytics-event="contact_link_click"
+                data-page-name="contact_us_page"
+                data-section-name="hero_section"
+                data-element-name="email_link_click"
+                data-link-label="one4cus.support@gmail.com"
+                data-link-href="mailto:one4cus.support@gmail.com"
+                data-contact-method="email"
                 className="mt-4 inline-flex text-sm font-semibold text-[#1f78d1] hover:underline"
               >
                 one4cus.support@gmail.com
@@ -93,6 +103,12 @@ export default function ContactPage() {
             <div className="mt-7 flex flex-col justify-center gap-4 sm:flex-row">
               <Link
                 href="/services"
+                data-analytics-event="click_section_cta"
+                data-page-name="contact_us_page"
+                data-section-name="hero_section"
+                data-element-name="btn_browse_services_contact"
+                data-cta-label="Browse Services"
+                data-cta-href="/services"
                 className="inline-flex h-12 items-center justify-center rounded-xl bg-white px-6 text-sm font-semibold text-[#1f78d1] transition hover:bg-blue-50"
               >
                 Browse Services
@@ -100,6 +116,12 @@ export default function ContactPage() {
 
               <Link
                 href="/deals"
+                data-analytics-event="click_section_cta"
+                data-page-name="contact_us_page"
+                data-section-name="hero_section"
+                data-element-name="btn_browse_deals_contact"
+                data-cta-label="Browse Deals"
+                data-cta-href="/deals"
                 className="inline-flex h-12 items-center justify-center rounded-xl border border-white/50 px-6 text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 Browse Deals

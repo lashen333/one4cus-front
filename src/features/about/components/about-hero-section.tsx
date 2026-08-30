@@ -1,6 +1,8 @@
-// src\features\about\components\about-hero-section.tsx
+// src/features/about/components/about-hero-section.tsx
+
 import { PageContainer } from "@/components/layout/page-container";
 import type { AboutPageData } from "../types/about.types";
+import { AboutPageTracker } from "./about-page-tracker";
 
 type AboutHeroSectionProps = {
   hero: AboutPageData["hero"];
@@ -9,6 +11,8 @@ type AboutHeroSectionProps = {
 export function AboutHeroSection({ hero }: AboutHeroSectionProps) {
   return (
     <section className="bg-[#f3f8fc] py-16 md:py-24">
+      <AboutPageTracker />
+
       <PageContainer>
         <div className="mx-auto max-w-4xl text-center">
           <span className="inline-flex rounded-full border border-[#cfe1f5] bg-white px-4 py-2 text-sm font-semibold text-[#1f78d1]">

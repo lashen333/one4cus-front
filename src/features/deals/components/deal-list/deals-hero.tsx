@@ -1,8 +1,10 @@
 // src\features\deals\components\deal-list\deals-hero.tsx
+
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { BrowsePageToggle } from "@/features/browse/components/browse-page-toggle";
 import Image from "next/image";
+import { DealsHeroTracker } from "./deals-hero-tracker";
 
 type DealsHeroProps = {
   hero: {
@@ -23,6 +25,8 @@ type DealsHeroProps = {
 export function DealsHero({ hero }: DealsHeroProps) {
   return (
     <section className="pt-10 pb-12">
+      <DealsHeroTracker />
+
       <PageContainer>
         <BrowsePageToggle active="deals" />
 
@@ -39,8 +43,28 @@ export function DealsHero({ hero }: DealsHeroProps) {
             <p className="mt-6 max-w-xl text-xl leading-9 text-slate-500">{hero.subtitle}</p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Button href="/deals">{hero.primaryCtaLabel}</Button>
-              <Button href="#" variant="secondary">
+              <Button
+                href="/deals"
+                data-analytics-event="click_hero_cta"
+                data-page-name="deals_page"
+                data-section-name="hero_section"
+                data-element-name="btn_explore_all_deals"
+                data-cta-label={hero.primaryCtaLabel}
+                data-cta-href="/deals"
+              >
+                {hero.primaryCtaLabel}
+              </Button>
+
+              <Button
+                href="#how-it-works"
+                variant="secondary"
+                data-analytics-event="click_hero_cta"
+                data-page-name="deals_page"
+                data-section-name="hero_section"
+                data-element-name="btn_how_it_works"
+                data-cta-label={hero.secondaryCtaLabel}
+                data-cta-href="#how-it-works"
+              >
                 {hero.secondaryCtaLabel}
               </Button>
             </div>
