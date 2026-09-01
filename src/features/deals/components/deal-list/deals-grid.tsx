@@ -18,8 +18,14 @@ export function DealsGrid({ items }: DealsGridProps) {
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 2xl:grid-cols-3">
-      {items.map((item) => (
-        <DealOpportunityCard key={item.id} item={item} />
+      {items.map((item, index) => (
+        <DealOpportunityCard
+          key={item.id}
+          item={item}
+          cardPosition={index + 1}
+          sourcePage="deals_page"
+          pageSection="listing_section"
+        />
       ))}
     </div>
   );

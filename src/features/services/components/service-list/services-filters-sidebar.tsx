@@ -1,4 +1,4 @@
-// src/features/services/components/service-list/services-filters-sidebar.tsx
+// src\features\services\components\service-list\services-filters-sidebar.tsx
 "use client";
 
 import { pushToDataLayer } from "@/lib/analytics/gtm";

@@ -6,6 +6,9 @@ import type { DealListItem } from "../../types/deals-list.types";
 
 type DealOpportunityCardProps = {
   item: DealListItem;
+  cardPosition?: number;
+  sourcePage?: string;
+  pageSection?: string;
 };
 
 function getRiskClasses(risk: string) {
@@ -31,7 +34,12 @@ function getFundingClasses(status: string) {
   return "bg-slate-100 text-slate-600";
 }
 
-export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
+export function DealOpportunityCard({
+  item,
+  cardPosition,
+  sourcePage = "deals_page",
+  pageSection = "listing_section",
+}: DealOpportunityCardProps) {
   const imageSrc = item.image || "/images/placeholders/deal.png";
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -132,6 +140,18 @@ export function DealOpportunityCard({ item }: DealOpportunityCardProps) {
         <div className="mt-auto pt-1">
           <Link
             href={`/deals/${item.slug}`}
+            data-analytics-event="click_view_profile"
+            data-page-name="deals_page"
+            data-section-name="listing_section"
+            data-element-name={`card_${item.slug}`}
+            data-profile-type="deal"
+            data-source-page={sourcePage}
+            data-page-section={pageSection}
+            data-item-id={item.id}
+            data-item-name={item.title}
+            data-item-category={item.category || "unknown"}
+            data-card-position={cardPosition ?? ""}
+            data-destination-url={`/deals/${item.slug}`}
             className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-xl bg-[#1f78d1] px-5 text-sm font-medium text-white transition hover:bg-[#1768b7]"
           >
             View Opportunity
