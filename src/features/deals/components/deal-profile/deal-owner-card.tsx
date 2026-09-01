@@ -46,6 +46,8 @@ export function DealOwnerCard({ owner }: DealOwnerCardProps) {
           entityType="deal"
           entitySlug={owner.entitySlug}
           sourceTitle={owner.company}
+          pageName="profile_page"
+          sectionName="deals_category"
         />
         {/*<Button className="w-full">
           <span className="inline-flex items-center gap-2">

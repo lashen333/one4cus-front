@@ -1,7 +1,9 @@
 // src\components\shared\reveal-contact-button.tsx
 //contact number reveal
+// src/components/shared/reveal-contact-button.tsx
 "use client";
 
+import { pushToDataLayer } from "@/lib/analytics/gtm";
 import { Phone } from "lucide-react";
 import { useState } from "react";
 
@@ -9,12 +11,16 @@ type RevealContactButtonProps = {
   entityType: "service" | "deal" | "provider";
   entitySlug: string;
   sourceTitle: string;
+  pageName?: string;
+  sectionName?: string;
 };
 
 export function RevealContactButton({
   entityType,
   entitySlug,
   sourceTitle,
+  pageName = "profile_page",
+  sectionName,
 }: RevealContactButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [visitorName, setVisitorName] = useState("");
@@ -23,6 +29,9 @@ export function RevealContactButton({
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const trackingSectionName =
+    sectionName ?? (entityType === "deal" ? "deals_category" : "service_category");
+
   async function handleReveal() {
     setErrorMessage("");
 
@@ -30,6 +39,16 @@ export function RevealContactButton({
       setErrorMessage("Please add your name and phone number or email.");
       return;
     }
+
+    pushToDataLayer({
+      event: "reveal_number_submit",
+      page_name: pageName,
+      section_name: trackingSectionName,
+      element_name: "btn_reveal_number_submit",
+      entity_type: entityType,
+      entity_slug: entitySlug,
+      source_title: sourceTitle,
+    });
 
     try {
       setIsSubmitting(true);
@@ -55,8 +74,28 @@ export function RevealContactButton({
       }
 
       setRevealedContact(result.data.revealedContact);
+
+      pushToDataLayer({
+        event: "reveal_number_success",
+        page_name: pageName,
+        section_name: trackingSectionName,
+        element_name: "btn_reveal_number_submit",
+        entity_type: entityType,
+        entity_slug: entitySlug,
+        source_title: sourceTitle,
+      });
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : "Failed to reveal contact.");
+
+      pushToDataLayer({
+        event: "reveal_number_error",
+        page_name: pageName,
+        section_name: trackingSectionName,
+        element_name: "btn_reveal_number_submit",
+        entity_type: entityType,
+        entity_slug: entitySlug,
+        source_title: sourceTitle,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -66,7 +105,19 @@ export function RevealContactButton({
     <>
       <button
         type="button"
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          pushToDataLayer({
+            event: "reveal_number_open",
+            page_name: pageName,
+            section_name: trackingSectionName,
+            element_name: "btn_reveal_number_open",
+            entity_type: entityType,
+            entity_slug: entitySlug,
+            source_title: sourceTitle,
+          });
+
+          setIsOpen(true);
+        }}
         className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md border border-[#1f78d1] text-sm font-medium text-[#1f78d1] transition hover:bg-blue-50"
       >
         <Phone className="size-4" />

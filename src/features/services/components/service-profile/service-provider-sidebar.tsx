@@ -58,6 +58,8 @@ export function ServiceProviderSidebar({ service }: ServiceProviderSidebarProps)
             entityType="service"
             entitySlug={service.slug}
             sourceTitle={service.title}
+            pageName="profile_page"
+            sectionName="service_category"
           />
 
           {/*<Button className="w-full">
