@@ -32,6 +32,8 @@ export function RevealContactButton({
   const trackingSectionName =
     sectionName ?? (entityType === "deal" ? "deals_category" : "service_category");
 
+  const formId = `form_reveal_number_${entityType}`;
+
   async function handleReveal() {
     setErrorMessage("");
 
@@ -45,6 +47,7 @@ export function RevealContactButton({
       page_name: pageName,
       section_name: trackingSectionName,
       element_name: "btn_reveal_number_submit",
+      form_id: formId,
       entity_type: entityType,
       entity_slug: entitySlug,
       source_title: sourceTitle,
@@ -80,6 +83,7 @@ export function RevealContactButton({
         page_name: pageName,
         section_name: trackingSectionName,
         element_name: "btn_reveal_number_submit",
+        form_id: formId,
         entity_type: entityType,
         entity_slug: entitySlug,
         source_title: sourceTitle,
@@ -92,6 +96,7 @@ export function RevealContactButton({
         page_name: pageName,
         section_name: trackingSectionName,
         element_name: "btn_reveal_number_submit",
+        form_id: formId,
         entity_type: entityType,
         entity_slug: entitySlug,
         source_title: sourceTitle,
@@ -111,6 +116,7 @@ export function RevealContactButton({
             page_name: pageName,
             section_name: trackingSectionName,
             element_name: "btn_reveal_number_open",
+            form_id: formId,
             entity_type: entityType,
             entity_slug: entitySlug,
             source_title: sourceTitle,
@@ -118,6 +124,12 @@ export function RevealContactButton({
 
           setIsOpen(true);
         }}
+        data-page-name={pageName}
+        data-section-name={trackingSectionName}
+        data-element-name="btn_reveal_number_open"
+        data-form-id={formId}
+        data-entity-type={entityType}
+        data-entity-slug={entitySlug}
         className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md border border-[#1f78d1] text-sm font-medium text-[#1f78d1] transition hover:bg-blue-50"
       >
         <Phone className="size-4" />
@@ -150,10 +162,25 @@ export function RevealContactButton({
                 <p className="mt-1 text-2xl font-bold text-green-800">{revealedContact}</p>
               </div>
             ) : (
-              <div className="mt-6 space-y-4">
+              <form
+                id={formId}
+                name={formId}
+                data-page-name={pageName}
+                data-section-name={trackingSectionName}
+                data-element-name={formId}
+                data-form-id={formId}
+                data-entity-type={entityType}
+                data-entity-slug={entitySlug}
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  handleReveal();
+                }}
+                className="mt-6 space-y-4"
+              >
                 <div>
                   <label className="text-sm font-medium text-slate-700">Your Name</label>
                   <input
+                    name="visitor_name"
                     value={visitorName}
                     onChange={(event) => setVisitorName(event.target.value)}
                     type="text"
@@ -167,6 +194,7 @@ export function RevealContactButton({
                     Phone Number or Email
                   </label>
                   <input
+                    name="visitor_contact"
                     value={visitorContact}
                     onChange={(event) => setVisitorContact(event.target.value)}
                     type="text"
@@ -178,14 +206,19 @@ export function RevealContactButton({
                 {errorMessage ? <p className="text-sm text-red-500">{errorMessage}</p> : null}
 
                 <button
-                  type="button"
-                  onClick={handleReveal}
+                  type="submit"
                   disabled={isSubmitting}
+                  data-page-name={pageName}
+                  data-section-name={trackingSectionName}
+                  data-element-name="btn_reveal_number_submit"
+                  data-form-id={formId}
+                  data-entity-type={entityType}
+                  data-entity-slug={entitySlug}
                   className="inline-flex h-11 w-full items-center justify-center rounded-md bg-[#1f78d1] text-sm font-medium text-white transition hover:bg-[#1768b7] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isSubmitting ? "Saving..." : "Reveal Number"}
                 </button>
-              </div>
+              </form>
             )}
           </div>
         </div>
