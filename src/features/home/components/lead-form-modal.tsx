@@ -1,7 +1,6 @@
-// src\features\home\components\lead-form-modal.tsx
-//signup become aprovider form model
+// src/features/home/components/lead-form-modal.tsx
+// signup / become a provider form modal
 
-// src\features\home\components\lead-form-modal.tsx
 "use client";
 
 import { useState } from "react";
@@ -37,6 +36,11 @@ export function LeadFormModal({ open, leadType, onClose }: LeadFormModalProps) {
   if (!open) return null;
 
   const copy = FORM_COPY[leadType];
+
+  const formId = leadType === "provider" ? "form_become_provider" : "form_signup";
+
+  const submitElementName =
+    leadType === "provider" ? "btn_submit_provider_request" : "btn_submit_signup";
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -90,6 +94,11 @@ export function LeadFormModal({ open, leadType, onClose }: LeadFormModalProps) {
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full px-3 py-1 text-sm text-slate-500 hover:bg-slate-100"
           aria-label="Close form"
+          data-page-name="global"
+          data-section-name="lead_form_modal"
+          data-element-name="btn_close_lead_form"
+          data-form-id={formId}
+          data-lead-type={leadType}
         >
           ✕
         </button>
@@ -99,10 +108,21 @@ export function LeadFormModal({ open, leadType, onClose }: LeadFormModalProps) {
           <p className="mt-2 text-sm text-slate-600">{copy.description}</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+          id={formId}
+          name={formId}
+          data-page-name="global"
+          data-section-name="lead_form_modal"
+          data-element-name={formId}
+          data-form-id={formId}
+          data-lead-type={leadType}
+          onSubmit={handleSubmit}
+          className="space-y-4"
+        >
           <div>
             <label className="mb-1 block text-sm font-medium text-slate-700">Name *</label>
             <input
+              name="name"
               value={name}
               onChange={(event) => setName(event.target.value)}
               required
@@ -116,6 +136,7 @@ export function LeadFormModal({ open, leadType, onClose }: LeadFormModalProps) {
               Phone Number or Email *
             </label>
             <input
+              name="phone_or_email"
               value={phoneOrEmail}
               onChange={(event) => setPhoneOrEmail(event.target.value)}
               required
@@ -137,6 +158,11 @@ export function LeadFormModal({ open, leadType, onClose }: LeadFormModalProps) {
           <button
             type="submit"
             disabled={isSubmitting}
+            data-page-name="global"
+            data-section-name="lead_form_modal"
+            data-element-name={submitElementName}
+            data-form-id={formId}
+            data-lead-type={leadType}
             className="w-full rounded-lg bg-[#1f78d1] px-4 py-3 text-sm font-semibold text-white hover:bg-[#1471cd] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? "Submitting..." : copy.buttonLabel}
