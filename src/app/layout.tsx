@@ -1,4 +1,5 @@
 // src\app\layout.tsx
+import { PageExitTracker } from "@/components/analytics/page-exit-tracker";
 import { siteConfig } from "@/lib/config/site";
 import { GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
@@ -21,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PageExitTracker />
+        {children}
+      </body>
       {gtmId ? <GoogleTagManager gtmId={gtmId} /> : null}
     </html>
   );
