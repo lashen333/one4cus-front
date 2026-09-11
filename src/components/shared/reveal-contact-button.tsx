@@ -1,6 +1,6 @@
 // src\components\shared\reveal-contact-button.tsx
-//contact number reveal
-// src/components/shared/reveal-contact-button.tsx
+// contact number reveal
+
 "use client";
 
 import { pushToDataLayer } from "@/lib/analytics/gtm";
@@ -44,13 +44,15 @@ export function RevealContactButton({
 
     pushToDataLayer({
       event: "reveal_number_submit",
-      page_name: pageName,
-      section_name: trackingSectionName,
       element_name: "btn_reveal_number_submit",
-      form_id: formId,
-      entity_type: entityType,
-      entity_slug: entitySlug,
-      source_title: sourceTitle,
+      event_value: {
+        page_name: pageName,
+        section_name: trackingSectionName,
+        form_id: formId,
+        entity_type: entityType,
+        entity_slug: entitySlug,
+        source_title: sourceTitle,
+      },
     });
 
     try {
@@ -80,26 +82,31 @@ export function RevealContactButton({
 
       pushToDataLayer({
         event: "reveal_number_success",
-        page_name: pageName,
-        section_name: trackingSectionName,
         element_name: "btn_reveal_number_submit",
-        form_id: formId,
-        entity_type: entityType,
-        entity_slug: entitySlug,
-        source_title: sourceTitle,
+        event_value: {
+          page_name: pageName,
+          section_name: trackingSectionName,
+          form_id: formId,
+          entity_type: entityType,
+          entity_slug: entitySlug,
+          source_title: sourceTitle,
+        },
       });
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : "Failed to reveal contact.");
 
       pushToDataLayer({
         event: "reveal_number_error",
-        page_name: pageName,
-        section_name: trackingSectionName,
         element_name: "btn_reveal_number_submit",
-        form_id: formId,
-        entity_type: entityType,
-        entity_slug: entitySlug,
-        source_title: sourceTitle,
+        event_value: {
+          page_name: pageName,
+          section_name: trackingSectionName,
+          form_id: formId,
+          entity_type: entityType,
+          entity_slug: entitySlug,
+          source_title: sourceTitle,
+          error_message: error instanceof Error ? error.message : "Failed to reveal contact.",
+        },
       });
     } finally {
       setIsSubmitting(false);
@@ -113,13 +120,15 @@ export function RevealContactButton({
         onClick={() => {
           pushToDataLayer({
             event: "reveal_number_open",
-            page_name: pageName,
-            section_name: trackingSectionName,
             element_name: "btn_reveal_number_open",
-            form_id: formId,
-            entity_type: entityType,
-            entity_slug: entitySlug,
-            source_title: sourceTitle,
+            event_value: {
+              page_name: pageName,
+              section_name: trackingSectionName,
+              form_id: formId,
+              entity_type: entityType,
+              entity_slug: entitySlug,
+              source_title: sourceTitle,
+            },
           });
 
           setIsOpen(true);

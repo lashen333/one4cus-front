@@ -14,6 +14,15 @@ type SearchPanelProps = {
   onSubmitSearch: () => void;
 };
 
+function toTrackingName(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
 export function SearchPanel({
   search,
   searchTerm,
@@ -27,9 +36,13 @@ export function SearchPanel({
 
     pushToDataLayer({
       event: "search_submit",
-      search_term: cleanedSearchTerm || "empty",
       element_name: "search_input_home",
-      page_section: "homepage_search",
+      event_value: {
+        page_name: "homepage",
+        section_name: "search_section",
+        search_term: cleanedSearchTerm || "empty",
+        page_section: "homepage_search",
+      },
     });
     onSubmitSearch();
   }
@@ -57,29 +70,38 @@ export function SearchPanel({
             </form>
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-              {search.chips.map((chip) => (
-                <button
-                  key={chip.id}
-                  type="button"
-                  onClick={() => {
-                    pushToDataLayer({
-                      event: "quick_search_click",
-                      search_term: chip.label,
-                      chip_id: chip.id,
-                      element_name: "filter_tag_(category_name)",
-                      page_section: "homepage_search_chips",
-                    });
-                    onSearchTermChange(chip.label);
-                  }}
-                  className={`rounded-md border px-4 py-2 text-sm transition ${
-                    searchTerm.toLowerCase() === chip.label.toLowerCase()
-                      ? "border-[#1677c8] bg-[#1677c8] text-white"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-100"
-                  }`}
-                >
-                  {chip.label}
-                </button>
-              ))}
+              {search.chips.map((chip) => {
+                const trackingName = toTrackingName(chip.label);
+
+                return (
+                  <button
+                    key={chip.id}
+                    type="button"
+                    onClick={() => {
+                      pushToDataLayer({
+                        event: "quick_search_click",
+                        element_name: `filter_tag_${trackingName}`,
+                        event_value: {
+                          page_name: "homepage",
+                          section_name: "search_section",
+                          search_term: chip.label,
+                          chip_id: chip.id,
+                          page_section: "homepage_search_chips",
+                        },
+                      });
+
+                      onSearchTermChange(chip.label);
+                    }}
+                    className={`rounded-md border px-4 py-2 text-sm transition ${
+                      searchTerm.toLowerCase() === chip.label.toLowerCase()
+                        ? "border-[#1677c8] bg-[#1677c8] text-white"
+                        : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-100"
+                    }`}
+                  >
+                    {chip.label}
+                  </button>
+                );
+              })}
             </div>
 
             {searchTerm ? (
@@ -89,10 +111,15 @@ export function SearchPanel({
                   onClick={() => {
                     pushToDataLayer({
                       event: "search_clear",
-                      search_term: searchTerm.trim() || "empty",
-                      element_name: "clear_search_home",
-                      page_section: "homepage_search",
+                      element_name: "btn_clear_search_home",
+                      event_value: {
+                        page_name: "homepage",
+                        section_name: "search_section",
+                        search_term: searchTerm.trim() || "empty",
+                        page_section: "homepage_search",
+                      },
                     });
+
                     onSearchTermChange("");
                   }}
                   className="text-sm font-medium text-[#1677c8] hover:underline"

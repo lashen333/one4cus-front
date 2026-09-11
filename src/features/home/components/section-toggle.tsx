@@ -17,10 +17,12 @@ export function SectionToggle({ activeTab, onChange }: SectionToggleProps) {
 
     pushToDataLayer({
       event: "section_toggle_click",
-      page_name: "home_page",
-      section_name: "hero_section",
       element_name: tab === "services" ? "button_toggle_services" : "button_toggle_deals",
-      selected_tab: tab,
+      event_value: {
+        page_name: "homepage",
+        section_name: "listing_toggle_section",
+        selected_tab: tab,
+      },
     });
     onChange(tab);
   };

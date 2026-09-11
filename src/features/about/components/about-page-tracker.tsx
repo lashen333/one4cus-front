@@ -9,9 +9,11 @@ export function AboutPageTracker() {
   useEffect(() => {
     pushToDataLayer({
       event: "section_view",
-      page_name: "about_us_page",
-      section_name: "hero_section",
       element_name: "about_us_hero_section",
+      event_value: {
+        page_name: "about_us_page",
+        section_name: "hero_section",
+      },
     });
   }, []);
 

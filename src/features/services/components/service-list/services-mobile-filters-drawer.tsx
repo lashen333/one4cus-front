@@ -53,14 +53,16 @@ function FilterCheckbox({
         onChange={() => {
           pushToDataLayer({
             event: "filter_toggle",
-            page_name: "services_page",
-            section_name: "listing_section",
             element_name: `filter_checkbox_${trackingName}`,
-            filter_group: filterGroup,
-            filter_name: label,
-            filter_value: trackingName,
-            filter_state: nextState,
-            filter_location: "mobile_drawer",
+            event_value: {
+              page_name: "services_page",
+              section_name: "listing_section",
+              filter_group: filterGroup,
+              filter_name: label,
+              filter_value: trackingName,
+              filter_state: nextState,
+              filter_location: "mobile_drawer",
+            },
           });
 
           onToggle();
@@ -94,10 +96,12 @@ export function ServicesMobileFiltersDrawer({
   const trackClose = (elementName: string) => {
     pushToDataLayer({
       event: "filter_drawer_close",
-      page_name: "services_page",
-      section_name: "listing_section",
       element_name: elementName,
-      filter_location: "mobile_drawer",
+      event_value: {
+        page_name: "services_page",
+        section_name: "listing_section",
+        filter_location: "mobile_drawer",
+      },
     });
 
     onClose();
@@ -205,10 +209,12 @@ export function ServicesMobileFiltersDrawer({
               onClick={() => {
                 pushToDataLayer({
                   event: "filter_reset",
-                  page_name: "services_page",
-                  section_name: "listing_section",
                   element_name: "btn_reset_mobile_filters",
-                  filter_location: "mobile_drawer",
+                  event_value: {
+                    page_name: "services_page",
+                    section_name: "listing_section",
+                    filter_location: "mobile_drawer",
+                  },
                 });
 
                 onResetAll();
@@ -223,10 +229,12 @@ export function ServicesMobileFiltersDrawer({
               onClick={() => {
                 pushToDataLayer({
                   event: "filter_apply",
-                  page_name: "services_page",
-                  section_name: "listing_section",
                   element_name: "btn_apply_mobile_filters",
-                  filter_location: "mobile_drawer",
+                  event_value: {
+                    page_name: "services_page",
+                    section_name: "listing_section",
+                    filter_location: "mobile_drawer",
+                  },
                 });
 
                 onClose();

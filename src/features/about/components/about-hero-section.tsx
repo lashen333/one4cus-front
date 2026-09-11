@@ -1,4 +1,4 @@
-// src/features/about/components/about-hero-section.tsx
+// src\features\about\components\about-hero-section.tsx
 
 import { PageContainer } from "@/components/layout/page-container";
 import type { AboutPageData } from "../types/about.types";

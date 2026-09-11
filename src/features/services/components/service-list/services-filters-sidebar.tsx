@@ -1,4 +1,4 @@
-// src\features\services\components\service-list\services-filters-sidebar.tsx
+// src/features/services/components/service-list/services-filters-sidebar.tsx
 "use client";
 
 import { pushToDataLayer } from "@/lib/analytics/gtm";
@@ -50,14 +50,16 @@ function FilterCheckbox({
         onChange={() => {
           pushToDataLayer({
             event: "filter_toggle",
-            page_name: "services_page",
-            section_name: "listing_section",
             element_name: `filter_checkbox_${trackingName}`,
-            filter_group: filterGroup,
-            filter_name: label,
-            filter_value: trackingName,
-            filter_state: nextState,
-            filter_location: "desktop_sidebar",
+            event_value: {
+              page_name: "services_page",
+              section_name: "listing_section",
+              filter_group: filterGroup,
+              filter_name: label,
+              filter_value: trackingName,
+              filter_state: nextState,
+              filter_location: "desktop_sidebar",
+            },
           });
 
           onToggle();
@@ -94,10 +96,12 @@ export function ServicesFiltersSidebar({
             onClick={() => {
               pushToDataLayer({
                 event: "filter_reset",
-                page_name: "services_page",
-                section_name: "listing_section",
                 element_name: "btn_reset_all_filters",
-                filter_location: "desktop_sidebar",
+                event_value: {
+                  page_name: "services_page",
+                  section_name: "listing_section",
+                  filter_location: "desktop_sidebar",
+                },
               });
 
               onResetAll();

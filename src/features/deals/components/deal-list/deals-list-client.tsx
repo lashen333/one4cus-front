@@ -1,4 +1,4 @@
-// src\features\deals\components\deal-list\deals-list-client.tsx
+// src/features/deals/components/deal-list/deals-list-client.tsx
 "use client";
 
 import { PageContainer } from "@/components/layout/page-container";
@@ -24,7 +24,7 @@ type DealsListClientProps = {
   data: DealsListingPageData;
 };
 
-//this convert the tracking names snake case style
+// This converts tracking names to snake_case style
 function toTrackingName(value: string) {
   return value
     .trim()
@@ -48,19 +48,6 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
   const hasTrackedSearchFocus = useRef(false);
 
-  function trackSearchInputFocus() {
-    if (hasTrackedSearchFocus.current) return;
-
-    hasTrackedSearchFocus.current = true;
-
-    pushToDataLayer({
-      event: "search_input_focus",
-      page_name: "deals_page",
-      section_name: "listing_section",
-      element_name: "search_input_deals",
-    });
-  }
-
   const visibleItems = data.items;
   const currentPage = data.pagination.page;
   const totalPages = data.pagination.totalPages;
@@ -77,12 +64,29 @@ export function DealsListClient({ data }: DealsListClientProps) {
     });
   }
 
+  function trackSearchInputFocus() {
+    if (hasTrackedSearchFocus.current) return;
+
+    hasTrackedSearchFocus.current = true;
+
+    pushToDataLayer({
+      event: "search_input_focus",
+      element_name: "search_input_deals",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+      },
+    });
+  }
+
   function clearAllFilters() {
     pushToDataLayer({
       event: "filter_reset",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: "btn_clear_all_filters",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+      },
     });
 
     setDraftSearchTerm("");
@@ -101,15 +105,17 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
     pushToDataLayer({
       event: "search_submit",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: "search_input_deals",
-      search_term: cleanedSearchTerm || "empty",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        search_term: cleanedSearchTerm || "empty",
+      },
     });
 
     pushFiltersToUrl({
       ...filters,
-      searchTerm: draftSearchTerm,
+      searchTerm: cleanedSearchTerm,
     });
   }
 
@@ -119,13 +125,15 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
     pushToDataLayer({
       event: "filter_toggle",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: `filter_checkbox_${trackingName}`,
-      filter_group: "category",
-      filter_name: value,
-      filter_value: trackingName,
-      filter_state: isSelected ? "deselected" : "selected",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_group: "category",
+        filter_name: value,
+        filter_value: trackingName,
+        filter_state: isSelected ? "deselected" : "selected",
+      },
     });
 
     pushFiltersToUrl({
@@ -140,13 +148,15 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
     pushToDataLayer({
       event: "filter_toggle",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: `filter_checkbox_${trackingName}`,
-      filter_group: "funding_status",
-      filter_name: value,
-      filter_value: trackingName,
-      filter_state: isSelected ? "deselected" : "selected",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_group: "funding_status",
+        filter_name: value,
+        filter_value: trackingName,
+        filter_state: isSelected ? "deselected" : "selected",
+      },
     });
 
     pushFiltersToUrl({
@@ -161,14 +171,17 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
     pushToDataLayer({
       event: "filter_toggle",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: `filter_checkbox_${trackingName}`,
-      filter_group: "risk_level",
-      filter_name: value,
-      filter_value: trackingName,
-      filter_state: isSelected ? "deselected" : "selected",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_group: "risk_level",
+        filter_name: value,
+        filter_value: trackingName,
+        filter_state: isSelected ? "deselected" : "selected",
+      },
     });
+
     pushFiltersToUrl({
       ...filters,
       selectedRiskLevels: toggleArrayValue(filters.selectedRiskLevels, value),
@@ -181,14 +194,17 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
     pushToDataLayer({
       event: "filter_toggle",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: `filter_checkbox_${trackingName}`,
-      filter_group: "minimum_investment",
-      filter_name: value,
-      filter_value: trackingName,
-      filter_state: isSelected ? "deselected" : "selected",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_group: "minimum_investment",
+        filter_name: value,
+        filter_value: trackingName,
+        filter_state: isSelected ? "deselected" : "selected",
+      },
     });
+
     pushFiltersToUrl({
       ...filters,
       selectedMinimumInvestments: toggleArrayValue(filters.selectedMinimumInvestments, value),
@@ -201,13 +217,15 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
     pushToDataLayer({
       event: "filter_toggle",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: `filter_checkbox_${trackingName}`,
-      filter_group: "deal_type",
-      filter_name: value,
-      filter_value: trackingName,
-      filter_state: isSelected ? "deselected" : "selected",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_group: "deal_type",
+        filter_name: value,
+        filter_value: trackingName,
+        filter_state: isSelected ? "deselected" : "selected",
+      },
     });
 
     pushFiltersToUrl({
@@ -219,13 +237,15 @@ export function DealsListClient({ data }: DealsListClientProps) {
   function toggleVerifiedOnly(value: boolean) {
     pushToDataLayer({
       event: "filter_toggle",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: "filter_checkbox_verified_deals",
-      filter_group: "verified",
-      filter_name: "Verified Only",
-      filter_value: "verified_only",
-      filter_state: value ? "selected" : "deselected",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_group: "verified",
+        filter_name: "Verified Only",
+        filter_value: "verified_only",
+        filter_state: value ? "selected" : "deselected",
+      },
     });
 
     pushFiltersToUrl({
@@ -239,12 +259,14 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
     pushToDataLayer({
       event: "filter_remove",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: `filter_chip_remove_${trackingName}`,
-      filter_group: "category",
-      filter_name: value,
-      filter_value: trackingName,
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_group: "category",
+        filter_name: value,
+        filter_value: trackingName,
+      },
     });
 
     pushFiltersToUrl({
@@ -258,12 +280,14 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
     pushToDataLayer({
       event: "filter_remove",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: `filter_chip_remove_${trackingName}`,
-      filter_group: "risk_level",
-      filter_name: value,
-      filter_value: trackingName,
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_group: "risk_level",
+        filter_name: value,
+        filter_value: trackingName,
+      },
     });
 
     pushFiltersToUrl({
@@ -275,10 +299,12 @@ export function DealsListClient({ data }: DealsListClientProps) {
   function updateSort(value: string) {
     pushToDataLayer({
       event: "sort_change",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: "filter_tag_sort_by",
-      sort_by: value,
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        sort_by: value,
+      },
     });
 
     pushFiltersToUrl({
@@ -290,9 +316,11 @@ export function DealsListClient({ data }: DealsListClientProps) {
   function applyFilters() {
     pushToDataLayer({
       event: "filter_apply",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: "btn_filter_apply",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+      },
     });
   }
 
@@ -301,13 +329,15 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
     pushToDataLayer({
       event: "filter_toggle",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: "filter_range_roi_min",
-      filter_group: "roi_range",
-      filter_name: "Min ROI",
-      filter_value: String(nextValue),
-      filter_state: "changed",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_group: "roi_range",
+        filter_name: "Min ROI",
+        filter_value: String(nextValue),
+        filter_state: "changed",
+      },
     });
 
     pushFiltersToUrl({
@@ -321,19 +351,49 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
     pushToDataLayer({
       event: "filter_toggle",
-      page_name: "deals_page",
-      section_name: "listing_section",
       element_name: "filter_range_roi_max",
-      filter_group: "roi_range",
-      filter_name: "Max ROI",
-      filter_value: String(nextValue),
-      filter_state: "changed",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_group: "roi_range",
+        filter_name: "Max ROI",
+        filter_value: String(nextValue),
+        filter_state: "changed",
+      },
     });
 
     pushFiltersToUrl({
       ...filters,
       roiMax: nextValue,
     });
+  }
+
+  function openMobileFilters() {
+    pushToDataLayer({
+      event: "filter_drawer_open",
+      element_name: "btn_open_mobile_filters",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_location: "mobile_drawer",
+      },
+    });
+
+    setIsMobileFiltersOpen(true);
+  }
+
+  function closeMobileFilters() {
+    pushToDataLayer({
+      event: "filter_drawer_close",
+      element_name: "btn_close_mobile_filters",
+      event_value: {
+        page_name: "deals_page",
+        section_name: "listing_section",
+        filter_location: "mobile_drawer",
+      },
+    });
+
+    setIsMobileFiltersOpen(false);
   }
 
   return (
@@ -381,7 +441,7 @@ export function DealsListClient({ data }: DealsListClientProps) {
 
                 <button
                   type="button"
-                  onClick={() => setIsMobileFiltersOpen(true)}
+                  onClick={openMobileFilters}
                   className="inline-flex h-10 shrink-0 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50"
                 >
                   <SlidersHorizontal className="size-4" />
@@ -393,6 +453,8 @@ export function DealsListClient({ data }: DealsListClientProps) {
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                   <div className="flex min-w-0 flex-1 flex-col gap-4 md:flex-row">
                     <form
+                      id="form_deals_search"
+                      name="form_deals_search"
                       className="relative min-w-0 flex-1"
                       onSubmit={(event) => {
                         event.preventDefault();
@@ -401,6 +463,7 @@ export function DealsListClient({ data }: DealsListClientProps) {
                     >
                       <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
                       <input
+                        name="deals_search"
                         value={draftSearchTerm}
                         onFocus={trackSearchInputFocus}
                         onChange={(event) => setDraftSearchTerm(event.target.value)}
@@ -502,7 +565,7 @@ export function DealsListClient({ data }: DealsListClientProps) {
         onMinimumInvestmentToggle={toggleMinimumInvestment}
         onDealTypeToggle={toggleDealType}
         onResetAll={clearAllFilters}
-        onClose={() => setIsMobileFiltersOpen(false)}
+        onClose={closeMobileFilters}
       />
     </main>
   );

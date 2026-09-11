@@ -1,5 +1,7 @@
-// src\components\analytics\page-exit-tracker.tsx
-//to track the user close browser move to another domain or click back button on the browser
+// src/components/analytics/page-exit-tracker.tsx
+// Tracks when the user leaves One4cus entirely:
+// closes tab, closes browser, clicks browser back out of site, or navigates to another domain.
+
 "use client";
 
 import { pushToDataLayer } from "@/lib/analytics/gtm";
@@ -20,13 +22,15 @@ export function PageExitTracker() {
 
       pushToDataLayer({
         event: "page_exited",
-        page_name: "global",
-        section_name: "page_lifecycle",
         element_name: "page_exited",
-        exit_type: exitType,
-        page_path: window.location.pathname,
-        page_url: window.location.href,
-        page_title: document.title,
+        event_value: {
+          page_name: "global",
+          section_name: "page_lifecycle",
+          exit_type: exitType,
+          page_path: window.location.pathname,
+          page_url: window.location.href,
+          page_title: document.title,
+        },
       });
     }
 
@@ -40,7 +44,10 @@ export function PageExitTracker() {
 
       if (!href) return;
 
+      // Do not count same-page anchor clicks as exits
       if (href.startsWith("#") || href.startsWith("javascript:")) return;
+
+      // These should be tracked separately as contact clicks, not page exits
       if (href.startsWith("mailto:") || href.startsWith("tel:")) return;
 
       let targetUrl: URL;
@@ -51,11 +58,13 @@ export function PageExitTracker() {
         return;
       }
 
+      // Internal One4cus navigation should NOT fire page_exited
       if (targetUrl.origin === window.location.origin) {
         isInternalNavigation = true;
         return;
       }
 
+      // External website navigation should fire page_exited
       if (targetUrl.protocol === "http:" || targetUrl.protocol === "https:") {
         isExternalNavigation = true;
         pushPageExit("external_navigation");
@@ -74,6 +83,8 @@ export function PageExitTracker() {
     }
 
     function handlePopState() {
+      // Browser back/forward can leave the site.
+      // pagehide will confirm if the page is actually unloaded.
       isInternalNavigation = false;
     }
 

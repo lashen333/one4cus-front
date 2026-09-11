@@ -39,13 +39,15 @@ function FilterChip({
       onClick={() => {
         pushToDataLayer({
           event: "filter_remove",
-          page_name: "services_page",
-          section_name: "listing_section",
           element_name: `filter_chip_remove_${trackingName}`,
-          filter_group: filterGroup,
-          filter_name: filterName,
-          filter_value: trackingName,
-          filter_location: "active_filters",
+          event_value: {
+            page_name: "services_page",
+            section_name: "listing_section",
+            filter_group: filterGroup,
+            filter_name: filterName,
+            filter_value: trackingName,
+            filter_location: "active_filters",
+          },
         });
 
         onRemove();
@@ -95,10 +97,12 @@ export function ServicesActiveFilters({
         onClick={() => {
           pushToDataLayer({
             event: "filter_clear_all",
-            page_name: "services_page",
-            section_name: "listing_section",
             element_name: "btn_clear_all_active_filters",
-            filter_location: "active_filters",
+            event_value: {
+              page_name: "services_page",
+              section_name: "listing_section",
+              filter_location: "active_filters",
+            },
           });
 
           onClearAll();

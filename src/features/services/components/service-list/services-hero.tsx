@@ -42,9 +42,11 @@ export function ServicesHero({
   useEffect(() => {
     pushToDataLayer({
       event: "section_view",
-      page_name: "services_page",
-      section_name: "hero_section",
       element_name: "services_hero_section",
+      event_value: {
+        page_name: "services_page",
+        section_name: "hero_section",
+      },
     });
   }, []);
 
@@ -55,9 +57,11 @@ export function ServicesHero({
 
     pushToDataLayer({
       event: "search_input_focus",
-      page_name: "services_page",
-      section_name: "hero_section",
       element_name: "search_input_services",
+      event_value: {
+        page_name: "services_page",
+        section_name: "hero_section",
+      },
     });
   };
 
@@ -67,11 +71,13 @@ export function ServicesHero({
 
     pushToDataLayer({
       event: "search_submit",
-      page_name: "services_page",
-      section_name: "hero_section",
       element_name: "btn_search_services",
-      search_term: cleanedSearchTerm || "empty",
-      city: cleanedCity || "empty",
+      event_value: {
+        page_name: "services_page",
+        section_name: "hero_section",
+        search_term: cleanedSearchTerm || "empty",
+        city: cleanedCity || "empty",
+      },
     });
 
     onSubmitSearch();

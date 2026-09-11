@@ -1,10 +1,14 @@
 // src\lib\analytics\gtm.ts
 //this file send the events from the website to GTM
-export type GtmEvent = {
-  event: string;
+export type GtmEventValue = {
   [key: string]: string | number | boolean | null | undefined;
 };
 
+export type GtmEvent = {
+  event: string;
+  element_name: string;
+  event_value?: GtmEventValue;
+};
 declare global {
   interface Window {
     dataLayer?: GtmEvent[];

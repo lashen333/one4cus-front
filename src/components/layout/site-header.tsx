@@ -19,6 +19,15 @@ const navItems = [
   { label: "Contact", href: "/contact" },
 ];
 
+function toTrackingName(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
 export function SiteHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeForm, setActiveForm] = useState<"provider" | "signup" | null>(null);
@@ -33,10 +42,15 @@ export function SiteHeader() {
   ) => {
     pushToDataLayer({
       event: "click_header_nav",
-      element_name: `nav_${item.label.toLowerCase()}`,
-      nav_label: item.label,
-      nav_href: item.href,
-      nav_location: location,
+      element_name: `nav_${toTrackingName(item.label)}`,
+      event_value: {
+        page_name: "global",
+        section_name: "header/navigation",
+        nav_label: item.label,
+        nav_href: item.href,
+        nav_location: location,
+        current_path: pathname,
+      },
     });
   };
 
@@ -47,9 +61,14 @@ export function SiteHeader() {
     pushToDataLayer({
       event: "click_header_cta",
       element_name: formType === "provider" ? "btn_service_provider" : "btn_signup",
-      cta_label: formType === "provider" ? "List My Services/Deals" : "Sign Up",
-      form_type: formType,
-      nav_location: location,
+      event_value: {
+        page_name: "global",
+        section_name: "header/navigation",
+        cta_label: formType === "provider" ? "List My Services/Deals" : "Sign Up",
+        form_type: formType,
+        nav_location: location,
+        current_path: pathname,
+      },
     });
 
     setActiveForm(formType);
@@ -68,8 +87,13 @@ export function SiteHeader() {
               pushToDataLayer({
                 event: "click_header_logo",
                 element_name: "nav_logo",
-                nav_href: "/",
-                nav_location: "desktop_header",
+                event_value: {
+                  page_name: "global",
+                  section_name: "header/navigation",
+                  nav_href: "/",
+                  nav_location: "desktop_header",
+                  current_path: pathname,
+                },
               });
               closeMobileMenu();
             }}
@@ -148,7 +172,12 @@ export function SiteHeader() {
               pushToDataLayer({
                 event: isMobileMenuOpen ? "close_mobile_menu" : "open_mobile_menu",
                 element_name: isMobileMenuOpen ? "btn_close_mobile_menu" : "btn_open_mobile_menu",
-                nav_location: "mobile_header",
+                event_value: {
+                  page_name: "global",
+                  section_name: "header/navigation",
+                  nav_location: "mobile_header",
+                  current_path: pathname,
+                },
               });
               setIsMobileMenuOpen((prev) => !prev);
             }}

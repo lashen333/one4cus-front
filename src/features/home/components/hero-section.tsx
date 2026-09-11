@@ -1,4 +1,4 @@
-// src\features\home\components\hero-section.tsx
+// src/features/home/components/hero-section.tsx
 "use client";
 
 import { PageContainer } from "@/components/layout/page-container";
@@ -18,19 +18,40 @@ export function HeroSection({ hero }: HeroSectionProps) {
   useEffect(() => {
     pushToDataLayer({
       event: "section_view",
-      page_name: "homepage",
-      section_name: "hero_section",
       element_name: "home_hero_section",
+      event_value: {
+        page_name: "homepage",
+        section_name: "hero_section",
+      },
     });
   }, []);
 
+  const trackPrimaryCtaClick = () => {
+    pushToDataLayer({
+      event: "cta_click",
+      element_name: "home_hero_browse",
+      event_value: {
+        page_name: "homepage",
+        section_name: "hero_section",
+        cta_label: hero.primaryCta.label,
+        cta_href: hero.primaryCta.href,
+        page_section: "homepage_hero",
+      },
+    });
+  };
+
   const openLeadForm = (formType: "provider" | "signup") => {
     pushToDataLayer({
-      event: "click_hero_cta",
-      cta_label: hero.secondaryCta.label,
-      cta_href: "lead_form",
-      page_section: "homepage_hero",
-      form_type: formType,
+      event: "cta_click",
+      element_name: "home_hero_list",
+      event_value: {
+        page_name: "homepage",
+        section_name: "hero_section",
+        cta_label: hero.secondaryCta.label,
+        cta_href: "lead_form",
+        page_section: "homepage_hero",
+        form_type: formType,
+      },
     });
 
     setActiveForm(formType);
@@ -52,7 +73,10 @@ export function HeroSection({ hero }: HeroSectionProps) {
             <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button
                 href={hero.primaryCta.href}
-                data-analytics-event="click_hero_cta"
+                onClick={trackPrimaryCtaClick}
+                data-analytics-event="cta_click"
+                data-page-name="homepage"
+                data-section-name="hero_section"
                 data-cta-label={hero.primaryCta.label}
                 data-cta-href={hero.primaryCta.href}
                 data-element-name="home_hero_browse"
@@ -64,14 +88,14 @@ export function HeroSection({ hero }: HeroSectionProps) {
               <Button
                 type="button"
                 variant="secondary"
-                data-analytics-event="click_hero_cta"
+                onClick={() => openLeadForm("provider")}
+                data-analytics-event="cta_click"
+                data-page-name="homepage"
+                data-section-name="hero_section"
                 data-cta-label={hero.secondaryCta.label}
                 data-cta-href="lead_form"
                 data-element-name="home_hero_list"
                 data-page-section="homepage_hero"
-                onClick={() => {
-                  openLeadForm("provider");
-                }}
               >
                 {hero.secondaryCta.label}
               </Button>
