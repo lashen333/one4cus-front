@@ -1,4 +1,5 @@
 // src\app\layout.tsx
+import { CardClickTracker } from "@/components/analytics/card-click-tracker";
 import { PageExitTracker } from "@/components/analytics/page-exit-tracker";
 import { siteConfig } from "@/lib/config/site";
 import { GoogleTagManager } from "@next/third-parties/google";
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <CardClickTracker />
         <PageExitTracker />
         {children}
       </body>

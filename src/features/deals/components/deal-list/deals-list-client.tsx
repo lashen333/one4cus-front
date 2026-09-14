@@ -1,4 +1,4 @@
-// src/features/deals/components/deal-list/deals-list-client.tsx
+// src\features\deals\components\deal-list\deals-list-client.tsx
 "use client";
 
 import { PageContainer } from "@/components/layout/page-container";
