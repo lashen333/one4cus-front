@@ -176,6 +176,7 @@ export function SiteHeader() {
                   page_name: "global",
                   section_name: "header/navigation",
                   nav_location: "mobile_header",
+                  cta_label: isMobileMenuOpen ? "Close Menu" : "Open Menu",
                   current_path: pathname,
                 },
               });
