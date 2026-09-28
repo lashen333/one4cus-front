@@ -1,4 +1,4 @@
-// src/features/services/components/service-list/services-hero.tsx
+// src\features\services\components\service-list\services-hero.tsx
 "use client";
 
 import { PageContainer } from "@/components/layout/page-container";

@@ -1,4 +1,4 @@
-// src/features/deals/components/deal-list/deals-hero-tracker.tsx
+// src\features\deals\components\deal-list\deals-hero-tracker.tsx
 "use client";
 
 import { pushToDataLayer } from "@/lib/analytics/gtm";

@@ -21,6 +21,7 @@ export function SectionToggle({ activeTab, onChange }: SectionToggleProps) {
       event_value: {
         page_name: "homepage",
         section_name: "listing_toggle_section",
+        cta_label: tab === "services" ? "Services" : "Deals",
         selected_tab: tab,
       },
     });
