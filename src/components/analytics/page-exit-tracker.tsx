@@ -1,4 +1,4 @@
-// src/components/analytics/page-exit-tracker.tsx
+// src\components\analytics\page-exit-tracker.tsx
 // Tracks when the user leaves One4cus entirely:
 // closes tab, closes browser, clicks browser back out of site, or navigates to another domain.
 
